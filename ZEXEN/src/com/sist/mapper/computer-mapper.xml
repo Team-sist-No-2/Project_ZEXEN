@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.computer-mapper">
+
+<insert id="computerInsert" parameterType="ComputerVO">
+   INSERT INTO Computer_TB VALUES(
+     (SELECT NVL(MAX(com_no)+1,1) FROM Computer_TB),
+     #{cate_no},
+     #{product},
+     #{spec},
+     #{image},
+     #{quantity},
+     #{cost},
+     #{gift},
+     #{sell_cnt},
+     #{stock_cnt}
+   )
+</insert>
+
+
+
+</mapper>
