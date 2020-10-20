@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.news-mapper">
+
+<select id="newsData" resultType="com.sist.vo.NewsVO" parameterType="hashmap">
+<!-- 
+private int news_no;
+   private String subject;
+   private String content;
+   private String poster;
+   private String regdate;
+   private int hit;
+   private int like_cnt;
+   private int hate_cnt;
+   private String member_id;
+
+ -->
+ SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id,num
+ FROM (SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id,row as num
+ FROM (SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id
+ FROM news))
+ WHERE num BETWEEN #{start} AND #{end}
+</select>
+
+<select id="newsTotalPage" resultType="int">
+SELECT CEIL(count(*)/10.0) FROM news
+</select>
+
+</mapper>
