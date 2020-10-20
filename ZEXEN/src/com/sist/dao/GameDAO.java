@@ -1,6 +1,8 @@
 package com.sist.dao;
 
 import java.io.Reader;
+import java.util.List;
+import java.util.Map;
 import com.sist.vo.GameVO;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -21,7 +23,16 @@ public class GameDAO {
 		session.close();
 	}
 	
+	//카테고리별 게임
+	public static List<GameVO> gameListData(Map map)
+	{
+		SqlSession session=ssf.openSession();
+		List<GameVO> list=session.selectList("gameListData",map);
+		session.close();
+		return list;
+	}
 	
+
 
 	 
 }

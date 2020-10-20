@@ -22,9 +22,13 @@
    )
   </insert>
   
-<!--   <select id="gameListData" resultType="MovieVO" parameterType="hashmap"> -->
-  
-<!--   </select> -->
+<select id="gameListData" resultType="GameVO" parameterType="hashmap">
+	SELECT game_no,name,poster,price,num
+	FROM (SELECT game_no,name,poster,price, rownum as num
+	FROM (SELECT game_no,name,poster,price
+	FROM game_tb WHERE cateno=#{category} ORDER BY game_no))
+	WHERE num BETWEEN #{start} AND #{end}
+</select>
 
 
 <!-- <select id="movieListData" resultType="MovieVO" parameterType="hashmap"> -->
