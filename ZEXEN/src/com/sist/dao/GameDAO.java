@@ -32,6 +32,14 @@ public class GameDAO {
 		return list;
 	}
 	
+	public static List<GameVO> gameTotalPage(Map map)
+	{
+		SqlSession session=ssf.openSession();
+		List<GameVO> list=session.selectList("gameListData",map);
+		session.close();
+		return list;
+	}
+	
 
 
 	 
