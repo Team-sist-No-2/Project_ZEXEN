@@ -3,7 +3,7 @@
 <mapper namespace="com.sist.dao.game-mapper">
 
 <insert id="gameInsert" parameterType="GameVO">
-   INSERT INTO Game_TB(game_no,category,name,rel_day,developer,content,min_spec,recom_spec,poster,like_cnt,hate_cnt,price,tag,movie)
+   INSERT INTO Game_TB(game_no,category,name,rel_day,developer,content,min_spec,recom_spec,poster,like_cnt,hate_cnt,price,tag,movie,list_poster)
    VALUES(
      (SELECT NVL(MAX(game_no)+1,1) FROM Game_TB),
      #{category},
@@ -18,26 +18,53 @@
      #{hate_cnt},
      #{price},
      #{tag},
-     #{movie}
+     #{movie},
+     #{list_poster}
    )
   </insert>
   
 <select id="gameListData" resultType="GameVO" parameterType="hashmap">
-	SELECT game_no,name,poster,price,num
-	FROM (SELECT game_no,name,poster,price, rownum as num
-	FROM (SELECT game_no,name,poster,price
-	FROM game_tb WHERE category=#{category} ORDER BY game_no))
+	SELECT game_no,name,list_poster,price,tag,like_cnt,num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
+	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE category=#{category} GROUP BY name)ORDER BY game_no))
 	WHERE num BETWEEN #{start} AND #{end}
 </select>
 
+<select id="gameTotalPage" resultType="int" parameterType="int">
+	SELECT CEIL(COUNT(*)/8.0)  
+    FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) 
+    FROM game_tb WHERE category=#{category} GROUP BY name)
+</select>
 
-<!-- <select id="movieListData" resultType="MovieVO" parameterType="hashmap"> -->
-<!-- 		SELECT no,poster,title,num -->
-<!-- 		FROM (SELECT no,poster,title,rownum as num -->
-<!-- 		FROM (SELECT no,poster,title -->
-<!-- 		FROM daum_movie WHERE cateno=#{cateno} ORDER BY score DESC)) -->
-<!-- 		WHERE num BETWEEN #{start} AND #{end} -->
-<!-- 	</select> -->
+<select id="gameCategoryCount" resultType="int" parameterType="int">
+	SELECT COUNT(*) 
+    FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) 
+    FROM game_tb WHERE category=#{category} GROUP BY name)
+</select>
+
+<!-- 
+		CATEGORY    NOT NULL VARCHAR2(50)   
+		NAME        NOT NULL VARCHAR2(150)  
+		REL_DAY              DATE           
+		DEVELOPER            VARCHAR2(300)  
+		CONTENT              CLOB           
+		MIN_SPEC             VARCHAR2(1000) 
+		RECOM_SPEC           VARCHAR2(1000) 
+		POSTER               CLOB           
+		LIKE_CNT             NUMBER         
+		HATE_CNT             NUMBER         
+		PRICE                NUMBER         
+		TAG                  VARCHAR2(500)  
+		MOVIE                VARCHAR2(500)  
+		SELL_CNT             NUMBER         
+		LIST_POSTER NOT NULL VARCHAR2(300)  
+ -->
+
+<select id="gameDetailData" resultType="GameVO" parameterType="int">
+	SELECT name,rel_day,developer,content,min_spec,recom_spec,poster,like_cnt,hate_cnt,price,tag,movie,sell_cnt FROM game_tb
+	where game_no=#{game_no}
+</select>
 
 
 

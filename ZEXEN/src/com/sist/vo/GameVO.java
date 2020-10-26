@@ -25,6 +25,12 @@ import java.sql.Date;
  */
 public class GameVO {
 	
+	public String getList_poster() {
+		return list_poster;
+	}
+	public void setList_poster(String list_poster) {
+		this.list_poster = list_poster;
+	}
 	public int getPrice() {
 		return price;
 	}
@@ -132,4 +138,5 @@ public class GameVO {
     private String tag;
     private String movie;
     private int sell_cnt; //디폴트 0
+    private String list_poster;
 }
