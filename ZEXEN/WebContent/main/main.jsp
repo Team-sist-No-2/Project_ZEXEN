@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="../assets/vendors/owl-carousel/owl.carousel.min.css">
 
   <link rel="stylesheet" href="../assets/css/style.css">
+  
+
+ 
+  
 </head>
 <body>
 

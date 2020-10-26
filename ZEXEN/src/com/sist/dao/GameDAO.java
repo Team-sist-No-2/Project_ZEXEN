@@ -32,15 +32,30 @@ public class GameDAO {
 		return list;
 	}
 	
-	public static List<GameVO> gameTotalPage(Map map)
+	//카테고리별 총페이지
+	public static int gameTotalPage(int category)
 	{
 		SqlSession session=ssf.openSession();
-		List<GameVO> list=session.selectList("gameListData",map);
+		int total=session.selectOne("gameTotalPage",category);
 		session.close();
-		return list;
+		return total;
 	}
-	
 
+	//카테고리별 개수(라디오 버튼 옆에 출력용도)
+	public static Integer gameCategoryCount(int category)
+	{
+		SqlSession session=ssf.openSession();
+		int cate_cnt=session.selectOne("gameCategoryCount",category);
+		session.close();
+		return cate_cnt;
+	}
 
-	 
+	//디테일 페이지 내용 출력
+	public static GameVO gameDetailData(int game_no)
+	{
+		SqlSession session=ssf.openSession();
+		GameVO vo=session.selectOne("gameDetailData",game_no);
+		session.close();
+		return vo;
+	}
 }
