@@ -10,9 +10,11 @@ import com.sist.vo.GameVO;
 
 
 public class ComputerDAO {
+	
 	private static SqlSessionFactory ssf;
 	static 
 	{
+		System.out.println("test");
 		ssf=CreateSqlSessionFactory.getSsf();
 	}
    
