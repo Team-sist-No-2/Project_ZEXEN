@@ -60,15 +60,139 @@
     background-position: 0% 50%;
   }
 }
+
+
+
+
+#like_btn {
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+}
+#like_btn:hover {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+}
+#hate_btn {
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+}
+#hate_btn:hover {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+}
+
+
   </style>
 
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	
+	var alreadyClick=false;
+	
+	$('#like_btn').click(function(){
+		
+		
+		if(!alreadyClick){
+		
+		let lcnt=${vo.like_cnt+1};
+		lcnt=lcnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		$('#like_out').html(lcnt);
 
+		$.ajax({
+				type:'post',
+				url:'../game/like.do?game_no=${vo.game_no}',
+				success:function(result)
+				{
+					console.log("좋아요 누른 결과는 "+result);
+				}
+		})
+		alreadyClick=true;
+		}
+		else{
+			alert('이미 평가한 게임입니다')
+		}
+	})
+	
+	
+	
+	$('#hate_btn').click(function(){
+		
+		if(!alreadyClick){
+		
+		let hcnt=${vo.hate_cnt+1};
+// 		alert(hcnt);
+		hcnt=hcnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		$('#hate_out').html(hcnt);
+
+		$.ajax({
+				type:'post',
+				url:'../game/hate.do?game_no=${vo.game_no}',
+				success:function(result)
+				{
+					console.log("싫어요 누른 결과는 "+result);
+				}
+		})
+		alreadyClick=true;
+		}
+		else{
+			alert('이미 평가한 게임입니다')
+		}
+	})
+	
+	
+	$('#reply_btn').click(function(){
+		let textarea=$('#textarea').val();
+		console.log(textarea);
+		
+			if(textarea.trim()=="")
+			{
+				$('#textarea').focus();
+				return;
+			}
+		
+			else
+			{
+				var no = ${vo.game_no};
+ 				var allData = {"textarea": textarea, "game_no": no};
+ 				console.log(allData);
+				$.ajax({
+					type: 'post',
+					 url: '../game/replyIn.do',
+					 data : allData,
+					 success: function(result){
+						 console.log("댓글작성완료");
+					 }
+					});
+			}
+		
+	})
+	
+	
+})
+
+</script>
 
 
 </head>
 <body>
 		 <!--================Single Product Area =================-->
-		<div class="product_image_area">
+		<div class="product_image_area" style="padding-top: 0px">
 			<div class="container">
 				<div class="row s_product_inner">
 					<div class="col-lg-6" style="display: flex;">
@@ -93,7 +217,7 @@
 					</div>
 					<div class="col-lg-5 offset-lg-1">
 						<div class="s_product_text">
-							<h1>${vo.name }</h1>
+							<h2 style="color: #000000; font-size: 23pt">${vo.name }</h2>
 							
 							<c:choose>
 						         <c:when test = "${vo.price== 0}">
@@ -109,8 +233,8 @@
 					    	</c:choose>
 							
 							<ul class="list">
-								<li><a class="active" href="#"><span>개발사</span> : ${vo.developer }</a></li>
-								<li><a href="#"><span>발매일</span> : ${vo.rel_day }</a></li>
+								<li><span>개발사</span> : ${vo.developer }</a></li>
+								<li><span>발매일</span> : ${vo.rel_day }</a></li>
 							</ul>
 							<p><span style="font-weight: 800">태그모음</span><br>${vo.tag }</p>
 							<div class="product_count">
@@ -119,7 +243,7 @@
 <!-- 								<a class="button primary-btn" href="#" style="margin-top: 20px">Add to Cart</a>    -->
 								
 								
-								<div class="btnxx"><a href="#" style="color: white">Add to Cart</a>
+								<div class="btnxx"><a href="#" style="color: white">Buy</a>
 								  <div class="btnxx2"></div>
 								</div>
 								
@@ -150,10 +274,6 @@
 						 aria-selected="false">Specification</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-						 aria-selected="false">Comments</a>
-					</li>
-					<li class="nav-item">
 						<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
 						 aria-selected="false">Reviews</a>
 					</li>
@@ -166,167 +286,75 @@
 						<div class="table-responsive">
 						<table class="table">
 							<tbody>
-										<c:choose>
-										         <c:when test = "${vo.recom_spec == null}">
-										         <tr><td>
-										         	<h1>스펙</h1>
-										         </td></tr>
-													<c:forTokens var="spec" items="${vo.min_spec}" delims=",">
-														<tr>
-															<td>
-																${spec } 1번째 only_one
-															</td>
-														</tr>
-													</c:forTokens>
-				
-										         </c:when>
-										         <c:when test = "${vo.recom_spec != null}">
-										         
-										         <tr><td>
-										         	<h1>최소스펙</h1>
-										         </td></tr>
-											            <c:forTokens var="spec" items="${vo.min_spec}" delims=",">
-														<tr>
-															<td>
-																${spec } 2번째 min
-															</td>
-														</tr>
-														</c:forTokens>
-														
-														
-												<tr><td>
-										         	<h1>권장스펙</h1>
-										         </td></tr>
-														<c:forTokens var="spec" items="${vo.recom_spec}" delims=",">
-														<tr>
-															<td>
-																${spec } 2번째 recom
-															</td>
-														</tr>
-													</c:forTokens>
-										         </c:when>
-								        </c:choose>
+							<c:choose>
+							         <c:when test = "${vo.recom_spec == null}">
+							         <tr><td>
+							         	<h2>사양</h2>
+							         </td></tr>
+										<c:forTokens var="spec" items="${vo.min_spec}" delims=",">
+											<tr>
+												<td>
+													${spec }
+												</td>
+											</tr>
+										</c:forTokens>
+	
+							         </c:when>
+							         <c:when test = "${vo.recom_spec != null}">
+							         
+							         <tr><td>
+							         	<h2>최소사양</h2>
+							         </td></tr>
+								            <c:forTokens var="spec" items="${vo.min_spec}" delims=",">
+											<tr>
+												<td>
+													${spec }
+												</td>
+											</tr>
+											</c:forTokens>
+									<tr><td>
+							         	<h2>권장사양</h2>
+							         </td></tr>
+											<c:forTokens var="spec" items="${vo.recom_spec}" delims=",">
+											<tr>
+												<td>
+													${spec }
+												</td>
+											</tr>
+										</c:forTokens>
+							         </c:when>
+					        </c:choose>
 							</tbody>
 						</table>
 						</div>
-					    	
-					    	
-						
-						
-						
 					</div>
-					<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-						<div class="row">
-							<div class="col-lg-6">
-								<div class="comment_list">
-									<div class="review_item">
-										<div class="media">
-											<div class="d-flex">
-												<img src="img/product/review-1.png" alt="">
-											</div>
-											<div class="media-body">
-												<h4>Blake Ruiz</h4>
-												<h5>12th Feb, 2018 at 05:56 pm</h5>
-												<a class="reply_btn" href="#">Reply</a>
-											</div>
-										</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-											commodo</p>
-									</div>
-									<div class="review_item reply">
-										<div class="media">
-											<div class="d-flex">
-												<img src="img/product/review-2.png" alt="">
-											</div>
-											<div class="media-body">
-												<h4>Blake Ruiz</h4>
-												<h5>12th Feb, 2018 at 05:56 pm</h5>
-												<a class="reply_btn" href="#">Reply</a>
-											</div>
-										</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-											commodo</p>
-									</div>
-									<div class="review_item">
-										<div class="media">
-											<div class="d-flex">
-												<img src="img/product/review-3.png" alt="">
-											</div>
-											<div class="media-body">
-												<h4>Blake Ruiz</h4>
-												<h5>12th Feb, 2018 at 05:56 pm</h5>
-												<a class="reply_btn" href="#">Reply</a>
-											</div>
-										</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-											commodo</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-6">
-								<div class="review_box">
-									<h4>Post a comment</h4>
-									<form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-										<div class="col-md-12">
-											<div class="form-group">
-												<input type="text" class="form-control" id="name" name="name" placeholder="Your Full name">
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<input type="email" class="form-control" id="email" name="email" placeholder="Email Address">
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<input type="text" class="form-control" id="number" name="number" placeholder="Phone Number">
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group">
-												<textarea class="form-control" name="message" id="message" rows="1" placeholder="Message"></textarea>
-											</div>
-										</div>
-										<div class="col-md-12 text-right">
-											<button type="submit" value="submit" class="btn primary-btn">Submit Now</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 					<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
 						<div class="row">
 							<div class="col-lg-6">
-								<div class="row total_rate">
+								<div class="row total_rate" style="margin-bottom: 10px;">
 									<div class="col-6">
 										<div class="box_total">
-											<h5>Overall</h5>
-											<h4>4.0</h4>
-											<h6>(03 Reviews)</h6>
+										<button style="background-color: #f1f6f7; border:0;" value="${vo.like_cnt }" id="like_btn">
+											<img src="../assets/img/like.png" width="100px">
+											</button>
+											<h4 style="color: #9E01F9" id="like_out"><fmt:formatNumber value="${vo.like_cnt }" pattern="#,###"/></h4>
+<%-- 											<h4>${vo.like_cnt}</h4> --%>
 										</div>
 									</div>
 									<div class="col-6">
-										<div class="rating_list">
-											<h3>Based on 3 Reviews</h3>
-											<ul class="list">
-												<li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-												<li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-												<li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-												<li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-												<li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-														 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											</ul>
+										<div class="box_total">
+										<button style="background-color: #f1f6f7; border:0;" value="${vo.like_cnt }" id="hate_btn">
+											<img src="../assets/img/hate.png" width="100px" >
+											</button>
+											<h4 style="color: #fa00a2" id="hate_out"><fmt:formatNumber value="${vo.hate_cnt }" pattern="#,###"/></h4>
+<%-- 											<h4>${vo.hate_cnt}</h4> --%>
 										</div>
+
 									</div>
 								</div>
+								
+								
 								<div class="review_list">
 									<div class="review_item">
 										<div class="media">
@@ -383,36 +411,23 @@
 											commodo</p>
 									</div>
 								</div>
+								
+								
+								
 							</div>
+							
 							<div class="col-lg-6">
 								<div class="review_box">
 									<h4>Add a Review</h4>
-									<p>Your Rating:</p>
-									<ul class="list">
-										<li><a href="#"><i class="fa fa-star"></i></a></li>
-										<li><a href="#"><i class="fa fa-star"></i></a></li>
-										<li><a href="#"><i class="fa fa-star"></i></a></li>
-										<li><a href="#"><i class="fa fa-star"></i></a></li>
-										<li><a href="#"><i class="fa fa-star"></i></a></li>
-									</ul>
-									<p>Outstanding</p>
-	                <form action="#/" class="form-contact form-review mt-3">
+	                <form action="#/" class="form-contact form-review mt-3" id="reply_form">
 	                  <div class="form-group">
-	                    <input class="form-control" name="name" type="text" placeholder="Enter your name" required>
-	                  </div>
-	                  <div class="form-group">
-	                    <input class="form-control" name="email" type="email" placeholder="Enter email address" required>
-	                  </div>
-	                  <div class="form-group">
-	                    <input class="form-control" name="subject" type="text" placeholder="Enter Subject">
-	                  </div>
-	                  <div class="form-group">
-	                    <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5" placeholder="Enter Message"></textarea>
+	                    <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5"></textarea>
 	                  </div>
 	                  <div class="form-group text-center text-md-right mt-3">
-	                    <button type="submit" class="button button--active button-review">Submit Now</button>
+	                    <button type="button" class="button button--active button-review" id="reply_btn">Submit Now</button>
 	                  </div>
 	                </form>
+	                
 								</div>
 							</div>
 						</div>
@@ -423,119 +438,119 @@
 		<!--================End Product Description Area =================-->
 	
 		<!--================ Start related Product area =================-->  
-		<section class="related-product-area section-margin--small mt-0">
-			<div class="container">
-				<div class="section-intro pb-60px">
-	        <p>Popular Item in the market</p>
-	        <h2>Top <span class="section-intro__style">Product</span></h2>
-	      </div>
-				<div class="row mt-30">
-	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-	          <div class="single-search-product-wrapper">
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-1.png" alt=""></a>
-	              <div class="desc">
-	                  <a href="#" class="title">Gray Coffee Cup</a>
-	                  <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-2.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-3.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	          </div>
-	        </div>
+<!-- 		<section class="related-product-area section-margin--small mt-0"> -->
+<!-- 			<div class="container"> -->
+<!-- 				<div class="section-intro pb-60px"> -->
+<!-- 	        <p>Popular Item in the market</p> -->
+<!-- 	        <h2>Top <span class="section-intro__style">Product</span></h2> -->
+<!-- 	      </div> -->
+<!-- 				<div class="row mt-30"> -->
+<!-- 	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0"> -->
+<!-- 	          <div class="single-search-product-wrapper"> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-1.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                  <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                  <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-2.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-3.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	          </div> -->
+<!-- 	        </div> -->
 	
-	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-	          <div class="single-search-product-wrapper">
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-4.png" alt=""></a>
-	              <div class="desc">
-	                  <a href="#" class="title">Gray Coffee Cup</a>
-	                  <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-5.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-6.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	          </div>
-	        </div>
+<!-- 	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0"> -->
+<!-- 	          <div class="single-search-product-wrapper"> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-4.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                  <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                  <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-5.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-6.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	          </div> -->
+<!-- 	        </div> -->
 	
-	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-	          <div class="single-search-product-wrapper">
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-7.png" alt=""></a>
-	              <div class="desc">
-	                  <a href="#" class="title">Gray Coffee Cup</a>
-	                  <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-8.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-9.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	          </div>
-	        </div>
+<!-- 	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0"> -->
+<!-- 	          <div class="single-search-product-wrapper"> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-7.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                  <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                  <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-8.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-9.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	          </div> -->
+<!-- 	        </div> -->
 	
-	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
-	          <div class="single-search-product-wrapper">
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-1.png" alt=""></a>
-	              <div class="desc">
-	                  <a href="#" class="title">Gray Coffee Cup</a>
-	                  <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-2.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	            <div class="single-search-product d-flex">
-	              <a href="#"><img src="img/product/product-sm-3.png" alt=""></a>
-	              <div class="desc">
-	                <a href="#" class="title">Gray Coffee Cup</a>
-	                <div class="price">$170.00</div>
-	              </div>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-			</div>
-		</section>
+<!-- 	        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0"> -->
+<!-- 	          <div class="single-search-product-wrapper"> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-1.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                  <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                  <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-2.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	            <div class="single-search-product d-flex"> -->
+<!-- 	              <a href="#"><img src="img/product/product-sm-3.png" alt=""></a> -->
+<!-- 	              <div class="desc"> -->
+<!-- 	                <a href="#" class="title">Gray Coffee Cup</a> -->
+<!-- 	                <div class="price">$170.00</div> -->
+<!-- 	              </div> -->
+<!-- 	            </div> -->
+<!-- 	          </div> -->
+<!-- 	        </div> -->
+<!-- 	      </div> -->
+<!-- 			</div> -->
+<!-- 		</section> -->
 		<!--================ end related Product area =================-->  	
 </body>
 </html>

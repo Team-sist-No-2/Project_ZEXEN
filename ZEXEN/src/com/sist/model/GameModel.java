@@ -57,7 +57,6 @@ public class GameModel {
 		request.setAttribute("cate_cnt", cate_cnt_list);
 		
 		request.setAttribute("main_jsp", "../game/main.jsp"); 	//main.jsp에서 include의 경로
-		System.out.println("game/main.do 실행");
 		
 		return "../main/main.jsp";
 	}
@@ -158,18 +157,68 @@ public class GameModel {
     	String no=request.getParameter("game_no");
     	int game_no=Integer.parseInt(no);
     	
-    	System.out.println(game_no);
-    	
     	GameVO vo=GameDAO.gameDetailData(game_no);
     	
-    	System.out.println("GameDAO.gameDetailData(game_no); 실행완료");
+    	System.out.println("GameDAO.gameDetailData(game_no); 실행완료"+game_no+"번 게시물");
     	
     	request.setAttribute("vo", vo);
     	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
-		System.out.println("game/detail.do 실행");
 		
 		return "../main/main.jsp";
     }
     
+    @RequestMapping("game/like.do")
+    public String game_LikeUp(HttpServletRequest request)
+    {
+    	System.out.println("game/like.do DAO 정상실행");
+    	String no=request.getParameter("game_no");
+    	int game_no=Integer.parseInt(no);
 
+    	System.out.println("like.do실행완료하였습니다");
+    	
+    	GameVO vo=GameDAO.gameDetailData(game_no);
+    	GameDAO.gameLikeUp(game_no);
+    	
+    	request.setAttribute("vo", vo);
+    	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
+		
+		return "../main/main.jsp";
+    }
+    
+    @RequestMapping("game/hate.do")
+    public String game_HateUp(HttpServletRequest request)
+    {
+    	System.out.println("game/hate.do DAO 정상실행");
+    	String no=request.getParameter("game_no");
+    	int game_no=Integer.parseInt(no);
+
+    	System.out.println("hate.do실행완료하였습니다");
+    	
+    	GameVO vo=GameDAO.gameDetailData(game_no);
+    	GameDAO.gameHateUp(game_no);
+    	
+    	request.setAttribute("vo", vo);
+    	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
+		
+		return "../main/main.jsp";
+    }
+    
+    @RequestMapping("game/replyIn.do")
+    public String game_Reply_Insert(HttpServletRequest request)
+    {
+    	System.out.println("game/replyIn.do DAO 정상실행");
+    	String no=request.getParameter("game_no");
+    	String comm=request.getParameter("textarea");
+    	int game_no=Integer.parseInt(no);
+
+    	System.out.println("리플 받아온 게임번호:"+game_no+"리플 받아온 내용:"+comm);
+    	
+//    	GameVO vo=GameDAO.gameDetailData(game_no);
+//    	GameDAO.gameHateUp(game_no);
+    	
+//    	request.setAttribute("vo", vo);
+    	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
+		
+		return "../main/main.jsp";
+    }
 }

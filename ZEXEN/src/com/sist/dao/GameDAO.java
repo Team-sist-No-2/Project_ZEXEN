@@ -58,4 +58,19 @@ public class GameDAO {
 		session.close();
 		return vo;
 	}
+	
+	public static void gameLikeUp(int game_no)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.update("gameLikeUp",game_no);
+		session.close();
+	}
+	
+	public static void gameHateUp(int game_no)
+	{
+		SqlSession session=ssf.openSession(true);
+		session.update("gameHateUp",game_no);
+		session.close();
+	}
+	
 }

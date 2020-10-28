@@ -43,29 +43,26 @@
     FROM game_tb WHERE category=#{category} GROUP BY name)
 </select>
 
-<!-- 
-		CATEGORY    NOT NULL VARCHAR2(50)   
-		NAME        NOT NULL VARCHAR2(150)  
-		REL_DAY              DATE           
-		DEVELOPER            VARCHAR2(300)  
-		CONTENT              CLOB           
-		MIN_SPEC             VARCHAR2(1000) 
-		RECOM_SPEC           VARCHAR2(1000) 
-		POSTER               CLOB           
-		LIKE_CNT             NUMBER         
-		HATE_CNT             NUMBER         
-		PRICE                NUMBER         
-		TAG                  VARCHAR2(500)  
-		MOVIE                VARCHAR2(500)  
-		SELL_CNT             NUMBER         
-		LIST_POSTER NOT NULL VARCHAR2(300)  
- -->
-
 <select id="gameDetailData" resultType="GameVO" parameterType="int">
-	SELECT name,rel_day,developer,content,min_spec,recom_spec,poster,like_cnt,hate_cnt,price,tag,movie,sell_cnt FROM game_tb
+	SELECT game_no,name,rel_day,developer,content,min_spec,recom_spec,poster,like_cnt,hate_cnt,price,tag,movie,sell_cnt FROM game_tb
 	where game_no=#{game_no}
 </select>
 
+<update id="gameLikeUp" parameterType="int">
+	update game_tb
+	set like_cnt = like_cnt+1
+	where game_no=#{game_no}
+</update>
+
+<update id="gameHateUp" parameterType="int">
+	update game_tb
+	set hate_cnt = hate_cnt+1
+	where game_no=#{game_no}
+</update>
+
+<insert id="gameReplyInsert" parameterType="hashmap">
+	INSERT INTO
+</insert>
 
 
 </mapper>
