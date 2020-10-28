@@ -80,7 +80,7 @@
               
               
               <c:forEach var="vo" items="${list }">
-              <div class="col-md-6 col-lg-3">
+              <div class="col-md-6 col-lg-4">
                 <div class="card text-center card-product">
                   <div class="card-product__img">
                     <img class="card-img" src="${vo.image }" alt="">
