@@ -170,15 +170,19 @@ $(function() {
 			{
 				var no = ${vo.game_no};
  				var allData = {"textarea": textarea, "game_no": no};
- 				console.log(allData);
+//  				console.log(allData);
 				$.ajax({
 					type: 'post',
 					 url: '../game/replyIn.do',
 					 data : allData,
 					 success: function(result){
 						 console.log("댓글작성완료");
+// 						  댓글 append
+						 
 					 }
 					});
+				
+				
 			}
 		
 	})
