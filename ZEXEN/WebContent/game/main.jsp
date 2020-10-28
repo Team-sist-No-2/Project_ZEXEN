@@ -30,7 +30,6 @@
 
 var cate;
 
-
 // 카테고리 선택
 $(function() {
 	$('.pixel-radio').click(function(){

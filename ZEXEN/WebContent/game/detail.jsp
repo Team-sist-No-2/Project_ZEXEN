@@ -425,11 +425,20 @@ $(function() {
 									<h4>Add a Review</h4>
 	                <form action="#/" class="form-contact form-review mt-3" id="reply_form">
 	                  <div class="form-group">
-	                    <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5"></textarea>
+	                 
+	                   <c:if test="${sessionScope.id!=null }">
+	                    <textarea disabled class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5" placeholder="로그인이 필요 합니다"></textarea>
+	                  </div>
+	                  <div class="form-group text-center text-md-right mt-3">
+	                  </div>
+	                  </c:if>
+	                  
+	                  <c:if test="${sessionScope.id==null }">
+	                   <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5" placeholder="최대  500자 입력가능합니다."></textarea>
 	                  </div>
 	                  <div class="form-group text-center text-md-right mt-3">
 	                    <button type="button" class="button button--active button-review" id="reply_btn">Submit Now</button>
-	                  </div>
+	                  </c:if>
 	                </form>
 	                
 								</div>
