@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<!-- 윤수 테스트 완성  -->
+<!-- 윤수 테스트   -->
   <!--================Blog Area =================-->
   <section class="blog_area">
       <div class="container">
