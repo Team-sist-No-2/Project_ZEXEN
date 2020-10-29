@@ -2,21 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.news-mapper">
 
-<select id="newsData" resultType="com.sist.vo.NewsVO" parameterType="hashmap">
+
 <!-- 
-private int news_no;
-   private String subject;
-   private String content;
-   private String poster;
-   private String regdate;
-   private int hit;
-   private int like_cnt;
-   private int hate_cnt;
-   private String member_id;
+NEWS_NO   NOT NULL NUMBER         
+SUBJECT   NOT NULL VARCHAR2(2000) 
+CONTENT   NOT NULL CLOB           
+POSTER    NOT NULL VARCHAR2(1000) 
+REGDATE   NOT NULL VARCHAR2(100)  
+HIT                NUMBER         
+LIKE_CNT           NUMBER         
+HATE_CNT           NUMBER         
+MEMBER_ID          VARCHAR2(500)  
 
  -->
+
+
+<select id="newsData" resultType="NewsVO" parameterType="hashmap">
+
  SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id,num
- FROM (SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id,row as num
+ FROM (SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id,rownum as num
  FROM (SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id
  FROM news))
  WHERE num BETWEEN #{start} AND #{end}
@@ -25,5 +29,25 @@ private int news_no;
 <select id="newsTotalPage" resultType="int">
 SELECT CEIL(count(*)/10.0) FROM news
 </select>
+
+
+ <update id="hitIncrement" parameterType="int">
+UPDATE news SET
+hit=hit+1
+WHERE news_no=#{news_no}
+</update>
+
+
+<select id="newsDetailData" resultType="NewsVO" parameterType="int">
+	SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id  
+	FROM news
+	WHERE news_no=#{news_no}
+</select> 
+
+<update id="like" parameterType="NewsVO">
+	UPDATE news
+	SET like_cnt=like_cnt+1
+	WHERE news_no=#{news_no} 
+</update>
 
 </mapper>
