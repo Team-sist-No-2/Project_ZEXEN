@@ -247,7 +247,7 @@ $(function() {
 <!-- 								<a class="button primary-btn" href="#" style="margin-top: 20px">Add to Cart</a>    -->
 								
 								
-								<div class="btnxx"><a href="#" style="color: white">Buy</a>
+								<div class="btnxx"><a href="#" style="color: white">b u y</a>
 								  <div class="btnxx2"></div>
 								</div>
 								

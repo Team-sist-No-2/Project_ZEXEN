@@ -34,7 +34,7 @@
             </ul>
               
             <ul class="nav_menu_s">
-              <li class=""><a class="button button-header" href="#">로그인</a></li>
+              <li class=""><a class="button button-header" href="../member/login.do">로그인</a></li>
               <!--
                 <li class=""><a class="button button-header d_none" href="#">로그아웃</a></li>                    
               -->
