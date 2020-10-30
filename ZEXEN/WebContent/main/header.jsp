@@ -23,7 +23,7 @@
               <li class="nav-item"><a class="nav-link" href="../game/main.do">게임</a></li>
               <li class="nav-item"><a class="nav-link" href="../computer/main.do">컴퓨터</a></li>
               <li class="nav-item"><a class="nav-link" href="../board/main.do">커뮤니티</a></li>    
-              <li class="nav-item"><a class="nav-link" href="../news/">뉴스</a></li>                    
+              <li class="nav-item"><a class="nav-link" href="../news/main.do">뉴스</a></li>                    
              
             </ul>
 
