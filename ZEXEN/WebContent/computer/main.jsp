@@ -7,18 +7,11 @@
   <title>Aroma Shop - Category</title>
 </head>
 <body>
-	<!-- ================ start banner area ================= -->	
-	<section class="blog-banner-area">
-		<div class="container">
-			<h1 class="cont_tit">조립PC</h1>
-		</div>
-	</section>
-	<!-- ================ end banner area ================= -->
-	
 	
 	<!-- ================ category section start ================= -->		  
-  	<section class="section-margin--small mb-5" >
+  	<section class="section-margin--small mb-5" style="margin-top: 60px;">
     <div class="container">
+    <h1 class="cont_tit">컴퓨터</h1>
       <div class="row">
       
       	<!-- 화면사이즈 왼쪽 -->

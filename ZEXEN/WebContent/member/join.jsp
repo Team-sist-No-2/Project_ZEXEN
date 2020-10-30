@@ -120,7 +120,28 @@ function postfind()
 	}).open();
 }
 
-$(function(){
+
+
+$(function(){	
+	
+	$('#joinBtn').hover(function(){
+		$(this).css("cursor","pointer");	
+	},function(){
+		$(this).css("cursor","");
+	});
+	
+	
+	$('.option').click(function(){
+		let teltext=$(this).text();
+		
+		console.log("선택한숫자:"+teltext);
+		
+		$('#tel1').attr('value',teltext);
+		
+// 		alert($('#tel1').attr('value'));
+		
+	});
+	
 	$('#joinBtn').click(function(){
 		//alert("aaa");
 		let id=$('#id').val();
@@ -129,6 +150,7 @@ $(function(){
 			$('#id').focus();
 			return;
 		}
+		
 		
 		// 비밀번호
 		let pwd=$('#pwd').val();
@@ -160,6 +182,12 @@ $(function(){
 			return;
 		}
 		
+		//sex 미선택시 alert띄우기
+		let sex=$('[name=sex]:checked').val();
+		if(sex==null)
+		{alert("성별을 입력하세요");}
+	
+		
 		let birthday=$('#birthday').val();
 		if(birthday.trim()=="")
 		{
@@ -184,7 +212,9 @@ $(function(){
 		// 데이어 전송 
 		$('#joinFrm').submit();
 	});
+
 });
+
 
 </script>
 </head>
@@ -212,17 +242,17 @@ $(function(){
 							</div>
 							
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="pwd" name="pwd" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
+								<input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
 							</div>
 							
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="pwd1" name="pwd1" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
+								<input type="password" class="form-control" id="pwd1" name="pwd1" placeholder="Confirm Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'">
 							</div>
 							
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="name" name="name" placeholder="Username" style="display: inline-block; width: 70%; float: left;" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
-								<label style="font-size: 10pt; margin-top: 12pt; margin-right: 3pt;"><input type="radio" style="height: 10pt" class="form-control" id="sex" name="sex" value="man">남자</label>
-								<label style="font-size: 10pt; margin-top: 12pt; margin-right: 3pt;"><input type="radio" style="height: 10pt" class="form-control" id="sex" name="sex" value="woman">여자</label>
+								<label style="font-size: 10pt; margin-top: 12pt; margin-right: 3pt;"><input type="radio" style="height: 10pt" class="form-control sex" id="man" name="sex" value="man">남자</label>
+								<label style="font-size: 10pt; margin-top: 12pt; margin-right: 3pt;"><input type="radio" style="height: 10pt" class="form-control sex" id="woman" name="sex" value="woman">여자</label>
 							</div>
 							
 							
@@ -233,22 +263,26 @@ $(function(){
 						            
 				            <div class="col-md-12 form-group">         				
 								<div class="nice-select form-control" tabindex="0" style="margin-top: 6pt; height: 32px; line-height: 22px;">
-								<span class="current">010</span><ul class="list">
-								<li data-value="010" class="option selected focus">010</li>
-								<li data-value="017" class="option">017</li>
-								<li data-value="018" class="option">018</li></ul></div>
-								<input type="text" class="form-control" id="tel2" name="tel2" style="display: inline-block; width: 33%; float: left; margin-left: 10px; text-align: center;">
-								<input type="text" class="form-control" id="tel3" name="tel3" style="display: inline-block; width: 33%; float: left; margin-left: 10px; text-align: center;">
+								<span class="current"></span>
+								<ul class="list">
+								<li value="010" class="option selected focus">010</li>
+								<li value="017" class="option">017</li>
+								<li value="018" class="option">018</li>
+								</ul>
+								</div>
+								<input type="hidden" class="form-control" id="tel1"  name="tel1" value="">
+								<input type="text" class="form-control" id="tel2" name="tel2" style="display: inline-block; width: 36.5%; float: left; margin-left: 13.2px; text-align: center;">
+								<input type="text" class="form-control" id="tel3" name="tel3" style="display: inline-block; width: 36.5%; float: left; margin-left: 10px; text-align: center;">
              				</div>
 
              				 	
             				<div class="col-md-12 form-group">
-								<input type="date" class="form-control" id="birthday">
+								<input type="date" name="birthday" class="form-control" id="birthday">
              				</div>
              				
               
               				<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="post" name="post" style="width: 35%; display: inline-block; text-align: center; margin-right: 10pt; font-weight: 600; float: left;">
+								<input type="text" class="form-control" id="post" name="post" 	style="width: 35%; display: inline-block; text-align: center; margin-right: 10pt; font-weight: 600; float: left;">
 								<button type="button" class="button button--active button-review" id="post_btn" onclick="postfind()" style="font-size: 10px; width: 120px; padding-right: 0px; padding-top: 5px; padding-left: 0px; padding-bottom: 5px; float: left; margin-top: 10pt;">
 								우편번호 찾기
 								</button>

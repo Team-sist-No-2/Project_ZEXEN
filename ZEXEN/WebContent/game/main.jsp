@@ -78,18 +78,14 @@ $(function() {
 
 
 
-
-
-
-
-
 </script>
 </head>
 <body>
 
 	<!-- ================ category section start ================= -->		  
   	<section style="margin-top: 60px;">
-    <div class="container" > <h1 class="cont_tit">게임</h1>
+    <div class="container" > 
+    <h1 class="cont_tit">게임</h1>
       <div class="row">
       
       	<!-- 화면사이즈 왼쪽 -->

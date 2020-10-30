@@ -16,48 +16,6 @@ public class MemberModel {
 	@RequestMapping("member/login.do")
 	public String member_login(HttpServletRequest request)
 	{	
-//		String page=request.getParameter("page");
-//		if(page==null)
-//			page="1";
-//		
-//		int curpage=Integer.parseInt(page);
-//		int rowSize=8;
-//		int start=(rowSize*curpage)-(rowSize-1);
-//		int end=rowSize*curpage;
-//		
-//		Map map=new HashMap();
-//		map.put("start", start);
-//		map.put("end", end);
-//		
-//		List<GameVO> list=GameDAO.gameTotalData(map);
-//		int totalpage=GameDAO.gameTotalPage2();		 // SELECT CEIL(COUNT(*)/8.0) FROM game_tb
-//		
-//		int BLOCK=10;
-//        int startPage=((curpage-1)/BLOCK*BLOCK)+1;   //  1, 11, 21
-//        int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK; // 10, 20, 30
-//
-//		
-//		if(endPage>totalpage)   // ex) totalpage=34 page 라면 endPage=34
-//			endPage=totalpage;
-//		
-//		
-//		request.setAttribute("list", list);					//
-//		request.setAttribute("curpage", curpage);			//
-//		request.setAttribute("totalpage", totalpage);		//
-//		request.setAttribute("BLOCK", BLOCK);				//
-//		request.setAttribute("startPage", startPage);		//
-//		request.setAttribute("endPage", endPage);			//
-		
-	
-//		List<Integer> cate_cnt_list=new ArrayList<Integer>();
-//		
-//		for(int i=1;i<=11;i++)
-//		{
-//			cate_cnt_list.add(GameDAO.gameCategoryCount(i));
-//		}
-		
-//		request.setAttribute("cate_cnt", cate_cnt_list);
-		
 		request.setAttribute("main_jsp", "../member/login.jsp"); 	//main.jsp에서 include의 경로
 		
 		return "../main/main.jsp";
@@ -66,15 +24,12 @@ public class MemberModel {
 	@RequestMapping("member/join.do")
 	public String member_join(HttpServletRequest request)
 	{	
-		
-		
 		request.setAttribute("main_jsp", "../member/join.jsp"); 	//main.jsp에서 include의 경로
-		
 		return "../main/main.jsp";
 	}
 	
-	  @RequestMapping("member/join_ok.do")
-	    public String member_join_ok(HttpServletRequest request)
+	@RequestMapping("member/join_ok.do")
+	public String member_join_ok(HttpServletRequest request)
 	    {
 	    	System.out.println("member/join_ok.do 실행");
 	    	try 
@@ -90,6 +45,7 @@ public class MemberModel {
 	    	String tel1=request.getParameter("tel1");
 	    	String tel2=request.getParameter("tel2");
 	    	String tel3=request.getParameter("tel3");
+	    	String sex=request.getParameter("sex");
 	    	String birthday=request.getParameter("birthday");
 	    	String post=request.getParameter("post");
 	    	String addr1=request.getParameter("addr1");
@@ -97,17 +53,29 @@ public class MemberModel {
 	    	
 	    	MemberVO vo=new MemberVO();
 	        vo.setMember_id(id);
+	        System.out.println(vo.getMember_id());
 	        vo.setPwd(pwd);
+	        System.out.println(vo.getPwd());
 	        vo.setName(name);
+	        System.out.println(vo.getName());
 	        vo.setEmail(email);
-	        vo.setBirthday(birthday);   
-	        vo.setPost(post);
-	        vo.setAddr1(addr1);
-	        vo.setAddr2(addr2);
+	        System.out.println(vo.getEmail());
 	        vo.setTel(tel1+"-"+tel2+"-"+tel3);
+	        System.out.println(vo.getTel());
+	        vo.setBirthday(birthday);   
+	        System.out.println(vo.getBirthday());
+	        vo.setPost(post);
+	        System.out.println(vo.getPost());
+	        vo.setAddr1(addr1);
+	        System.out.println(vo.getAddr1());
+	        vo.setAddr2(addr2);
+	        System.out.println(vo.getAddr2());
+	        vo.setSex(sex);
+	        System.out.println(vo.getSex());
+	        
 
 	    	//Insert문장 실행
-	    	MemberDAO.memberInsert(vo);
+//	    	MemberDAO.memberInsert(vo);
 	    	
 	    	return "redirect:../main/main.do"; 
 	    }

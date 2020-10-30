@@ -11,6 +11,7 @@
  		<typeAlias type="com.sist.vo.ComputerVO" alias="ComputerVO" />
  		<typeAlias type="com.sist.vo.MemberVO" alias="MemberVO" />
  		<typeAlias type="com.sist.vo.NewsVO" alias="NewsVO" />
+ 		<typeAlias type="com.sist.vo.BoardVO" alias="BoardVO" />
  	</typeAliases>
  	
  	<environments default="development">
@@ -30,6 +31,7 @@
  		<mapper resource="com/sist/mapper/computer-mapper.xml"/>
  		<mapper resource="com/sist/mapper/member-mapper.xml"/>
  		<mapper resource="com/sist/mapper/news-mapper.xml"/>
+ 		<mapper resource="com/sist/mapper/board-mapper.xml"/>
  		
  	</mappers>
 
