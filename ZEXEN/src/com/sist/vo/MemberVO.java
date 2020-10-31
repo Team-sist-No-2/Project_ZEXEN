@@ -15,7 +15,13 @@ POST      VARCHAR2(10 BYTE)
  */
 
 public class MemberVO {
-    public String getId() {
+    public String getPimg() {
+		return pimg;
+	}
+	public void setPimg(String pimg) {
+		this.pimg = pimg;
+	}
+	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
@@ -39,6 +45,7 @@ public class MemberVO {
     private String admin;
     private String post;
     private String msg;
+    private String pimg;
     
    public String getMsg() {
       return msg;
