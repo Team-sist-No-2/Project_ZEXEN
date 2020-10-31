@@ -4,6 +4,8 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 import com.sist.vo.GameVO;
+import com.sist.vo.ReplyVO;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -72,5 +74,22 @@ public class GameDAO {
 		session.update("gameHateUp",game_no);
 		session.close();
 	}
+	
+	public static void gameReplyInsert(ReplyVO rvo)
+	{
+		SqlSession session=ssf.openSession();
+		session=ssf.openSession(true);
+		session.insert("gameReplyInsert",rvo);
+		session.close();
+	}
+	
+	public static List<ReplyVO> gameReplyListData(int game_no)
+   {
+	   SqlSession session=ssf.openSession();
+	   List<ReplyVO> list=session.selectList("gameReplyListData",game_no);
+	   session.close();
+	   return list;
+   }
+	
 	
 }

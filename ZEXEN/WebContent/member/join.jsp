@@ -121,6 +121,12 @@ function postfind()
 }
 
 
+function profile123() 
+{
+	window.open("../member/profile.jsp", "a", "width=600, height=400, left=100, top=50");
+}
+
+
 
 $(function(){	
 	
@@ -233,7 +239,7 @@ $(function(){
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner register_form_inner">
-						<h3>Create an account</h3>
+						<h3 style="margin-bottom: 40px;">Create an account</h3>
 						
 						
 						<form class="row login_form" method="post" action="../member/join_ok.do" id="joinFrm" >
@@ -271,8 +277,8 @@ $(function(){
 								</ul>
 								</div>
 								<input type="hidden" class="form-control" id="tel1"  name="tel1" value="">
-								<input type="text" class="form-control" id="tel2" name="tel2" style="display: inline-block; width: 36.5%; float: left; margin-left: 13.2px; text-align: center;">
-								<input type="text" class="form-control" id="tel3" name="tel3" style="display: inline-block; width: 36.5%; float: left; margin-left: 10px; text-align: center;">
+								<input type="text" class="form-control" id="tel2" name="tel2" style="display: inline-block; width: 33%; float: left; margin-left: 11px; text-align: center;">
+								<input type="text" class="form-control" id="tel3" name="tel3" style="display: inline-block; width: 33%; float: left; margin-left: 10px; text-align: center;">
              				</div>
 
              				 	
@@ -295,6 +301,15 @@ $(function(){
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="addr2" name="addr2" placeholder="상세 주소" onfocus="this.placeholder = ''" onblur="this.placeholder = '상세 주소'">
 							</div>
+							
+							
+							<div class="col-md-12 form-group">
+								<input type="hidden" class="form-control" id="profile" name="profile" value="">
+								<button type="button" class="button button--active button-review" id="profile" onclick="profile123()" style="font-size: 10px; width: 120px; padding-right: 0px; padding-top: 5px; padding-left: 0px; padding-bottom: 5px; float: center; margin-top: 10pt;">
+								이미지넣기
+								</button>
+							</div>
+							
 							
 							<div class="col-md-12 form-group">
 							

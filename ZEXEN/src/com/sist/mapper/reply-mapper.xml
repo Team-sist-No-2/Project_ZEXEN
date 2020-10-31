@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.reply-mapper">
+
+
+<insert id="gameReplyInsert" parameterType="ReplyVO">
+	INSERT INTO reply_tb(reply_no,category,game_no,msg,id) VALUES (
+	(SELECT NVL(MAX(reply_no)+1,1) FROM reply_tb), 
+	#{category},
+	#{game_no},
+	#{msg},
+	#{id}
+	)
+</insert>
+
+<select id="gameReplyListData" resultType="ReplyVO" parameterType="int">
+    SELECT reply_no,category,game_no,msg,id,regdate
+    FROM reply_tb
+    WHERE game_no=#{game_no}
+    ORDER BY regdate desc
+</select>
+
+
+</mapper>

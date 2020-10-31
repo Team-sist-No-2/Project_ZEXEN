@@ -12,6 +12,7 @@
  		<typeAlias type="com.sist.vo.MemberVO" alias="MemberVO" />
  		<typeAlias type="com.sist.vo.NewsVO" alias="NewsVO" />
  		<typeAlias type="com.sist.vo.BoardVO" alias="BoardVO" />
+ 		<typeAlias type="com.sist.vo.ReplyVO" alias="ReplyVO"/>
  	</typeAliases>
  	
  	<environments default="development">
@@ -32,7 +33,7 @@
  		<mapper resource="com/sist/mapper/member-mapper.xml"/>
  		<mapper resource="com/sist/mapper/news-mapper.xml"/>
  		<mapper resource="com/sist/mapper/board-mapper.xml"/>
- 		
+ 		<mapper resource="com/sist/mapper/reply-mapper.xml"/>
  	</mappers>
 
  </configuration>

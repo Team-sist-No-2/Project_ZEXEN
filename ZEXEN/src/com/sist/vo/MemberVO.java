@@ -15,7 +15,19 @@ POST      VARCHAR2(10 BYTE)
  */
 
 public class MemberVO {
-    private String member_id;
+    public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getAdmin() {
+		return admin;
+	}
+	public void setAdmin(String admin) {
+		this.admin = admin;
+	}
+	private String id;
     private String pwd;
     private String name;
     private String email;
@@ -24,7 +36,7 @@ public class MemberVO {
     private String birthday;
     private String addr1;
     private String addr2;
-    private String admin_type;
+    private String admin;
     private String post;
     private String msg;
     
@@ -34,12 +46,7 @@ public class MemberVO {
    public void setMsg(String msg) {
       this.msg = msg;
    }
-   public String getMember_id() {
-      return member_id;
-   }
-   public void setMember_id(String member_id) {
-      this.member_id = member_id;
-   }
+
    public String getPwd() {
       return pwd;
    }
@@ -88,12 +95,7 @@ public class MemberVO {
    public void setAddr2(String addr2) {
       this.addr2 = addr2;
    }
-   public String getAdmin_type() {
-      return admin_type;
-   }
-   public void setAdmin_type(String admin_type) {
-      this.admin_type = admin_type;
-   }
+
    public String getPost() {
       return post;
    }

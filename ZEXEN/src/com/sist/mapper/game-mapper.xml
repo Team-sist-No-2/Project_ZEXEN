@@ -60,16 +60,7 @@
 	where game_no=#{game_no}
 </update>
 
-<insert id="gameReplyInsert" parameterType="hashmap">
-	INSERT INTO game_reply(reply_no,category,game_no,comm) 
- 	VALUES 
- 	(
-	(SELECT NVL(MAX(game_reply)+1,1) FROM game_reply), 
-	1, 
-	#{game_no}',
-	#{comm}
-	)
-</insert>
+
  	
 
 </mapper>

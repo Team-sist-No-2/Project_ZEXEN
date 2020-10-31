@@ -3,10 +3,13 @@ package com.sist.model;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.ws.RequestWrapper;
 import com.sist.controller.RequestMapping;
+import com.sist.dao.BoardDAO;
 import com.sist.dao.GameDAO;
 import com.sist.vo.GameVO;
+import com.sist.vo.ReplyVO;
 
 public class GameModel {
 
@@ -158,10 +161,14 @@ public class GameModel {
     	int game_no=Integer.parseInt(no);
     	
     	GameVO vo=GameDAO.gameDetailData(game_no);
-    	
-    	System.out.println("GameDAO.gameDetailData(game_no); 실행완료"+game_no+"번 게시물");
-    	
     	request.setAttribute("vo", vo);
+    	
+    	System.out.println("gameReplyListData에 들어갈 값 game_no:"+game_no);
+    	
+    	List<ReplyVO> list=GameDAO.gameReplyListData(game_no);
+    	System.out.println("리플개수"+list.size());
+   	    request.setAttribute("rList", list);
+    	
     	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
 		
 		return "../main/main.jsp";
@@ -203,22 +210,34 @@ public class GameModel {
 		return "../main/main.jsp";
     }
     
-    @RequestMapping("game/replyIn.do")
-    public String game_Reply_Insert(HttpServletRequest request)
+    @RequestMapping("game/reply_insert.do")
+    public String game_reply_insert(HttpServletRequest request)
     {
-    	System.out.println("game/replyIn.do DAO 정상실행");
-    	String no=request.getParameter("game_no");
-    	String comm=request.getParameter("textarea");
-    	int game_no=Integer.parseInt(no);
-
-    	System.out.println("리플 받아온 게임번호:"+game_no+"리플 받아온 내용:"+comm);
-    	
-//    	GameVO vo=GameDAO.gameDetailData(game_no);
-//    	GameDAO.gameHateUp(game_no);
-    	
-//    	request.setAttribute("vo", vo);
-    	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
-		
-		return "../main/main.jsp";
+ 	   try
+ 	   {
+ 		   request.setCharacterEncoding("UTF-8");
+ 		   
+ 	   }catch(Exception ex) {}
+ 	   
+ 	   
+ 	   String game_no=request.getParameter("game_no");
+ 	   String msg=request.getParameter("msg");
+ 	   System.out.println("reply_insert실행");
+ 	  
+ 	   HttpSession session=request.getSession();
+ 	   String id=(String)session.getAttribute("id");
+ 	   
+ 	   System.out.println("reply_insert에서 받아온 id:"+id);
+ 	   // VO에 담아서 => DAO
+ 	   ReplyVO rvo=new ReplyVO();
+ 	   
+ 	   
+ 	   rvo.setGame_no(Integer.parseInt(game_no));
+ 	   rvo.setId(id);
+ 	   rvo.setMsg(msg);
+ 	   rvo.setCategory(1);
+ 	   // DAO연결 
+ 	   GameDAO.gameReplyInsert(rvo);
+ 	   return "redirect:../game/detail.do?game_no="+game_no;
     }
 }

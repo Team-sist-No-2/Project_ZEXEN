@@ -360,60 +360,23 @@ $(function() {
 								
 								
 								<div class="review_list">
+									
+									
+								<c:forEach items="${rList }" var="rvo">
 									<div class="review_item">
 										<div class="media">
 											<div class="d-flex">
-												<img src="img/product/review-1.png" alt="">
+												<img src="../assets/img/icon1/001.png" width="70px" height="70px" alt="">
 											</div>
 											<div class="media-body">
-												<h4>Blake Ruiz</h4>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
+												<h4>${rvo.id } </h4>
+												<h4> <fmt:formatDate value="${rvo.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </h4>
 											</div>
 										</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-											commodo</p>
+										<p>${rvo.msg }</p>
 									</div>
-									<div class="review_item">
-										<div class="media">
-											<div class="d-flex">
-												<img src="img/product/review-2.png" alt="">
-											</div>
-											<div class="media-body">
-												<h4>Blake Ruiz</h4>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-											</div>
-										</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-											commodo</p>
-									</div>
-									<div class="review_item">
-										<div class="media">
-											<div class="d-flex">
-												<img src="img/product/review-3.png" alt="">
-											</div>
-											<div class="media-body">
-												<h4>Blake Ruiz</h4>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-											</div>
-										</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-											dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-											commodo</p>
-									</div>
+								</c:forEach>
+									
 								</div>
 								
 								
@@ -423,23 +386,29 @@ $(function() {
 							<div class="col-lg-6">
 								<div class="review_box">
 									<h4>Add a Review</h4>
-	                <form action="#/" class="form-contact form-review mt-3" id="reply_form">
+									
+									
+	                <form action="../game/reply_insert.do" class="form-contact form-review mt-3" id="reply_form" method="post">
 	                  <div class="form-group">
 	                 
-	                   <c:if test="${sessionScope.id!=null }"> <!-- id != 변경해야됨 -->
-	                    <textarea disabled class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5" placeholder="로그인이 필요 합니다"></textarea>
+	                   <c:if test="${sessionScope.id==null }">
+	                    <textarea disabled class="form-control different-control w-100"  cols="30" rows="5" placeholder="로그인이 필요 합니다"></textarea>
 	                  </div>
 	                  <div class="form-group text-center text-md-right mt-3">
 	                  </div>
 	                  </c:if>
 	                  
-	                  <c:if test="${sessionScope.id==null }"> <!-- id != 변경해야됨 -->
-	                   <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5" placeholder="최대  500자 입력가능합니다."></textarea>
+	                  <c:if test="${sessionScope.id!=null }">
+	                   <input type=hidden name="game_no" value="${vo.game_no }">
+	                   <textarea class="form-control different-control w-100" name="msg" cols="30" rows="5" placeholder="최대  500자 입력가능합니다."></textarea>
 	                  </div>
 	                  <div class="form-group text-center text-md-right mt-3">
-	                    <button type="button" class="button button--active button-review" id="reply_btn">Submit Now</button>
+	                    <input type="submit" class="button button--active button-review" id="reply_btn"  value="댓글쓰기"/>
 	                  </c:if>
 	                </form>
+
+	                
+	                
 	                
 								</div>
 							</div>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,17 +29,27 @@
             </ul>
 
             <ul class="nav-shop">
-              <li class="nav-item"><button><i class="ti-search"></i></button></li>
+<!--               <li class="nav-item"><button><i class="ti-search"></i></button></li> -->
+			<c:if test="${sessionScope.id!=null }">
               <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button></li>
               <li class="nav-item"><button><i class="ti-heart" style="font-size: 14px;"></i><span class="nav-shop__circle">1</span></button></li>
+            </c:if>
             </ul>
               
             <ul class="nav_menu_s">
+            
+            <c:if test="${sessionScope.id==null }">
               <li class=""><a class="button button-header" href="../member/login.do">로그인</a></li>
-              <!--
-                <li class=""><a class="button button-header d_none" href="#">로그아웃</a></li>                    
-              -->
-              <li class=""><a class="" href="#">회원가입</a></li>
+            </c:if>
+            <c:if test="${sessionScope.id!=null }">
+              <li class=""><a class="button button-header" href="../member/logout.do">로그아웃</a></li>                 
+            </c:if>
+            <c:if test="${sessionScope.id==null }">
+               <li class=""><a class="" href="../member/join.do">회원가입</a></li>
+            </c:if>
+             <c:if test="${sessionScope.id!=null }">
+               <li class=""><a class="" href="../member/mypage.do">마이페이지</a></li>   
+            </c:if>
               <li class=""><a class="" href="#">고객센터</a></li>
             </ul>  
           </div>
