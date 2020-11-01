@@ -27,12 +27,12 @@
 	SELECT game_no,na'me,list_poster,price,tag,like_cnt,num
 	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
 	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
-	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE category=#{category} GROUP BY name)ORDER BY game_no))
+	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE category=#{category} GROUP BY name)ORDER BY ${sort}))
 	WHERE num BETWEEN #{start} AND #{end}
 </select>
 
 <select id="gameTotalPage" resultType="int" parameterType="int">
-	SELECT CEIL(COUNT(*)/8.0)  
+	SELECT CEIL(COUNT(*)/10.0)  
     FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) 
     FROM game_tb WHERE category=#{category} GROUP BY name)
 </select>
@@ -60,7 +60,19 @@
 	where game_no=#{game_no}
 </update>
 
+<select id="gameSearchData" resultType="GameVO" parameterType="hashmap">
+	SELECT game_no,name,list_poster,price,tag,like_cnt,num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
+	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY game_no))
+	WHERE num BETWEEN #{start} AND #{end}
+</select>
 
+<select id="gameSearchTotalPage" resultType="int" parameterType="hashmap">
+   SELECT CEIL(COUNT(*)/10.0) 
+   FROM ((SELECT * FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) 
+   FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY game_no))
+</select>
  	
 
 </mapper>
