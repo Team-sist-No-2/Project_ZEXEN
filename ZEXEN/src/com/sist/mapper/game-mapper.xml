@@ -64,7 +64,7 @@
 	SELECT game_no,name,list_poster,price,tag,like_cnt,num
 	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
 	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
-	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY game_no))
+	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY ${sort}))
 	WHERE num BETWEEN #{start} AND #{end}
 </select>
 

@@ -42,7 +42,7 @@ public class GameModel {
 			{
 				for(int i=cookies.length-1;i>=0;i--)
 				{
-					if(cookies[i].getName().startsWith(id))
+					if(cookies[i].getName().startsWith(id+"_cookie"))
 					{
 						String no=cookies[i].getValue();
 						GameVO vo=GameDAO.gameDetailData(Integer.parseInt(no));
@@ -70,8 +70,6 @@ public class GameModel {
 	   		if(sort==null)
 	   			sort="1";
 	   		
-	   		System.out.println(sort);
-	   	
 	   		switch(sort){
 	        case "1": 
 	            sort="game_no";
@@ -131,7 +129,7 @@ public class GameModel {
     	String game_no=request.getParameter("game_no");
     	HttpSession session=request.getSession();
     	String id=(String)session.getAttribute("id");
-    	Cookie cookie=new Cookie(id+game_no, game_no);
+    	Cookie cookie=new Cookie(id+"_cookie"+game_no, game_no);
     	System.out.println("detail_before 실행하여 얻은 쿠키:"+cookie.getName()+"게임번호:"+cookie.getValue());
     	response.addCookie(cookie);
     	
@@ -229,8 +227,28 @@ public class GameModel {
     {
        String key=request.getParameter("key");
        String page = request.getParameter("page");
-       System.out.println(key);
-
+       if(page==null)
+  			page="1";
+       String sort=request.getParameter("sort");
+       if(sort==null)
+  			sort="1";
+  		
+  		System.out.println(sort);
+  	
+  		switch(sort){
+       case "1": 
+           sort="game_no";
+           break;
+       case "2":
+       	sort="like_cnt DESC";
+           break;
+       case "3" :
+       	sort="price desc";
+           break;
+       case "4" :
+       	sort="price";
+           break;
+  		}
        if (page == null)
           page = "1";
        
@@ -244,6 +262,7 @@ public class GameModel {
        map.put("key", key);
        map.put("start", start);
        map.put("end", end);
+       map.put("sort",sort);
        
        List<GameVO> list=GameDAO.gameSearchData(map);
        int totalpage=GameDAO.gameSearchTotalPage(map);

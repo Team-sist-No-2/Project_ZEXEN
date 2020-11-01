@@ -12,14 +12,16 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 
-var cate;	//카테고리 전역변수
+var cate=1;	//카테고리 전역변수
 var sort=1; //정렬기준
+var search_on=false;
 
 // 카테고리 선택
 $(function() {
 	$('.pixel-radio').click(function(){	//카테고리 선택시 해당하는 리스트 출력
 		cate=$(this).attr("cate_no");
-		console.log("전역변수 cate= "+cate);
+		search_on=false;
+		console.log("선택한 카테고리 번호: "+cate+"  , 검색비활성화");
 		$.ajax({
 					type:'post',
 					url:'../game/list.do',
@@ -34,49 +36,55 @@ $(function() {
 	
 
 	$('.option').click(function(){	//인기순위,낮은가격,높은가격 등등 정렬기준 리스트 출력 (정렬기준은 카테고리 변경시에도 유지)
-		console.log("전역변수 cate= "+cate);
-		sort=$(this).attr("data-value")
-		console.log("선택된 정렬기준 "+sort);
+	// 옵션버튼 누를때마다 페이지는 자동 1으로 리셋
+	
+		if(search_on) //키워드가 있다면 키워드에대해서 선택한 정렬기준으로 리스트 출력
+		{
+			sort=$(this).attr("data-value")
+			let keyword=$('#gameKewword').val();
+			
+			$.ajax({
+						type:'post',
+						url:'../game/search.do',
+						data: {key:keyword,sort:sort},
+						success:function(result)
+						{
+		  			        $('#tagin').html(result);
+		  				}
+				  })
+		}
 		
-		$.ajax({
-					type:'post',
-					url:'../game/list.do',
-					data: {cate:cate,sort:sort},
-					success:function(result)
-					{
-						$('#tagin').html(result);
-					}
-			   })
+		else //키워드가 없다면 선택된 카테고리 번호와 선택한 정렬기준으로 리스트 출력 
+		{
+			console.log("전역변수 cate= "+cate);
+			sort=$(this).attr("data-value")
+			console.log("선택된 정렬기준 "+sort);
+			
+			$.ajax({
+						type:'post',
+						url:'../game/list.do',
+						data: {cate:cate,sort:sort},
+						success:function(result)
+						{
+							$('#tagin').html(result);
+						}
+				   })
+		}
+		
 		})
 	
 	
-	$('#gameSearch').click(function(){ //서치버튼 클릭시 검색창에 입려된 텍스트로 검색하기
-	    $('.pixel-radio').prop("checked", false);
-        let keyword=$('#gameKewword').val();
-        console.log(keyword);
-	      
-        $.ajax({
-	          		type:'post',
-	        		url:'../game/search.do',
-	          		data: {key:keyword},
-	         	    success:function(result)
-			        {
-			            $('#tagin').html(result);
-			        }
-	          });
-   		})
-	
-   	
    	  $(document).ready(function() {
       $("#gameKewword").keyup(function(key) {	//검색창에 입력시 실시간 타이핑된 단어로 검색하기
+    	 search_on=true;
+      	 console.log("검색활성화됨");
       	 $('.pixel-radio').prop("checked", false);
          let keyword=$('#gameKewword').val();
-         console.log(keyword);
       	      
          $.ajax({
 					type:'post',
 					url:'../game/search.do',
-					data: {key:keyword},
+					data: {key:keyword,sort:sort},
 					success:function(result)
 					{
       			        $('#tagin').html(result);
@@ -84,6 +92,24 @@ $(function() {
       	       });
             });
          });
+	
+	
+// 	$('#gameSearch').click(function(){ //서치버튼 클릭시 검색창에 입려된 텍스트로 검색하기
+//	    $('.pixel-radio').prop("checked", false);
+//     let keyword=$('#gameKewword').val();
+//     console.log(keyword);
+      
+//     $.ajax({
+//	          		type:'post',
+//	        		url:'../game/search.do',
+//	        		data: {key:keyword,sort:sort},
+//	         	    success:function(result)
+//			        {
+//			            $('#tagin').html(result);
+//			        }
+//	          });
+//		})
+
 });
 
 </script>
@@ -139,7 +165,8 @@ $(function() {
           
           <div class="filter-bar d-flex flex-wrap align-items-center">
             
-            <div class="sorting mr-auto">
+            
+            <div class="sorting mr-auto" id="sortTF">
               <select style="display: none;">
                 <option value="1">연관성</option>
                 <option value="2">인기순위</option>
@@ -147,6 +174,8 @@ $(function() {
                 <option value="4">낮은 가격순</option>
               </select>
               <div class="nice-select" tabindex="0">
+              
+              
               <span class="current">인기순위</span>
               <ul class="list">
               	<li data-value="1" class="option focus selected">연관성</li>
@@ -155,6 +184,7 @@ $(function() {
               	<li data-value="4" class="option">낮은 가격순</li>
               	</ul></div>
             </div>
+            
             
             <div>
               <div class="input-group filter-bar-search">

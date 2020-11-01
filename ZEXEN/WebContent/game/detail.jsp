@@ -257,7 +257,7 @@ $(function() {
 							</div>
 							<div class="card_area d-flex align-items-center">
 								<a class="icon_btn" href="#"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
-								<a class="icon_btn" href="#"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" href="../game_wish.do?game_no=${vo.game_no }"><i class="ti-heart" style="color: #9E01F9;"></i></a>
 							</div>
 						</div>
 					</div>
