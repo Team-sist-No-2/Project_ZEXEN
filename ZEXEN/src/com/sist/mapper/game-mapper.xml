@@ -24,7 +24,7 @@
   </insert>
   
 <select id="gameListData" resultType="GameVO" parameterType="hashmap">
-	SELECT game_no,na'me,list_poster,price,tag,like_cnt,num
+	SELECT game_no,name,list_poster,price,tag,like_cnt,num
 	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
 	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
 	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE category=#{category} GROUP BY name)ORDER BY ${sort}))

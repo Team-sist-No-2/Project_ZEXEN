@@ -6,6 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.stream.events.EndDocument;
 import javax.xml.ws.RequestWrapper;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.BoardDAO;
@@ -19,6 +20,8 @@ public class GameModel {
 	@RequestMapping("game/main.do")
 	public String game_main(HttpServletRequest request)
 	{	
+		
+		//카테고리 별 게임 개수
 		List<Integer> cate_cnt_list=new ArrayList<Integer>();
 		for(int i=1;i<=11;i++)
 		{
@@ -84,13 +87,16 @@ public class GameModel {
 	        	sort="price";
 	            break;
 	    }
-	   	
-	   		
 		
 		int curpage=Integer.parseInt(page);
 		int rowSize=10;
 		int start=(rowSize*curpage)-(rowSize-1);
 		int end=rowSize*curpage;
+		
+		System.out.println(category);
+	   	System.out.println(start);
+	   	System.out.println(end);
+	   	System.out.println(sort);
 		
 		Map map=new HashMap();
 		map.put("category", category);
