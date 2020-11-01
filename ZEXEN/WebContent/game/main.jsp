@@ -12,14 +12,12 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 
-var cate;
-var sort=1;
-console.log("처음 정렬기준= "+sort);
+var cate;	//카테고리 전역변수
+var sort=1; //정렬기준
 
 // 카테고리 선택
 $(function() {
-	$('.pixel-radio').click(function()
-	{
+	$('.pixel-radio').click(function(){	//카테고리 선택시 해당하는 리스트 출력
 		cate=$(this).attr("cate_no");
 		console.log("전역변수 cate= "+cate);
 		$.ajax({
@@ -30,46 +28,62 @@ $(function() {
 					{
 						$('#tagin').html(result);
 					}
-				})
-	})
+			  })
+		})
 	$("#inde").trigger("click"); //시작하자마자 인디클릭 
 	
 
-	$('.option').click(function()
-	{
+	$('.option').click(function(){	//인기순위,낮은가격,높은가격 등등 정렬기준 리스트 출력 (정렬기준은 카테고리 변경시에도 유지)
 		console.log("전역변수 cate= "+cate);
 		sort=$(this).attr("data-value")
 		console.log("선택된 정렬기준 "+sort);
+		
 		$.ajax({
-			type:'post',
-			url:'../game/list.do',
-			data: {cate:cate,sort:sort},
-			success:function(result)
-			{
-				$('#tagin').html(result);
-			}
+					type:'post',
+					url:'../game/list.do',
+					data: {cate:cate,sort:sort},
+					success:function(result)
+					{
+						$('#tagin').html(result);
+					}
+			   })
 		})
-	})
 	
-	   $('#gameSearch').click(function(){
-	  	 $('.pixel-radio').prop("checked", false);
-       	 let keyword=$('#gameKewword').val();
-       	console.log(keyword);
+	
+	$('#gameSearch').click(function(){ //서치버튼 클릭시 검색창에 입려된 텍스트로 검색하기
+	    $('.pixel-radio').prop("checked", false);
+        let keyword=$('#gameKewword').val();
+        console.log(keyword);
 	      
-//        $.ajax({
-// 	          type:'post',
-
-// 	          url:'../ex/search.do',
-// 	          data: {key:keyword},
-// 	          success:function(result)
-// 	          {
-// 	             $('#tagin').html(result);
-// 	          }
-// 	       });
-      
-//       let temp=$('#test11 .card-body>a>p:contains("'+k+'")');
-//       $(temp).parent().parent.show();
-   })
+        $.ajax({
+	          		type:'post',
+	        		url:'../game/search.do',
+	          		data: {key:keyword},
+	         	    success:function(result)
+			        {
+			            $('#tagin').html(result);
+			        }
+	          });
+   		})
+	
+   	
+   	  $(document).ready(function() {
+      $("#gameKewword").keyup(function(key) {	//검색창에 입력시 실시간 타이핑된 단어로 검색하기
+      	 $('.pixel-radio').prop("checked", false);
+         let keyword=$('#gameKewword').val();
+         console.log(keyword);
+      	      
+         $.ajax({
+					type:'post',
+					url:'../game/search.do',
+					data: {key:keyword},
+					success:function(result)
+					{
+      			        $('#tagin').html(result);
+      				}
+      	       });
+            });
+         });
 });
 
 </script>

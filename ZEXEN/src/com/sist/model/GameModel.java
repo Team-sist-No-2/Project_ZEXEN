@@ -123,7 +123,8 @@ public class GameModel {
 
 		
 		return "../game/list.jsp";
-}
+	}
+	
     @RequestMapping("game/detail_before.do")
     public String game_detail_before(HttpServletRequest request,HttpServletResponse response)
     {
@@ -155,8 +156,6 @@ public class GameModel {
     	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
 		return "../main/main.jsp";
     }
-    
-    
     
     @RequestMapping("game/like.do")
     public String game_LikeUp(HttpServletRequest request)
@@ -224,4 +223,49 @@ public class GameModel {
  	   GameDAO.gameReplyInsert(rvo);
  	   return "redirect:../game/detail.do?game_no="+game_no;
     }
+
+    @RequestMapping("game/search.do")
+    public String game_search(HttpServletRequest request)
+    {
+       String key=request.getParameter("key");
+       String page = request.getParameter("page");
+       System.out.println(key);
+
+       if (page == null)
+          page = "1";
+       
+       int curpage = Integer.parseInt(page);
+       
+       int rowSize = 10;
+       int start = (curpage * rowSize) - (rowSize - 1);
+       int end = curpage * rowSize;
+
+       Map map = new HashMap();
+       map.put("key", key);
+       map.put("start", start);
+       map.put("end", end);
+       
+       List<GameVO> list=GameDAO.gameSearchData(map);
+       int totalpage=GameDAO.gameSearchTotalPage(map);
+       
+       int BLOCK = 10;
+       int startPage = ((curpage - 1) / BLOCK * BLOCK) + 1;
+       int endPage = ((curpage - 1) / BLOCK * BLOCK) + BLOCK;
+
+       if(endPage>totalpage)
+          endPage = totalpage;
+
+
+       request.setAttribute("list", list);
+       request.setAttribute("curpage", curpage);
+       request.setAttribute("totalpage", totalpage);
+       request.setAttribute("BLOCK", BLOCK);
+       request.setAttribute("startPage", startPage);
+       request.setAttribute("endPage", endPage);
+       
+       return "../game/list.jsp";
+    }
+
+
+
 }
