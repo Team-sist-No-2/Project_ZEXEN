@@ -21,7 +21,7 @@
                 
                 <div class="categories_details" style="background: rgba(34, 34, 34, 0.3);">
                     <div class="categories_text">
-                        <a href="../game/detail.do?game_no=${vo.game_no}">
+                        <a href="../game/detail_before.do?game_no=${vo.game_no}">
                             <h5 style="font-weight: 800" >
 
 						     <c:choose>

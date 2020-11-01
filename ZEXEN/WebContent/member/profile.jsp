@@ -13,15 +13,47 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   $( function() {
-    $( "#accordion" ).accordion();
-  } );
+  
+	  $( "#accordion" ).accordion();
+ 
+  
+	  $('img').hover(function(){
+		$(this).css("cursor","pointer");	
+		},function(){
+			$(this).css("cursor","");
+	  });
+  
+  	$('img').click(function(){
+	  	let pimg=$(this).attr("src");	
+//  	  	alert(pimg);
+
+// 	$("#pimg", parent.opener.document).val(pimg);
+	$(opener.document).find("#pimg").attr("value",pimg);
+	$(opener.document).find("#profileout").attr("src",pimg);
+	window.close();
+	  
+// 	  $.ajax({
+// 				type:'post',
+// 				url:'../member/join.do?pimg='+pimg,
+// 				success:function(result)
+// 				{
+// 					opener.location.reload();
+// 				}
+// 			})
+	  
+	});
+  
+  
+  });
+  
   </script>
 </head>
 <body>
  
 <div id="accordion">
-  <h3>Section 1</h3>
+  <h3 style="background: #9E01F9; color: white;" >Section 1</h3>
   <div>
+
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5b337485031a671b9c23d56d/iPhone/001.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5b337485031a671b9c23d56d/iPhone/002.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5b337485031a671b9c23d56d/iPhone/003.png"width="70" height="70"/>
@@ -59,42 +91,122 @@
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5b337485031a671b9c23d56d/iPhone/035.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5b337485031a671b9c23d56d/iPhone/036.png"width="70" height="70"/>
   </div>
-  <h3>Section 2</h3>
+  <h3 style="background: #9E01F9 color: white;">Section 2</h3>
   <div>
-    <p>
-    Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-    purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-    velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-    suscipit faucibus urna.
-    </p>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/001.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/002.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/003.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/004.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/005.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/006.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/007.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/008.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/009.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/010.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/011.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/012.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/013.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/014.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/015.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/016.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/017.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/018.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/019.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/020.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/021.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/022.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/023.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/024.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/025.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/026.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/027.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/028.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/029.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/030.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/031.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/032.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/033.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/034.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/035.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/036.png"width="70" height="70"/>
   </div>
-  <h3>Section 3</h3>
+  <h3 style="background: #9E01F9 color: white;">Section 3</h3>
   <div>
-    <p>
-    Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-    Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-    ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-    lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-    </p>
-    <ul>
-      <li>List item one</li>
-      <li>List item two</li>
-      <li>List item three</li>
-    </ul>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/001.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/002.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/003.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/004.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/005.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/007.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/008.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/009.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/010.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/011.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/012.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/013.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/014.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/015.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/016.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/017.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/018.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/019.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/020.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/021.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/022.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/023.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/024.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/025.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/026.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/027.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/028.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/029.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/030.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/031.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/033.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/034.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/035.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/038.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/039.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/040.png"width="70" height="70"/>
   </div>
-  <h3>Section 4</h3>
+  <h3 style="background: #9E01F9 color: white;">Section 4</h3>
   <div>
-    <p>
-    Cras dictum. Pellentesque habitant morbi tristique senectus et netus
-    et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in
-    faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia
-    mauris vel est.
-    </p>
-    <p>
-    Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus.
-    Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-    inceptos himenaeos.
-    </p>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/001.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/002.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/003.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/004.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/005.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/006.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/007.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/008.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/009.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/010.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/011.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/012.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/013.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/014.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/015.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/016.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/017.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/018.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/019.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/020.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/021.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/022.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/023.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/024.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/025.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/026.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/027.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/028.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/029.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/030.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/031.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/032.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/033.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/034.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/035.png"width="70" height="70"/>
+<img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/036.png"width="70" height="70"/>
   </div>
 </div>
  

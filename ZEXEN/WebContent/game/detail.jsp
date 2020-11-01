@@ -366,7 +366,7 @@ $(function() {
 									<div class="review_item">
 										<div class="media">
 											<div class="d-flex">
-												<img src="../assets/img/icon1/001.png" width="70px" height="70px" alt="">
+												<img src="${rvo.pimg }" width="70px" height="70px" alt="">
 											</div>
 											<div class="media-body">
 												<h4>${rvo.id } </h4>

@@ -14,10 +14,10 @@
 </insert>
 
 <select id="gameReplyListData" resultType="ReplyVO" parameterType="int">
-    SELECT reply_no,category,game_no,msg,id,regdate
-    FROM reply_tb
-    WHERE game_no=#{game_no}
-    ORDER BY regdate desc
+    select reply_no,game_no,msg,regdate,member_tb.id,reply_tb.id,member_tb.pimg
+	FROM reply_tb,member_tb
+	where reply_tb.id=member_tb.id AND game_no=#{game_no}
+	ORDER BY regdate desc
 </select>
 
 

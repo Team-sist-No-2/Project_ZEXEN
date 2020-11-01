@@ -42,14 +42,20 @@
               <li class=""><a class="button button-header" href="../member/login.do">로그인</a></li>
             </c:if>
             <c:if test="${sessionScope.id!=null }">
+               ${sessionScope.name }(${sessionScope.admin=='y'?'관리자':'일반유저' })
               <li class=""><a class="button button-header" href="../member/logout.do">로그아웃</a></li>                 
             </c:if>
             <c:if test="${sessionScope.id==null }">
                <li class=""><a class="" href="../member/join.do">회원가입</a></li>
             </c:if>
-             <c:if test="${sessionScope.id!=null }">
-               <li class=""><a class="" href="../member/mypage.do">마이페이지</a></li>   
-            </c:if>
+              <c:if test="${ sessionScope.id!=null}">
+			      <c:if test="${ sessionScope.admin=='n'}">
+		            <li><a href="../member/mypage.do">마이페이지</a></li>
+		      </c:if>
+		      <c:if test="${ sessionScope.admin=='y'}">
+		            <li><a href="#">관리페이지</a></li>	
+		      </c:if>
+		      </c:if>
               <li class=""><a class="" href="#">고객센터</a></li>
             </ul>  
           </div>

@@ -14,7 +14,8 @@
        #{addr1},
        #{addr2},
        'n',
-       #{post}
+       #{post},
+       #{pimg}
      )
    </insert>
    

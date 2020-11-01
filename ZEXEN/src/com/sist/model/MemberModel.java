@@ -33,6 +33,7 @@ public class MemberModel {
 	 	   {
 	 		   HttpSession session=request.getSession();
 	 		   session.setAttribute("id", vo.getId());
+	 		   session.setAttribute("name", vo.getName());
 	 		   session.setAttribute("admin", vo.getAdmin());
 	 	   }
 	 	   System.out.println(vo.getMsg());
@@ -52,6 +53,10 @@ public class MemberModel {
 	@RequestMapping("member/join.do")
 	public String member_join(HttpServletRequest request)
 	{	
+		String pimg=request.getParameter("pimg");
+		
+		request.setAttribute("pimg", pimg);
+		System.out.println(pimg);
 		request.setAttribute("main_jsp", "../member/join.jsp"); 	//main.jsp에서 include의 경로
 		return "../main/main.jsp";
 	}
@@ -78,6 +83,7 @@ public class MemberModel {
 	    	String post=request.getParameter("post");
 	    	String addr1=request.getParameter("addr1");
 	    	String addr2=request.getParameter("addr2");
+	    	String pimg=request.getParameter("pimg"); 
 	    	
 	    	MemberVO vo=new MemberVO();
 	        vo.setId(id);
@@ -100,6 +106,8 @@ public class MemberModel {
 	        System.out.println(vo.getAddr2());
 	        vo.setSex(sex);
 	        System.out.println(vo.getSex());
+	        vo.setPimg(pimg);
+	        System.out.println(vo.getPimg());
 	        
 
 	    	//Insert문장 실행

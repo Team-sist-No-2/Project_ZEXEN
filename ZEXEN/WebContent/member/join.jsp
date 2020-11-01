@@ -123,7 +123,7 @@ function postfind()
 
 function profile123() 
 {
-	window.open("../member/profile.jsp", "a", "width=600, height=400, left=100, top=50");
+	window.open("../member/profile.jsp", "a", "width=800, height=600, left=100, top=50");
 }
 
 
@@ -303,11 +303,16 @@ $(function(){
 							</div>
 							
 							
-							<div class="col-md-12 form-group">
-								<input type="hidden" class="form-control" id="profile" name="profile" value="">
-								<button type="button" class="button button--active button-review" id="profile" onclick="profile123()" style="font-size: 10px; width: 120px; padding-right: 0px; padding-top: 5px; padding-left: 0px; padding-bottom: 5px; float: center; margin-top: 10pt;">
-								이미지넣기
-								</button>
+							<div class="col-md-12 form-group" style="margin-top: 10px">
+								<input type="hidden" class="form-control" id="pimg" name="pimg" value="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png">
+								
+								
+								
+							<img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" id="profileout" width="70px" height="70px"/>
+								
+							<button type="button" class="button button--active button-review" onclick="profile123()" style="font-size: 10px; width: 120px; padding-right: 0px; padding-top: 5px; padding-left: 0px; padding-bottom: 5px; float: center; margin-top: 10pt;">
+							이미지넣기
+							</button>
 							</div>
 							
 							

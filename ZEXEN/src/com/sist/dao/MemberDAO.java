@@ -41,6 +41,7 @@ public class MemberDAO {
 				  vo.setId(dVO.getId());
 				  vo.setName(dVO.getName());
 				  vo.setAdmin(dVO.getAdmin());
+				  vo.setPimg(dVO.getPimg());
 			  }
 			  else
 			  {

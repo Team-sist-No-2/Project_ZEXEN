@@ -113,6 +113,21 @@ $(function() {
               </li>
             </ul>
           </div>
+           <div class="sidebar-filter">
+            <div class="top-filter-head">내가 본 게임</div>
+            <div class="common-filter">
+            	 <c:forEach var="vo" items="${cList }" begin="0" end="3" >
+			      <a href="../game/detail.do?game_no=${vo.game_no }"><img src="${vo.list_poster}" width="100%"></a>
+			    </c:forEach>
+    		
+    
+            </div>
+          </div>
+          
+          
+          
+          
+          
         </div>
         
         
