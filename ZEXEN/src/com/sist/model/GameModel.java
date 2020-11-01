@@ -57,15 +57,37 @@ public class GameModel {
 		return "../main/main.jsp";
 	}
 	
-    @RequestMapping("game/list.do")
+	@RequestMapping("game/list.do")
 	public String game_list(HttpServletRequest request)
 	{
-		//===========데이터 베이스에서 자료 가져오기===========
-  		//받을 데이터 2개 : 페이지, 카테고리 번호
 		String page=request.getParameter("page");
-		String category=request.getParameter("cate");
-		if(page==null)
-			page="1";
+   		String category=request.getParameter("cate");
+   		String sort=request.getParameter("sort");
+	   		if(page==null)
+	   			page="1";
+	   		if(category==null)
+	   			category="1";
+	   		if(sort==null)
+	   			sort="1";
+	   		
+	   		System.out.println(sort);
+	   	
+	   		switch(sort){
+	        case "1": 
+	            sort="game_no";
+	            break;
+	        case "2":
+	        	sort="like_cnt DESC";
+	            break;
+	        case "3" :
+	        	sort="price desc";
+	            break;
+	        case "4" :
+	        	sort="price";
+	            break;
+	    }
+	   	
+	   		
 		
 		int curpage=Integer.parseInt(page);
 		int rowSize=10;
@@ -76,97 +98,32 @@ public class GameModel {
 		map.put("category", category);
 		map.put("start", start);
 		map.put("end", end);
+		map.put("sort",sort);
 		
 		
 		//리스트
 		List<GameVO> list=GameDAO.gameListData(map);
-//		int totalpage=GameDAO.gameTotalPage(Integer.parseInt(category)); //SELECT CEIL(COUNT(*)/8.0) FROM game_tb (카테고리에 관한)
-//		
-//		int BLOCK=10;
-//        int startPage=((curpage-1)/BLOCK*BLOCK)+1;   //  1, 11, 21
-//        int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK; // 10, 20, 30
-//        
-//    	if(endPage>totalpage)   // ex) totalpage=34 page 라면 endPage=34
-//			endPage=totalpage;
+		int totalpage=GameDAO.gameTotalPage(Integer.parseInt(category)); 
+		
+		int BLOCK=10;
+		int startPage=((curpage-1)/BLOCK*BLOCK)+1;   //  1, 11, 21
+		int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK; // 10, 20, 30
+		
+		if(endPage>totalpage)   // ex) totalpage=34 page 라면 endPage=34
+		   endPage=totalpage;
 		
 		
 		// ===========jsp에 필요한 데이터를 보내기 시작=========== 
     	request.setAttribute("list", list);
-//		request.setAttribute("curpage", curpage);
-//		request.setAttribute("totalpage", totalpage);
-//		request.setAttribute("BLOCK", BLOCK);
-//		request.setAttribute("startPage", startPage);
-//		request.setAttribute("endPage", endPage);
-		
-		return "../game/list.jsp";
-	}
-    
-    @RequestMapping("game/page.do")
-   	public String game_page(HttpServletRequest request)
-   	{
-   		//===========데이터 베이스에서 자료 가져오기===========
-     		//받을 데이터 2개 : 페이지, 카테고리 번호
-   		String page=request.getParameter("page");
-   		String category=request.getParameter("cate");
-   		if(page==null)
-   			page="1";
-   		if(category==null)
-   			category="1";
-   		
-   		int curpage=Integer.parseInt(page);
-//   		int rowSize=8;
-//   		int start=(rowSize*curpage)-(rowSize-1);
-//   		int end=rowSize*curpage;
-   		
-   		Map map=new HashMap();
-   		map.put("category", category);
-//   		map.put("start", start);
-//   		map.put("end", end);
-   		
-   		
-   		//리스트
-//   		List<GameVO> list=GameDAO.gameListData(map);
-   		int totalpage=GameDAO.gameTotalPage(Integer.parseInt(category)); //SELECT CEIL(COUNT(*)/8.0) FROM game_tb (카테고리에 관한)
-   		
-   		int BLOCK=10;
-           int startPage=((curpage-1)/BLOCK*BLOCK)+1;   //  1, 11, 21
-           int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK; // 10, 20, 30
-           
-       	if(endPage>totalpage)   // ex) totalpage=34 page 라면 endPage=34
-   			endPage=totalpage;
-   		
-   		
-   		// ===========jsp에 필요한 데이터를 보내기 시작=========== 
-//       	request.setAttribute("list", list);
-   		request.setAttribute("curpage", curpage);		//현재 페이지 -> 1
+    	request.setAttribute("curpage", curpage);		//현재 페이지 -> 1
    		request.setAttribute("totalpage", totalpage);	//카테고리에 대한 토탈 페이지
    		request.setAttribute("BLOCK", BLOCK);			//블럭은 10
    		request.setAttribute("startPage", startPage);	//현재페이지 대한 스타트 페이지
    		request.setAttribute("endPage", endPage);		//현재페이지 대한 엔드 페이지
-   		
-   		return "../game/page.jsp";
-   	}
 
-    /*
-    @RequestMapping("game/detail.do")
-    public String game_detail(HttpServletRequest request)
-    {
-    	String no=request.getParameter("game_no");
-    	int game_no=Integer.parseInt(no);
-    	
-    	GameVO vo=GameDAO.gameDetailData(game_no);
-    	request.setAttribute("vo", vo);
-    	
-    	List<ReplyVO> list=GameDAO.gameReplyListData(game_no);
-    	
-    	
-    	
-   	    request.setAttribute("rList", list);
-    	
-    	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
-		return "../main/main.jsp";
-    }
-    */
+		
+		return "../game/list.jsp";
+}
     @RequestMapping("game/detail_before.do")
     public String game_detail_before(HttpServletRequest request,HttpServletResponse response)
     {

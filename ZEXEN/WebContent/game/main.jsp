@@ -12,71 +12,65 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 
-// $(function() {
-// 	$('#all').click(function(){
-// 		$.ajax({
-// 				type:'post',
-// 				url:'../game/total.do',
-// 				success:function(result)
-// 				{
-// 					$('.category-list').html(result);
-// 				}
-// 		})
-// 	})
-// 	$("#all").trigger("click");
-// })
-
-
-
 var cate;
+var sort=1;
+console.log("처음 정렬기준= "+sort);
 
 // 카테고리 선택
 $(function() {
-	$('.pixel-radio').click(function(){
-		let cate_no=$(this).attr("cate_no");
-		console.log("내가 선택한 cate_no= "+cate_no);
+	$('.pixel-radio').click(function()
+	{
 		cate=$(this).attr("cate_no");
 		console.log("전역변수 cate= "+cate);
 		$.ajax({
-				type:'post',
-				url:'../game/list.do?cate='+cate_no,
-				success:function(result)
-				{
-					$('.category-list').html(result);
-				}
-		})
-		
-		$.ajax({
-				type:'post',
-				url:'../game/page.do?cate='+cate_no,
-				success:function(result)
-				{
-					$('.blog-pagination').html(result);
-				}
-		})
+					type:'post',
+					url:'../game/list.do',
+					data: {cate:cate,sort:sort},
+					success:function(result)
+					{
+						$('#tagin').html(result);
+					}
+				})
 	})
 	$("#inde").trigger("click"); //시작하자마자 인디클릭 
-})
-
-
-$(function() {
-	$('.option').click(function(){
-		let sort=$(this).attr("data-value")
-		console.log("정렬기준 "+sort);
 	
-// 		$.ajax({
-// 				type:'post',
-// 				url:'../game/list.do?page='+page+'&cate='+cate_no,
-// 				success:function(result)
-// 				{
-// 					$('.category-list').html(result);
-// 				}
-// 		})
+
+	$('.option').click(function()
+	{
+		console.log("전역변수 cate= "+cate);
+		sort=$(this).attr("data-value")
+		console.log("선택된 정렬기준 "+sort);
+		$.ajax({
+			type:'post',
+			url:'../game/list.do',
+			data: {cate:cate,sort:sort},
+			success:function(result)
+			{
+				$('#tagin').html(result);
+			}
+		})
 	})
+	
+	   $('#gameSearch').click(function(){
+	  	 $('.pixel-radio').prop("checked", false);
+       	 let keyword=$('#gameKewword').val();
+       	console.log(keyword);
+	      
+//        $.ajax({
+// 	          type:'post',
+
+// 	          url:'../ex/search.do',
+// 	          data: {key:keyword},
+// 	          success:function(result)
+// 	          {
+// 	             $('#tagin').html(result);
+// 	          }
+// 	       });
+      
+//       let temp=$('#test11 .card-body>a>p:contains("'+k+'")');
+//       $(temp).parent().parent.show();
+   })
 });
-
-
-
 
 </script>
 </head>
@@ -92,7 +86,7 @@ $(function() {
         <div class="col-xl-3 col-lg-4 col-md-5">
        
           <div class="sidebar-categories">
-            <div class="head">Browse Categories</div>
+            <div class="head">Categories</div>
             <ul class="main-categories">
               <li class="common-filter">
                 <form action="#">
@@ -114,20 +108,13 @@ $(function() {
             </ul>
           </div>
            <div class="sidebar-filter">
-            <div class="top-filter-head">내가 본 게임</div>
-            <div class="common-filter">
+            <div class="top-filter-head">최근에 본 게임</div>
+            <div class="common-filter" style="background: white;">
             	 <c:forEach var="vo" items="${cList }" begin="0" end="3" >
 			      <a href="../game/detail.do?game_no=${vo.game_no }"><img src="${vo.list_poster}" width="100%"></a>
 			    </c:forEach>
-    		
-    
             </div>
           </div>
-          
-          
-          
-          
-          
         </div>
         
         
@@ -135,74 +122,47 @@ $(function() {
         <div class="col-xl-9 col-lg-8 col-md-7">
         
           <!-- Start Filter Bar -->
+          
           <div class="filter-bar d-flex flex-wrap align-items-center">
-            
-<!--             <div class="sorting mr-auto"> -->
-<!--               <select> -->
-<!--                 <option value="1">인기순위</option> -->
-<!--                 <option value="1">높은 가격순</option> -->
-<!--                 <option value="1">낮은 가격순</option> -->
-<!--                 <option value="1">무료</option> -->
-<!--               </select> -->
-<!--             </div> -->
-            
-            
-            
             
             <div class="sorting mr-auto">
               <select style="display: none;">
-                <option value="1">인기순위</option>
-                <option value="1">높은 가격순</option>
-                <option value="1">낮은 가격순</option>
-                <option value="1">무료</option>
+                <option value="1">연관성</option>
+                <option value="2">인기순위</option>
+                <option value="3">높은 가격순</option>
+                <option value="4">낮은 가격순</option>
               </select>
               <div class="nice-select" tabindex="0">
               <span class="current">인기순위</span>
               <ul class="list">
-              	<li data-value="1" class="option focus selected">인기순위</li>
-              	<li data-value="2" class="option">높은 가격순</li>
-              	<li data-value="3" class="option">낮은 가격순</li>
-              	<li data-value="4" class="option">무료</li></ul></div>
+              	<li data-value="1" class="option focus selected">연관성</li>
+              	<li data-value="2" class="option">인기순위</li>
+              	<li data-value="3" class="option">높은 가격순</li>
+              	<li data-value="4" class="option">낮은 가격순</li>
+              	</ul></div>
             </div>
-            
-            
-            
-            
-            
-            
-            
             
             <div>
               <div class="input-group filter-bar-search">
-                <input type="text" placeholder="Search">
+                <input type="text" placeholder="Search" id="gameKewword">
                 <div class="input-group-append">
-                  <button type="button"><i class="ti-search"></i></button>
+                  <button type="button" id="gameSearch"><i class="ti-search"></i></button>
                 </div>
               </div>
             </div>
           </div>
+          
           <!-- End Filter Bar -->
           
-          <!-- Start Best Seller -->
-          <section class="lattest-product-area pb-40 category-list">
-            
-          <!-- 리스트 들어오는 곳 -->
-          
-          </section>
-          
-           <nav class="blog-pagination justify-content-center d-flex">
-		  
-		  <!-- 페이지 들어오는 곳 -->
-		  
-		</nav>
-          
+          <div id="tagin">
+          <!-- 리스트들어가는곳 -->
+        </div>
 
 
         </div>
       </div>
     </div>
   </section>
-	<!-- ================ category section end ================= -->		  
 
 	
 
