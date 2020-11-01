@@ -16,17 +16,17 @@ package com.sist.vo;
  */
 
 public class ComputerVO {
-   private int com_no; // 제품번호
-   private int cate_no; // 카테고리
-   private String product; // 제품명
-   private String spec; // 스펙
-   private String image; // 이미지
-   private String gift; // 사은품
-   private int quantity; // 개수
-   private int cost; // 가격
-   private int sell_cnt; //현재까지 판매대수 default 0
-   private int stock_cnt; //재고수량 default 50?
-   
+   private int com_no; // �젣�뭹踰덊샇
+   private int cate_no; // 移댄뀒怨좊━
+   private String product; // �젣�뭹紐�
+   private String spec; // �뒪�럺
+   private String image; // �씠誘몄�
+   private String gift; // �궗���뭹
+   private int quantity; // 媛쒖닔
+   private int cost; // 媛�寃�
+   private int sell_cnt; //�쁽�옱源뚯� �뙋留ㅻ��닔 default 0
+   private int stock_cnt; //�옱怨좎닔�웾 default 50?
+   private int hit;
    
    public int getCom_no() {
       return com_no;
@@ -87,6 +87,12 @@ public class ComputerVO {
    }
    public void setStock_cnt(int stock_cnt) {
       this.stock_cnt = stock_cnt;
+   }
+   public int getHit() {
+	  return hit;
+   }
+   public void setHit(int hit) {
+	  this.hit = hit;
    }
    
 }
