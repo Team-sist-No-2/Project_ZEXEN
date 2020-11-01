@@ -5,6 +5,35 @@
 <html lang>
 <head>
   <title>Aroma Shop - Category</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+
+/* $(function() {
+	$('.pixel-radio').click(function(){
+		let cate_no=$(this).attr("cate_no");
+		console.log("내가 선택한 cate_no= "+cate_no);
+		cate=$(this).attr("cate_no");
+		console.log("전역변수 cate= "+cate);
+ 		$.ajax({
+				type:'post',
+				url:'../computer/main.do?cate='+cate_no,
+				success:function(result)
+				{
+					$('.category-list').html(result);
+				}
+		})	 
+		$.ajax({
+				type:'post',
+				url:'../computer/page.do?cate='+cate_no,
+				success:function(result)
+				{
+					$('.blog-pagination').html(result);
+				}
+		})
+	})
+	$("#inde").trigger("click"); //시작하자마자 인디클릭 
+}) */
+</script>
 </head>
 <body>
 	
@@ -92,6 +121,13 @@
               </c:forEach>
               
           </section>
+          
+         <nav class="blog-pagination justify-content-center d-flex">
+		  
+		  <!-- 페이지 들어오는 곳 -->
+		  
+		 </nav>
+          
           <!-- End Best Seller -->
         </div>
       </div>
