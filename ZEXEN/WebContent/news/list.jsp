@@ -9,6 +9,15 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+
+$(function() {
+	console.log("선택한 카테고리 번호: "+cate+"  , 검색비활성화");
+// 	function reload(){
+		
+// 	      $("#newsposter").load(window.location.href + "#newsposter");
+// 	}
+});
+
 $(function() {
 	$('.page-item').click(function(){
 		
@@ -22,10 +31,10 @@ $(function() {
 					$('.blog_left_sidebar').html(result);
 				}
 		})
-	
-	
 	})
 });
+
+
 </script>
 </head>
 <body>
@@ -70,7 +79,7 @@ $(function() {
                           </div> 
                           <div class="col-md-9">
                               <div class="blog_post">                             
-                               	  <img src=${vo.poster } alt="">
+                               	  <img src=${vo.poster } alt="" id="newsposter">
                                      <div class="blog_details">
                                       <a href="../news/detail.do?news_no=${vo.news_no }">
                                       <%-- <img src="${vo.poster }" alt=""> --%> 

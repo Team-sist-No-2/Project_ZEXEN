@@ -291,6 +291,9 @@ public class GameModel {
        return "../game/list.jsp";
     }
 
-
+//    public String game_wishInsert(HttpServletRequest request)
+//    {
+//    	
+//    }
 
 }
