@@ -3,8 +3,11 @@ package com.sist.dao;
 import java.io.Reader;
 import java.util.List;
 import java.util.Map;
+
+import com.sist.vo.BasketVO;
 import com.sist.vo.GameVO;
 import com.sist.vo.ReplyVO;
+import com.sist.vo.WishVO;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -19,8 +22,7 @@ public class GameDAO {
 	//게임넣기
 	public static void gameInsert(GameVO vo)
 	{
-		SqlSession session=ssf.openSession();
-		session=ssf.openSession(true);
+		SqlSession session=ssf.openSession(true);
 		session.insert("gameInsert",vo);
 		session.close();
 	}
@@ -112,4 +114,57 @@ public class GameDAO {
 	    session.close();
 	    return total;
 	}
+
+	//찜추가
+	public static void gameWishInsert(WishVO vo)
+	{
+		SqlSession session = ssf.openSession(true);
+		session.insert("gameWishInsert",vo);
+		session.close();
+	}
+	
+	//찜했는지 안했는지
+	public static int gameWishCount(WishVO vo) 
+	{
+		SqlSession session = ssf.openSession();
+		int count = session.selectOne("gameWishCount", vo);
+		session.close();
+		return count;
+	}
+	
+	//게임 디테일에서 찜삭제
+	public static void gameWishDelete(WishVO vo) 
+	{
+		SqlSession session = ssf.openSession(true);
+		session.delete("gameWishDelete", vo);
+		session.close();
+	}
+	
+	
+	//장바구니추가
+	public static void gameBasketInsert(BasketVO vo)
+	{
+		SqlSession session = ssf.openSession(true);
+		session.insert("gameBasketInsert",vo);
+		session.close();
+	}
+	
+	//장바구니 추가했는지 안했는지
+	public static int gameBasketCount(BasketVO vo) 
+	{
+		SqlSession session = ssf.openSession();
+		int count = session.selectOne("gameBasketCount", vo);
+		session.close();
+		return count;
+	}
+		
+	//게임 디테일에서 장바구니삭제
+	public static void gameBasketDelete(BasketVO vo) 
+	{
+		SqlSession session = ssf.openSession(true);
+		session.delete("gameBasketDelete", vo);
+		session.close();
+	}
+	
+	
 }

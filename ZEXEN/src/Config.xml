@@ -13,6 +13,9 @@
  		<typeAlias type="com.sist.vo.NewsVO" alias="NewsVO" />
  		<typeAlias type="com.sist.vo.BoardVO" alias="BoardVO" />
  		<typeAlias type="com.sist.vo.ReplyVO" alias="ReplyVO"/>
+ 		<typeAlias type="com.sist.vo.ReplyVO" alias="ReplyVO"/>
+ 		<typeAlias type="com.sist.vo.WishVO" alias="WishVO"/>
+ 		<typeAlias type="com.sist.vo.BasketVO" alias="BasketVO"/>
  	</typeAliases>
  	
  	<environments default="development">
@@ -28,7 +31,7 @@
  	</environments>
  	
  	<mappers>
- 		<mapper resource="com/sist/mapper/game-mapper.xml"/>
+ 		<mapper resource="com/sist/mapper/game_mapper.xml"/>
  		<mapper resource="com/sist/mapper/computer-mapper.xml"/>
  		<mapper resource="com/sist/mapper/member-mapper.xml"/>
  		<mapper resource="com/sist/mapper/news-mapper.xml"/>

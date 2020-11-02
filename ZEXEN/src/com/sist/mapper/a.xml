@@ -69,11 +69,29 @@
 </select>
 
 <select id="gameSearchTotalPage" resultType="int" parameterType="hashmap">
-   SELECT CEIL(COUNT(*)/10.0) 
-   FROM ((SELECT * FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) 
-   FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY game_no))
+	SELECT CEIL(COUNT(*)/10.0)
+	FROM ((SELECT * FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID)
+	FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY game_no))
 </select>
- 	
 
+
+<insert id="gameWishInsert" parameterType="WishVO">
+	INSERT INTO wish_list(wish_no,game_no,id,cate)
+	VALUES(
+	(SELECT NVL(MAX(game_no)+1,1) FROM wish_list),
+	#{game_no},
+	#{id},
+	1
+	)
+</insert>
+
+<select id="gameWishCount" parameterType="WishVO" resultType="int">
+    SELECT COUNT(*) FROM wish_list
+    WHERE id=#{id} AND game_no=#{game_no}
+</select>
+ 
+<delete id="gameWishDelete" parameterType="hashmap"> 
+ 	DELETE FROM wish_list
+	WHERE id=#{id} AND game_no=#{game_no};
+</delete>
 </mapper>
-

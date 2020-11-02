@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.game_mapper">
+
+<insert id="gameInsert" parameterType="GameVO">
+   INSERT INTO Game_TB(game_no,category,name,rel_day,developer,content,min_spec,recom_spec,poster,like_cnt,hate_cnt,price,tag,movie,list_poster)
+   VALUES(
+     (SELECT NVL(MAX(game_no)+1,1) FROM Game_TB),
+     #{category},
+     #{name},
+     #{rel_day},
+     #{developer},
+     #{content},
+     #{min_spec},
+     #{recom_spec},
+     #{poster},
+     #{like_cnt},
+     #{hate_cnt},
+     #{price},
+     #{tag},
+     #{movie},
+     #{list_poster}
+   )
+  </insert>
+  
+<select id="gameListData" resultType="GameVO" parameterType="hashmap">
+	SELECT game_no,name,list_poster,price,tag,like_cnt,num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
+	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE category=#{category} GROUP BY name)ORDER BY ${sort}))
+	WHERE num BETWEEN #{start} AND #{end}
+</select>
+
+<select id="gameTotalPage" resultType="int" parameterType="int">
+	SELECT CEIL(COUNT(*)/10.0)  
+    FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) 
+    FROM game_tb WHERE category=#{category} GROUP BY name)
+</select>
+
+<select id="gameCategoryCount" resultType="int" parameterType="int">
+	SELECT COUNT(*) 
+    FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) 
+    FROM game_tb WHERE category=#{category} GROUP BY name)
+</select>
+
+<select id="gameDetailData" resultType="GameVO" parameterType="int">
+	SELECT game_no,name,rel_day,developer,content,min_spec,recom_spec,poster,like_cnt,hate_cnt,price,tag,movie,sell_cnt,list_poster FROM game_tb
+	where game_no=#{game_no}
+</select>
+
+<update id="gameLikeUp" parameterType="int">
+	update game_tb
+	set like_cnt = like_cnt+1
+	where game_no=#{game_no}
+</update>
+
+<update id="gameHateUp" parameterType="int">
+	update game_tb
+	set hate_cnt = hate_cnt+1
+	where game_no=#{game_no}
+</update>
+
+<select id="gameSearchData" resultType="GameVO" parameterType="hashmap">
+	SELECT game_no,name,list_poster,price,tag,like_cnt,num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
+	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY ${sort}))
+	WHERE num BETWEEN #{start} AND #{end}
+</select>
+
+<select id="gameSearchTotalPage" resultType="int" parameterType="hashmap">
+	SELECT CEIL(COUNT(*)/10.0)
+	FROM ((SELECT * FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID)
+	FROM game_tb WHERE UPPER(name) LIKE UPPER('%'||#{key}||'%') GROUP BY name)ORDER BY game_no))
+</select>
+
+<!-- 찜 -->
+<insert id="gameWishInsert" parameterType="WishVO">
+	INSERT INTO wish_list(wish_no,game_no,id,cate) <!-- cate1: 게임 cate2: 컴퓨터 cate3: 뉴스 -->
+	VALUES(
+	(SELECT NVL(MAX(wish_no)+1,1) FROM wish_list),
+	#{game_no},
+	#{id},
+	1
+	)
+</insert>
+
+<select id="gameWishCount" parameterType="WishVO" resultType="int"> <!-- 찜목록에 추가 했나 안했나 -->
+    SELECT COUNT(*) FROM wish_list
+    WHERE id=#{id} AND game_no=#{game_no}
+</select>
+ 
+<delete id="gameWishDelete" parameterType="WishVO"> 
+ 	DELETE FROM wish_list
+	WHERE id=#{id} AND game_no=#{game_no}
+</delete>
+
+<!-- 장바구니 -->
+<insert id="gameBasketInsert" parameterType="BasketVO">
+	INSERT INTO shopping_basket(basket_no,game_no,id,cate) <!-- cate1: 게임 cate2: 컴퓨터 -->
+	VALUES(
+	(SELECT NVL(MAX(basket_no)+1,1) FROM shopping_basket),
+	#{game_no},
+	#{id},
+	1
+	)
+</insert>
+
+<select id="gameBasketCount" parameterType="BasketVO" resultType="int"> <!-- 장바구니에 추가 했나 안했나 -->
+    SELECT COUNT(*) FROM shopping_basket
+    WHERE id=#{id} AND game_no=#{game_no}
+</select>
+ 
+<delete id="gameBasketDelete" parameterType="BasketVO"> 
+ 	DELETE FROM shopping_basket
+	WHERE id=#{id} AND game_no=#{game_no}
+</delete>
+
+</mapper>

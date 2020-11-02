@@ -30,4 +30,20 @@
      WHERE id=#{id}
    </select>
 
+   <select id="wishListData" parameterType="String" resultType="WishVO">
+   	 SELECT * FROM wish_list
+	 WHERE id=#{id} AND cate=#{cate}
+	 ORDER BY wish_no DESC
+   </select>
+
+  <delete id="wishDelete" parameterType="int">
+    DELETE FROM wish_list
+    WHERE wish_no=#{wish_no}
+  </delete>
+  
+  <select id="wishCount" parameterType="String" resultType="int">
+   	 SELECT COUNT(*) FROM wish_list
+	 WHERE id=#{id}
+   </select>
+
 </mapper>

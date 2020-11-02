@@ -113,7 +113,9 @@
 </div>
 </div>
 
+
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+<a href="../member/wish.do">
 <div class="confirmation-card">
 <p style="text-align: center;">
 <img src="https://img.icons8.com/pastel-glyph/50/000000/hearts.png"/>
@@ -125,7 +127,9 @@
       </tr>
   </table>
 </div>
+</a>
 </div>
+
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
 <div class="confirmation-card">

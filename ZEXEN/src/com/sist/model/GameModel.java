@@ -11,8 +11,11 @@ import javax.xml.ws.RequestWrapper;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.BoardDAO;
 import com.sist.dao.GameDAO;
+import com.sist.dao.MemberDAO;
+import com.sist.vo.BasketVO;
 import com.sist.vo.GameVO;
 import com.sist.vo.ReplyVO;
+import com.sist.vo.WishVO;
 
 public class GameModel {
 
@@ -43,6 +46,7 @@ public class GameModel {
 		
 			if(id!=null)
 			{
+				
 				for(int i=cookies.length-1;i>=0;i--)
 				{
 					if(cookies[i].getName().startsWith(id+"_cookie"))
@@ -86,7 +90,7 @@ public class GameModel {
 	        case "4" :
 	        	sort="price";
 	            break;
-	    }
+	   		}
 		
 		int curpage=Integer.parseInt(page);
 		int rowSize=10;
@@ -148,14 +152,31 @@ public class GameModel {
     	String no=request.getParameter("game_no");
     	int game_no=Integer.parseInt(no);
     	
+    	//상세정보
     	GameVO vo=GameDAO.gameDetailData(game_no);
     	request.setAttribute("vo", vo);
     	
+    	//댓글리스트
     	List<ReplyVO> list=GameDAO.gameReplyListData(game_no);
-    	
-    	
-    	
    	    request.setAttribute("rList", list);
+   	    
+   	    HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		if(id!=null)
+		{
+		WishVO wvo=new WishVO();
+		wvo.setId(id);
+		wvo.setGame_no(game_no);
+		int wcount=GameDAO.gameWishCount(wvo);
+   	    request.setAttribute("wcount", wcount);
+   	    
+   	    BasketVO bvo=new BasketVO();
+		bvo.setId(id);
+		bvo.setGame_no(game_no);
+		int bcount=GameDAO.gameBasketCount(bvo);
+	    request.setAttribute("bcount", bcount);
+		}
+   	    
     	
     	request.setAttribute("main_jsp", "../game/detail.jsp"); 	//main.jsp에서 include의 경로
 		return "../main/main.jsp";
@@ -291,9 +312,70 @@ public class GameModel {
        return "../game/list.jsp";
     }
 
-//    public String game_wishInsert(HttpServletRequest request)
-//    {
-//    	
-//    }
+	@RequestMapping("game/wish_insert.do")
+	public String game_wish_insert(HttpServletRequest request)
+	{
+		String game_no=request.getParameter("game_no");
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		
+		WishVO vo=new WishVO();
+		vo.setId(id);
+		vo.setGame_no(Integer.parseInt(game_no));
+		
+		GameDAO.gameWishInsert(vo);
+		
+		
+		return "redirect:../game/detail.do?game_no="+game_no;
+	}
+
+	@RequestMapping("game/wish_delete.do")
+	public String game_wish_delete(HttpServletRequest request)
+	{
+		String game_no = request.getParameter("game_no");
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		WishVO vo=new WishVO();
+		vo.setId(id);
+		vo.setGame_no(Integer.parseInt(game_no));
+		
+		GameDAO.gameWishDelete(vo);
+
+		return "redirect:../game/detail.do?game_no="+game_no;
+	}
+	
+	@RequestMapping("game/basket_insert.do")
+	public String game_basket_insert(HttpServletRequest request)
+	{
+		String game_no=request.getParameter("game_no");
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		
+		BasketVO vo=new BasketVO();
+		vo.setId(id);
+		vo.setGame_no(Integer.parseInt(game_no));
+		
+		GameDAO.gameBasketInsert(vo);
+		
+		
+		return "redirect:../game/detail.do?game_no="+game_no;
+	}
+
+	@RequestMapping("game/basket_delete.do")
+	public String game_basket_delete(HttpServletRequest request)
+	{
+		String game_no = request.getParameter("game_no");
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		BasketVO vo=new BasketVO();
+		vo.setId(id);
+		vo.setGame_no(Integer.parseInt(game_no));
+		
+		GameDAO.gameBasketDelete(vo);
+
+		return "redirect:../game/detail.do?game_no="+game_no;
+	}
 
 }

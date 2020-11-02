@@ -25,6 +25,12 @@ import java.sql.Date;
  */
 public class GameVO {
 	
+	public int getGwish_no() {
+		return gwish_no;
+	}
+	public void setGwish_no(int gwish_no) {
+		this.gwish_no = gwish_no;
+	}
 	public String getList_poster() {
 		return list_poster;
 	}
@@ -139,4 +145,5 @@ public class GameVO {
     private String movie;
     private int sell_cnt; //디폴트 0
     private String list_poster;
+    private int gwish_no;
 }

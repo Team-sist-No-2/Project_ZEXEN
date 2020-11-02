@@ -8,8 +8,12 @@ import javax.xml.ws.RequestWrapper;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.GameDAO;
 import com.sist.dao.MemberDAO;
+import com.sist.vo.BasketVO;
+import com.sist.vo.ComputerVO;
 import com.sist.vo.GameVO;
 import com.sist.vo.MemberVO;
+import com.sist.vo.NewsVO;
+import com.sist.vo.WishVO;
 
 public class MemberModel {
 
@@ -125,19 +129,98 @@ public class MemberModel {
 		return "../main/main.jsp";
     }
 	
-//	@RequestMapping("member/wish.do")
-//	public String news_list(HttpServletRequest request) 
-//	{
-//	    String wish_no=request.getParameter("wish_no");
-//	    HttpSession session=request.getSession();
-//	    String id=(String)session.getAttribute("id");
-//	    WishVO vo=new WishVO();
-//	    vo.setId(id);
-//	    vo.setNews_no(Integer.parseInt(wish_no));
-//	    MemberDAO.wishInsert(vo);
-//	    return "../;
-//	}
+	@RequestMapping("member/wish.do") // 찜목록
+	public String wish_list(HttpServletRequest request) 
+	{
+		String cate = request.getParameter("cate");
+		if (cate == null)
+			cate = "1";
 
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+
+		Map map = new HashMap();
+		map.put("cate", cate);
+		map.put("id", id);
+
+		List<WishVO> wList = MemberDAO.wishListData(map);
+		
+		
+		List<ComputerVO> cList = new ArrayList<ComputerVO>();
+		List<NewsVO> nList = new ArrayList<NewsVO>();
+
+		if (cate == "1") 
+		{
+			List<GameVO> gList = new ArrayList<GameVO>();
+			for (WishVO vo : wList) 
+			{
+				GameVO gvo = GameDAO.gameDetailData(vo.getGame_no());
+				gvo.setGwish_no(vo.getWish_no());
+				gList.add(gvo);
+			}
+			request.setAttribute("gList", gList);
+		}
+		
+		request.setAttribute("main_jsp", "../member/wishlist.jsp");
+		return "../main/main.jsp";
+	}
 	
+	@RequestMapping("member/wish_delete.do")
+	public String wish_delete(HttpServletRequest request)
+	{
+		String wish_no=request.getParameter("wish_no");
+		String cate=request.getParameter("cate"); //카테고리 화면유지용
+		if(cate==null)
+			cate="1";
+		
+		MemberDAO.wishDelete(Integer.parseInt(wish_no));
+		
+		request.setAttribute("cate", cate);
+		return("redirect:../member/wish.do");
+	}
+	
+	@RequestMapping("member/basket.do") // 찜목록
+	public String basket_list(HttpServletRequest request) 
+	{
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+
+		Map map = new HashMap();
+		map.put("id", id);
+
+		List<BasketVO> bList = MemberDAO.basketListData(map);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		List<ComputerVO> cList = new ArrayList<ComputerVO>();
+		List<NewsVO> nList = new ArrayList<NewsVO>();
+
+		if (cate == "1") 
+		{
+			List<GameVO> gList = new ArrayList<GameVO>();
+			for (WishVO vo : wList) 
+			{
+				GameVO gvo = GameDAO.gameDetailData(vo.getGame_no());
+				gvo.setGwish_no(vo.getWish_no());
+				gList.add(gvo);
+			}
+			request.setAttribute("gList", gList);
+		}
+		
+		request.setAttribute("main_jsp", "../member/wishlist.jsp");
+		return "../main/main.jsp";
+	}
+	
+	
+	
+
 	
 }
