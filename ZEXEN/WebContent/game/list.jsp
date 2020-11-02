@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>TEST</title>
 <script type="text/javascript">
 $(function() {
 	$('.page-item').click(function(){

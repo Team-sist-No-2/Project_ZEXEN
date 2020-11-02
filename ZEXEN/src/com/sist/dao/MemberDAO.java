@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.sist.vo.BasketVO;
 import com.sist.vo.MemberVO;
 import com.sist.vo.WishVO;
 
@@ -71,4 +72,28 @@ public class MemberDAO {
 		session.close();
 		return wish_cnt;
 	}
+
+	public static List<BasketVO> basketListData(Map map)
+	{
+		SqlSession session = ssf.openSession();
+		List<BasketVO> list = session.selectList("basketListData", map);
+		session.close();
+		return list;
+	}
+	
+	public static void basketDelete(int basket_no) 
+	{
+		SqlSession session = ssf.openSession(true);
+		session.delete("basketDelete", basket_no);
+		session.close();
+	}
+	
+	public static int basket_count(String id) 
+	{
+		SqlSession session = ssf.openSession(true);
+		int basket_cnt=session.selectOne("basketCount",id);
+		session.close();
+		return basket_cnt;
+	}
+
 }

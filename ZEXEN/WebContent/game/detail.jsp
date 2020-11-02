@@ -250,8 +250,7 @@ $(function() {
 								</div>
 								</a>
 								
-								
-								
+							${sessionScope.id }								
 								            
 							</div>
 							<div class="card_area d-flex align-items-center">

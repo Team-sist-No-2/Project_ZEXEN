@@ -30,7 +30,7 @@
      WHERE id=#{id}
    </select>
 
-   <select id="wishListData" parameterType="String" resultType="WishVO">
+   <select id="wishListData" parameterType="hashmap" resultType="WishVO">
    	 SELECT * FROM wish_list
 	 WHERE id=#{id} AND cate=#{cate}
 	 ORDER BY wish_no DESC
@@ -45,5 +45,23 @@
    	 SELECT COUNT(*) FROM wish_list
 	 WHERE id=#{id}
    </select>
+   
+   
+   <select id="basketListData" parameterType="hashmap" resultType="BasketVO">
+   	 SELECT * FROM shopping_basket
+	 WHERE id=#{id} AND cate=#{cate}
+	 ORDER BY basket_no DESC
+   </select>
+
+  <delete id="basketDelete" parameterType="int">
+    DELETE FROM shopping_basket
+    WHERE basket_no=#{basket_no}
+  </delete>
+  
+  <select id="basketCount" parameterType="String" resultType="int">
+   	 SELECT COUNT(*) FROM shopping_basket
+	 WHERE id=#{id}
+   </select>
+   
 
 </mapper>
