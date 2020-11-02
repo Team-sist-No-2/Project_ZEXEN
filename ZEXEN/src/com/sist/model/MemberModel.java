@@ -179,44 +179,57 @@ public class MemberModel {
 		return("redirect:../member/wish.do");
 	}
 	
-	@RequestMapping("member/basket.do") // 찜목록
+	@RequestMapping("member/basket.do") // 장바구니
 	public String basket_list(HttpServletRequest request) 
 	{
+		String cate = request.getParameter("cate");
+		if (cate == null)
+			cate = "1";
+		
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
-
+		
 		Map map = new HashMap();
+		map.put("cate", cate);
 		map.put("id", id);
 
 		List<BasketVO> bList = MemberDAO.basketListData(map);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		List<ComputerVO> cList = new ArrayList<ComputerVO>();
-		List<NewsVO> nList = new ArrayList<NewsVO>();
 
 		if (cate == "1") 
 		{
 			List<GameVO> gList = new ArrayList<GameVO>();
-			for (WishVO vo : wList) 
+			for (BasketVO vo : bList) 
 			{
 				GameVO gvo = GameDAO.gameDetailData(vo.getGame_no());
-				gvo.setGwish_no(vo.getWish_no());
+				gvo.setGwish_no(vo.getBasket_no());
 				gList.add(gvo);
 			}
 			request.setAttribute("gList", gList);
 		}
 		
-		request.setAttribute("main_jsp", "../member/wishlist.jsp");
+		else
+		{
+			List<ComputerVO> cList = new ArrayList<ComputerVO>();
+		}
+		
+		request.setAttribute("main_jsp", "../member/basket.jsp");
 		return "../main/main.jsp";
+	}
+	
+	@RequestMapping("member/basket_delete.do")
+	public String basket_delete(HttpServletRequest request)
+	{
+		String basket_no=request.getParameter("basket_no");
+		String cate=request.getParameter("cate"); //카테고리 화면유지용
+		if(cate==null)
+			cate="1";
+		
+		MemberDAO.basketDelete(Integer.parseInt(basket_no));
+		
+		request.setAttribute("cate", cate);
+		return("redirect:../member/basket.do");
 	}
 	
 	
