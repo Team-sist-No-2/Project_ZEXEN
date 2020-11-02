@@ -18,12 +18,11 @@ public class ComputerModel {
 	public String computer_main(HttpServletRequest request)
 	{
 		List<Integer> cate_cnt_list=new ArrayList<Integer>();
-		for(int i=1;i<=11;i++)
+		for(int i=1;i<=5;i++)
 		{
 			cate_cnt_list.add(ComputerDAO.computerCategoryCount(i));
 		}
 		request.setAttribute("cate_cnt", cate_cnt_list);
-		
 		
 		HttpSession session=request.getSession();
 		String id=(String)session.getAttribute("id");
@@ -49,7 +48,6 @@ public class ComputerModel {
 			}
 			request.setAttribute("cList", cList);
 		}
-		
 		request.setAttribute("main_jsp", "../computer/main.jsp"); 	//main.jsp�뿉�꽌 include�쓽 寃쎈줈
 		return "../main/main.jsp";
 	}
@@ -70,7 +68,7 @@ public class ComputerModel {
 		int end = rowSize * curpage;
 
 		Map map = new HashMap();
-		map.put("cateno", cateno);
+		map.put("cate_no", cateno);
 		map.put("start", start);
 		map.put("end", end);
 		

@@ -32,7 +32,7 @@ $(function() {
 					}
 			  })
 		})
-	$("#inde").trigger("click"); //시작하자마자 인디클릭 
+	$("#popular").trigger("click"); //시작하자마자 인디클릭 
 	
 
 /* 	$('.option').click(function(){	//인기순위,낮은가격,높은가격 등등 정렬기준 리스트 출력 (정렬기준은 카테고리 변경시에도 유지)
