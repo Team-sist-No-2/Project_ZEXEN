@@ -25,7 +25,7 @@ $(function() {
 		$.ajax({
 					type:'post',
 					url:'../computer/list.do',
-					data: {cate:cate,sort:sort},
+					data: {cate_no:cate,sort:sort},
 					success:function(result)
 					{
 						$('#tagin').html(result);
@@ -145,7 +145,7 @@ $(function() {
             <div class="top-filter-head">최근에 본 컴퓨터</div>
             <div class="common-filter" style="background: white;">
             	 <c:forEach var="vo" items="${cList }" begin="0" end="3" >
-			      <a href="../game/detail.do?game_no=${vo.com_no }"><img src="${vo.image}" width="100%"></a>
+			      <a href="../computer/detail.do?game_no=${vo.com_no }"><img src="${vo.image}" width="100%"></a>
 			    </c:forEach>
             </div>
           </div>

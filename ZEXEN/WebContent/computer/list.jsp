@@ -50,8 +50,10 @@
 <body>
 
           <section class="lattest-product-area pb-40 category-list">
-            <div class="row">
-            <c:forEach var="vo" items="${list }"> 
+            <<div class="row">
+              
+              
+              <c:forEach var="vo" items="${list }">
               <div class="col-md-6 col-lg-4">
                 <div class="card text-center card-product">
                   <div class="card-product__img">
@@ -63,14 +65,13 @@
                     </ul>
                   </div>
                   <div class="card-body">
-                    <p>Accessories</p>
-                    <h6 class="card-product__title"><a href="#">${vo.product }</a></h4>
+                    <h6 class="card-product__title"><a href="#">${vo.product }</a></h6>
                     <fmt:formatNumber value="${vo.cost }" pattern="#,###"/> ₩
                   </div>
                 </div>
               </div>
               </c:forEach>
-            </div>
+              </div>
           </section>
 
  <nav class="blog-pagination justify-content-center d-flex">
