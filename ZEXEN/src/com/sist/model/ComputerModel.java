@@ -13,6 +13,7 @@ import com.sist.controller.RequestMapping;
 import com.sist.dao.ComputerDAO;
 import com.sist.vo.ComputerVO;
 
+
 public class ComputerModel {
 	@RequestMapping("computer/main.do")
 	public String computer_main(HttpServletRequest request)
@@ -77,5 +78,18 @@ public class ComputerModel {
 		request.setAttribute("list", list);
 			
 		return "../computer/list.jsp";
+	}
+	
+	@RequestMapping("computer/detail.do")
+	public String computer_detail(HttpServletRequest request) {
+		
+		String no=request.getParameter("com_no");
+		if(no == null) no = "1";
+		// DB연동
+		ComputerVO vo=ComputerDAO.computerDetailData(Integer.parseInt(no));
+		request.setAttribute("vo", vo);
+		request.setAttribute("main_jsp", "../computer/detail.jsp");
+		
+		return "../main/main.jsp";
 	}
 }

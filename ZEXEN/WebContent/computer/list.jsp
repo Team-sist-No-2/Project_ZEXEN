@@ -58,14 +58,16 @@
                 <div class="card text-center card-product">
                   <div class="card-product__img">
                     <img class="card-img" src="${vo.image }">
+         
                     <ul class="card-product__imgOverlay">
                       <li><button><i class="ti-search"></i></button></li>
                       <li><button><i class="ti-shopping-cart"></i></button></li>
                       <li><button><i class="ti-heart"></i></button></li>
                     </ul>
+            
                   </div>
                   <div class="card-body">
-                    <h6 class="card-product__title"><a href="#">${vo.product }</a></h6>
+                    <h6 class="card-product__title"><a href="../computer/detail.do?com_no=${vo.com_no}">${vo.product }</a></h6>
                     <fmt:formatNumber value="${vo.cost }" pattern="#,###"/> ₩
                   </div>
                 </div>
