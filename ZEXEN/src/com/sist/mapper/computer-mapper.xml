@@ -20,9 +20,9 @@
   
   <!-- 2. 리스트 출력 -->
   <select id="computerListData" resultType="ComputerVO" parameterType="hashmap">
-    SELECT com_no,cate_no,product,cost,num
-    FROM (SELECT com_no,cate_no,product,cost,rownum as num
-    FROM (SELECT com_no,cate_no,product,cost
+    SELECT com_no,cate_no,product,image,cost,num
+    FROM (SELECT com_no,cate_no,product,image,cost,rownum as num
+    FROM (SELECT com_no,cate_no,product,image,cost
     FROM computer_tb WHERE cate_no=#{cate_no} ORDER BY com_no DESC))
     WHERE num BETWEEN #{start} AND #{end}
   </select>
