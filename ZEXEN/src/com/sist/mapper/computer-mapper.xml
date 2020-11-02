@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.computer-mapper">
-  
+  <!-- 1. 데이터 삽입 -->
   <insert id="computerInsert" parameterType="ComputerVO">
    INSERT INTO computer_tb VALUES(
      (SELECT NVL(MAX(com_no)+1,1) FROM Computer_TB),
@@ -17,40 +17,26 @@
      #{hit}
    )
   </insert>
-
+  
+  <!-- 2. 리스트 출력 -->
   <select id="computerListData" resultType="ComputerVO" parameterType="hashmap">
-    SELECT com_no,cate_no,product,spec,image,cost,num
-    FROM (SELECT com_no,cate_no,product,spec,image,cost,rownum as num
-    FROM (SELECT com_no,cate_no,product,spec,image,cost
+    SELECT com_no,cate_no,product,cost,num
+    FROM (SELECT com_no,cate_no,product,cost,rownum as num
+    FROM (SELECT com_no,cate_no,product,cost
     FROM computer_tb WHERE cate_no=#{cate_no} ORDER BY com_no DESC))
     WHERE num BETWEEN #{start} AND #{end}
   </select>
   
-  <select id="computerTotalPage" resultType="int" parameterType="int">
-    SELECT CEIL(COUNT(*)/4.0) FROM computer_tb
-    WHERE cate_no=#{cate_no}
+  <!-- 3. 카테고리 번호 -->
+  <select id="computerCategoryCount" resultType="int" parameterType="int">
+	SELECT COUNT(*) 
+    FROM computer_tb WHERE ROWID IN(SELECT MAX(ROWID) 
+    FROM computer_tb WHERE cate_no=#{cate_no} GROUP BY product)
   </select>
-
-  <select id="computerTotalData" resultType="ComputerVO" parameterType="hashmap">
-    SELECT com_no,cate_no,product,spec,image,cost,num
-    FROM (SELECT com_no,cate_no,product,spec,image,cost,rownum as num
-    FROM (SELECT com_no,cate_no,product,spec,image,cost
-    FROM computer_tb WHERE cate_no=#{cate_no} ORDER BY com_no DESC))
-    WHERE num BETWEEN #{start} AND #{end}
-  </select>
-  
-  <select id="computerTotalPage2" resultType="int" parameterType="int">
-    SELECT CEIL(COUNT(*)/12.0) FROM computer_tb
-  </select>
-
-  <update id="hitIncrement" parameterType="int">
-    UPDATE computer_tb SET
-    hit=hit+1
-    WHERE com_no=#{com_no}
-  </update>
   
   <select id="computerDetailData" resultType="ComputerVO" parameterType="int">
-    SELECT * FROM computer_tb
-    WHERE com_no=#{com_no}
+	SELECT com_no,product,spec,image,cost,gift FROM computer_tb
+	where com_no=#{com_no}
   </select>
+
 </mapper>

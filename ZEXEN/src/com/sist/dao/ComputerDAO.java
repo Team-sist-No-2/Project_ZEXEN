@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import com.sist.vo.ComputerVO;
+import com.sist.vo.GameVO;
 
 public class ComputerDAO {
 	
@@ -15,6 +16,7 @@ public class ComputerDAO {
 		ssf=CreateSqlSessionFactory.getSsf();
 	}
 	
+	// 1. 데이터 삽입
 	public static void computerInsert(ComputerVO vo) 
 	{
 		SqlSession
@@ -24,6 +26,7 @@ public class ComputerDAO {
 		session.close(); 
 	}
 	
+	// 2. 리스트 출력
 	public static List<ComputerVO> computerListData(Map map)
 	{
 		SqlSession session=ssf.openSession();
@@ -32,37 +35,20 @@ public class ComputerDAO {
 		return list;
 	}
 	
-	public static int computerTotalPage(int cate_no)
+	public static Integer computerCategoryCount(int cate_no)
 	{
 		SqlSession session=ssf.openSession();
-		int total=session.selectOne("computerListData",cate_no);
+		int cate_cnt=session.selectOne("computerCategoryCount",cate_no);
 		session.close();
-		return total;
+		return cate_cnt;
 	}
 	
-    public static List<ComputerVO> computerTotalData(Map map)
-    {
-    	SqlSession session=ssf.openSession();
-	    List<ComputerVO> list=session.selectList("computerTotalData",map);
-	    session.close();// 諛섑솚
-	    return list;
-    }
-    
-    public static int computerTotalPage2()
-    {
-	    SqlSession session=ssf.openSession();
-	    int total=session.selectOne("computerTotalPage2");
-	    session.close();
-	    return total;
-    }
-    
-    public static ComputerVO computerDetailData(int no)
-    {
- 	   SqlSession session=ssf.openSession();
- 	   session.update("hitIncrement", no);
- 	   session.commit();
- 	   ComputerVO vo=session.selectOne("computerDetailData", no);
- 	   session.close();
- 	   return vo;
-    }
+	public static ComputerVO computerDetailData(int com_no)
+	{
+		SqlSession session=ssf.openSession();
+		ComputerVO vo=session.selectOne("computerDetailData",com_no);
+		session.close();
+		return vo;
+	}
+	
 }
