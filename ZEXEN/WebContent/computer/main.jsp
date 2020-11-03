@@ -9,6 +9,7 @@
 <html>
 <head>
   <title>Aroma Shop - Category</title>
+
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 
@@ -133,6 +134,7 @@ $(function() {
                   <ul>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="popular" name="brand" cate_no="1"><label for="popular">인기 <span> (${cate_cnt[0] })</span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="rpg" name="brand" cate_no="2"><label for="rpg">RPG <span> (${cate_cnt[1] })</span></label></li>
+
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="strategy" name="brand" cate_no="3"><label for="strategy">전략 <span> (${cate_cnt[2] })</span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="action" name="brand" cate_no="4"><label for="action">액션 <span> (${cate_cnt[3] })</span></label></li>
                     <li class="filter-list"><input class="pixel-radio" type="radio" id="sports" name="brand" cate_no="5"><label for="sports">스포츠 <span> (${cate_cnt[4] })</span></label></li>
@@ -189,6 +191,24 @@ $(function() {
               </div>
             </div>
           </div>
+          
+          
+ <%--          <div class="row">
+    <h2>최근 방문한 영화</h2>
+    <c:forEach var="vo" items="${cList }" varStatus="s">
+      <c:if test="${s.index<6 }">
+      <div class="col-md-2">
+	    <div class="thumbnail">
+	        <img src="${vo.image }" alt="Lights" style="width:100%">
+	        <div class="caption">
+	          <p>${vo.product }</p>
+	        </div>
+       </div>
+     </div>
+     </c:if>
+    </c:forEach>
+  </div>
+ --%>          
           
           <!-- End Filter Bar -->
           

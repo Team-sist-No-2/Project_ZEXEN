@@ -50,7 +50,7 @@
 <body>
 
           <section class="lattest-product-area pb-40 category-list">
-            <<div class="row">
+            <div class="row">
               
               
               <c:forEach var="vo" items="${list }">
@@ -60,15 +60,14 @@
                     <img class="card-img" src="${vo.image }">
          
                     <ul class="card-product__imgOverlay">
-                      <li><button><i class="ti-search"></i></button></li>
                       <li><button><i class="ti-shopping-cart"></i></button></li>
                       <li><button><i class="ti-heart"></i></button></li>
                     </ul>
             
                   </div>
                   <div class="card-body">
-                    <h6 class="card-product__title"><a href="../computer/detail.do?com_no=${vo.com_no}">${vo.product }</a></h6>
-                    <fmt:formatNumber value="${vo.cost }" pattern="#,###"/> ₩
+                    <h6 class="card-product__title"><a href="../computer/detail_before.do?com_no=${vo.com_no}">${vo.product }</a></h6>
+                    ₩<fmt:formatNumber value="${vo.cost }" pattern="#,###"/> 
                   </div>
                 </div>
               </div>
