@@ -271,10 +271,10 @@ $(function() {
 								
 							<c:if test="${sessionScope.id!=null }">
 								<c:if test="${wcount==0 }">
-								<a class="icon_btn" href="../game/wish_insert.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-heart-broken" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" href="../game/wish_insert.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
 								</c:if>
 								<c:if test="${wcount==1 }">
-								<a class="icon_btn" href="../game/wish_delete.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" href="../game/wish_delete.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-heart-broken" style="color: #9E01F9;"></i></a>
 								</c:if>
 							</c:if>
 							

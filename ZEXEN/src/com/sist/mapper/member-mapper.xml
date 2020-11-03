@@ -41,6 +41,11 @@
     WHERE wish_no=#{wish_no}
   </delete>
   
+  <delete id="wishAllDelete" parameterType="hashmap">
+    DELETE FROM wish_list
+    WHERE id=#{id} AND cate=#{cate}
+  </delete>
+  
   <select id="wishCount" parameterType="String" resultType="int">
    	 SELECT COUNT(*) FROM wish_list
 	 WHERE id=#{id}
@@ -58,10 +63,15 @@
     WHERE basket_no=#{basket_no}
   </delete>
   
-  <select id="basketCount" parameterType="String" resultType="int">
+  <select id="gameWishToBasket" parameterType="hashmap" resultType="int">
    	 SELECT COUNT(*) FROM shopping_basket
-	 WHERE id=#{id}
+	 where cate=1 AND id=#{id} AND game_no=#{game_no}
    </select>
    
+  <select id="computerWishToBasket" parameterType="hashmap" resultType="int">
+   	 SELECT COUNT(*) FROM shopping_basket
+	 where cate=2 AND id=#{id} AND com_no=#{com_no}
+  </select>
+  
 
 </mapper>

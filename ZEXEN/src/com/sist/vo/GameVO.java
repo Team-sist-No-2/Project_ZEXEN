@@ -25,6 +25,12 @@ import java.sql.Date;
  */
 public class GameVO {
 	
+	public int getGbasket_cnt() {
+		return gbasket_cnt;
+	}
+	public void setGbasket_cnt(int gbasket_cnt) {
+		this.gbasket_cnt = gbasket_cnt;
+	}
 	public int getGbasket_no() {
 		return gbasket_no;
 	}
@@ -153,4 +159,5 @@ public class GameVO {
     private String list_poster;
     private int gwish_no;
     private int gbasket_no;
+    private int gbasket_cnt;
 }

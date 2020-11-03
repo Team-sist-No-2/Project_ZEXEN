@@ -132,8 +132,14 @@ public class MemberModel {
     }
 	
 	@RequestMapping("member/wish.do") // 찜목록
-	public String wish_list(HttpServletRequest request) 
+	public String wish(HttpServletRequest request) 
 	{
+		String cate=request.getParameter("cate");
+		if(cate==null)
+		{
+			cate="1";
+		}
+		
 		HttpSession session = request.getSession();
 		String id = (String) session.getAttribute("id");
 
@@ -147,6 +153,10 @@ public class MemberModel {
 		{
 			GameVO gvo = GameDAO.gameDetailData(vo.getGame_no());
 			gvo.setGwish_no(vo.getWish_no());
+			
+			map.put("game_no",gvo.getGame_no());
+			int gcnt=MemberDAO.gameWishToBasket(map);
+			gvo.setGbasket_cnt(gcnt);
 			gList.add(gvo);
 		}
 		request.setAttribute("gList", gList);
@@ -158,6 +168,10 @@ public class MemberModel {
 		{
 			ComputerVO cvo=ComputerDAO.computerDetailData(vo.getCom_no());
 			cvo.setCwish_no(vo.getWish_no());
+			
+			map.put("com_no",cvo.getCom_no());
+			int ccnt=MemberDAO.computerWishToBasket(map);
+			cvo.setCbasket_cnt(ccnt);
 			cList.add(cvo);
 		}
 		request.setAttribute("cList", cList);
@@ -173,30 +187,8 @@ public class MemberModel {
 		}
 		request.setAttribute("nList", nList);
 
-//		if (cate == "1") 
-//		{
-//			List<GameVO> gList = new ArrayList<GameVO>();
-//			for (WishVO vo : wList) 
-//			{
-//				GameVO gvo = GameDAO.gameDetailData(vo.getGame_no());
-//				gvo.setGwish_no(vo.getWish_no());
-//				gList.add(gvo);
-//			}
-//			request.setAttribute("gList", gList);
-//		}
 		
-//		if (cate == "2") 
-//		{
-//			List<ComputerVO> cList = new ArrayList<ComputerVO>();
-//			for (WishVO vo : wList) 
-//			{
-//				ComputerVO cvo=ComputerDAO.computerDetailData(vo.getCom_no());
-//				cvo.setCwish_no(vo.getWish_no());
-//				cList.add(cvo);
-//			}
-//			request.setAttribute("cList", cList);
-//		}
-		
+		request.setAttribute("cate", cate); //선택되어서 보여질 페이지 조건
 		request.setAttribute("main_jsp", "../member/wishlist.jsp");
 		return "../main/main.jsp";
 	}
@@ -212,7 +204,24 @@ public class MemberModel {
 		MemberDAO.wishDelete(Integer.parseInt(wish_no));
 		
 		request.setAttribute("cate", cate);
-		return("redirect:../member/wish.do");
+		return("redirect:../member/wish.do?cate="+cate);
+	}
+	
+	@RequestMapping("member/wish_alldelete.do")
+	public String wish_alldelete(HttpServletRequest request)
+	{
+		String cate=request.getParameter("cate"); //카테고리 화면유지용
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		Map map=new HashMap();
+		map.put("id", id);
+		map.put("cate",cate);
+		
+		MemberDAO.wishAllDelete(map);
+		
+		request.setAttribute("cate", cate);
+		return("redirect:../member/wish.do?cate="+cate);
 	}
 	
 	@RequestMapping("member/basket.do") // 장바구니
@@ -257,18 +266,33 @@ public class MemberModel {
 	@RequestMapping("member/basket_insert.do")
 	public String basket_insert(HttpServletRequest request)
 	{
+		String cate=request.getParameter("cate");
+		if(cate==null)
+		{
+			cate="1";
+		}
 		String game_no=request.getParameter("game_no");
+		String com_no=request.getParameter("com_no");
 		
 		HttpSession session=request.getSession();
 		String id=(String)session.getAttribute("id");
 		
 		BasketVO vo=new BasketVO();
 		vo.setId(id);
+		
+		if(game_no!=null)
+		{
 		vo.setGame_no(Integer.parseInt(game_no));
-		
 		GameDAO.gameBasketInsert(vo);
+		}
 		
-		return("redirect:../member/basket.do");
+		else
+		{
+		vo.setCom_no(Integer.parseInt(com_no));
+//		ComputerDAO.computerBasketInsert(vo);
+		}
+		
+		return("redirect:../member/wish.do?cate="+cate);
 	}
 	
 	@RequestMapping("member/basket_delete.do")

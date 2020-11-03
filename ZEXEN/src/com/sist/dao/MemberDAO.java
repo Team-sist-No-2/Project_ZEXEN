@@ -65,6 +65,13 @@ public class MemberDAO {
 		session.close();
 	}
 	
+	public static void wishAllDelete(Map map) 
+	{
+		SqlSession session = ssf.openSession(true);
+		session.delete("wishAllDelete", map);
+		session.close();
+	}
+	
 	public static int wish_count(String id) 
 	{
 		SqlSession session = ssf.openSession(true);
@@ -88,10 +95,18 @@ public class MemberDAO {
 		session.close();
 	}
 	
-	public static int basket_count(String id) 
+	public static int gameWishToBasket(Map map) 
 	{
 		SqlSession session = ssf.openSession(true);
-		int basket_cnt=session.selectOne("basketCount",id);
+		int basket_cnt=session.selectOne("gameWishToBasket",map);
+		session.close();
+		return basket_cnt;
+	}
+	
+	public static int computerWishToBasket(Map map) 
+	{
+		SqlSession session = ssf.openSession(true);
+		int basket_cnt=session.selectOne("computerWishToBasket",map);
 		session.close();
 		return basket_cnt;
 	}
