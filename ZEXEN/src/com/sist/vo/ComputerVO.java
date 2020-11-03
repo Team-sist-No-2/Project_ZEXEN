@@ -16,7 +16,13 @@ package com.sist.vo;
  */
 
 public class ComputerVO {
-   public int getCwish_no() {
+   public int getCbasket_cnt() {
+		return cbasket_cnt;
+	}
+	public void setCbasket_cnt(int cbasket_cnt) {
+		this.cbasket_cnt = cbasket_cnt;
+	}
+public int getCwish_no() {
 		return cwish_no;
 	}
 	public void setCwish_no(int cwish_no) {
@@ -41,6 +47,7 @@ private int com_no; // �젣�뭹踰덊샇
    private int hit;
    private int cwish_no;
    private int cbasket_no;
+   private int cbasket_cnt;
    
    public int getCom_no() {
       return com_no;
