@@ -9,19 +9,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-/* $(function() {
+$(function() {
 	$('.page-item').click(function(){
 		let cate_no=cate;
 		let page=$(this).attr("page");
 		
-		
 		if(search_on)
 		{
 			console.log("검색활성화 : 검색어에대한 페이지 번호:"+page)
-			let keyword=$('#gameKewword').val();
+			let keyword=$('#CompKeyword').val();
 			$.ajax({
 				type:'post',
-				url:'../game/search.do',
+				url:'../computer/search.do',
 				data: {key:keyword,page:page,sort:sort}, //페이지 넘길 때  검색단어, 선언된 정렬 기준으로 페이지 넘기기
 				success:function(result)
 				{
@@ -35,8 +34,8 @@
 			console.log("검색 비활성화 : 카테고리 "+cate_no+" 에대한 페이지 번호: "+page);
 			$.ajax({
 					type:'post',
-					url:'../game/list.do',
-					data: {cate:cate_no,page:page,sort:sort}, //페이지 넘길 때 카테고리, 선언된 정렬 기준으로 페이지 넘기기
+					url:'../computer/list.do',
+					data: {cate_no:cate_no,page:page,sort:sort}, //페이지 넘길 때 카테고리, 선언된 정렬 기준으로 페이지 넘기기
 					success:function(result)
 					{
 						$('#tagin').html(result);
@@ -44,7 +43,7 @@
 			})
 		}
 	})
-}); */
+});
 </script>
 </head>
 <body>

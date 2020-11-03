@@ -39,16 +39,16 @@ public class ComputerModel {
 		{
 			for(int i=cookies.length-1;i>=0;i--)
 			{
-				if(cookies[i].getName().startsWith(id))
+				if(cookies[i].getName().startsWith(id+"_cookie"))
 				{
-					cookies[i].setPath("/");
 					String no=cookies[i].getValue();
 					ComputerVO vo=ComputerDAO.computerDetailData(Integer.parseInt(no));
 					cList.add(vo);
 				}
 			}
+			request.setAttribute("cList", cList);
 		}
-		request.setAttribute("cList", cList);
+		request.setAttribute("main_jsp", "../computer/main.jsp");
 		return "../main/main.jsp";
 	}
 	
