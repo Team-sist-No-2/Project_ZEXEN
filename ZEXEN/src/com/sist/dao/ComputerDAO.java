@@ -51,4 +51,12 @@ public class ComputerDAO {
 		return vo;
 	}
 	
+    public static int computerTotalPage(int cate_no)
+    {
+    	SqlSession session=ssf.openSession();
+	    int total=session.selectOne("computerTotalPage", cate_no);
+	    session.close();
+	    return total;
+    }
+	
 }

@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import com.sist.controller.RequestMapping;
 import com.sist.dao.ComputerDAO;
+import com.sist.dao.GameDAO;
 import com.sist.vo.ComputerVO;
+import com.sist.vo.GameVO;
 
 
 
@@ -70,10 +72,24 @@ public class ComputerModel {
 		map.put("start", start);
 		map.put("end", end);
 		
-		List<ComputerVO> list = ComputerDAO.computerListData(map);
-			
-		request.setAttribute("list", list);
-			
+		List<ComputerVO> list=ComputerDAO.computerListData(map);
+		int totalpage=ComputerDAO.computerTotalPage(Integer.parseInt(cateno)); 
+		
+		int BLOCK=10;
+		int startPage=((curpage-1)/BLOCK*BLOCK)+1;  
+		int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK; 
+		
+		if(endPage>totalpage)  
+		   endPage=totalpage;
+		 
+    	request.setAttribute("list", list);
+    	request.setAttribute("curpage", curpage);	
+   		request.setAttribute("totalpage", totalpage);	
+   		request.setAttribute("BLOCK", BLOCK);			
+   		request.setAttribute("startPage", startPage);	
+   		request.setAttribute("endPage", endPage);		
+
+		
 		return "../computer/list.jsp";
 	}
 	
