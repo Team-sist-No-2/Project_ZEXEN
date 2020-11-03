@@ -13,16 +13,7 @@ public class MainModel {
 	   @RequestMapping("main/main.do")
 	   public String main_page(HttpServletRequest request)
 	   {
-		   request.setAttribute("main_jsp", "../main/home.jsp"); 	//main.jsp에서 include의 경로
-		   
-		   HttpSession session=request.getSession();
-		   String id=(String)session.getAttribute("id");
-		   
-		   if(id!=null)
-			{
-			int wish_cnt=MemberDAO.wish_count(id);
-	   	    request.setAttribute("wish_cnt", wish_cnt);
-			}
+		  request.setAttribute("main_jsp", "../main/home.jsp"); 	//main.jsp에서 include의 경로
 		   
 	      return "../main/main.jsp";
 	   }

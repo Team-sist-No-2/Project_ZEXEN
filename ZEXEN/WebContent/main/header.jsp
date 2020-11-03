@@ -31,8 +31,8 @@
             <ul class="nav-shop">
 <!--               <li class="nav-item"><button><i class="ti-search"></i></button></li> -->
 			<c:if test="${sessionScope.id!=null }">
-              <li class="nav-item"><button><a href="../member/basket.do"><i class="ti-shopping-cart"></i></a><span class="nav-shop__circle"></span></button></li>
-              <li class="nav-item"><button><a href="../member/wish.do"><i class="ti-heart" style="font-size: 14px;"></i></a><span class="nav-shop__circle"></span></button></li>
+              <li class="nav-item"><button><a href="../member/basket.do"><i class="ti-shopping-cart" style="color: #9E01F9"></i></a><span class="nav-shop__circle"></span></button></li>
+              <li class="nav-item"><button><a href="../member/wish.do" ><i class="ti-heart" style="font-size: 14px; color: #9E01F9;" ></i></a><span class="nav-shop__circle"></span></button></li>
             </c:if>
             </ul>
               

@@ -97,11 +97,6 @@ public class GameModel {
 		int start=(rowSize*curpage)-(rowSize-1);
 		int end=rowSize*curpage;
 		
-		System.out.println(category);
-	   	System.out.println(start);
-	   	System.out.println(end);
-	   	System.out.println(sort);
-		
 		Map map=new HashMap();
 		map.put("category", category);
 		map.put("start", start);
@@ -187,6 +182,7 @@ public class GameModel {
     {
     	System.out.println("game/like.do DAO 정상실행");
     	String no=request.getParameter("game_no");
+    	System.out.println("좋아요 게임번호:"+no);
     	int game_no=Integer.parseInt(no);
 
     	System.out.println("like.do실행완료하였습니다");

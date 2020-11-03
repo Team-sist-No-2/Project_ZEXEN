@@ -136,7 +136,6 @@ $(function() {
 		if(!alreadyClick){
 		
 		let hcnt=${vo.hate_cnt+1};
-// 		alert(hcnt);
 		hcnt=hcnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		$('#hate_out').html(hcnt);
 
@@ -250,22 +249,21 @@ $(function() {
 								</div>
 								</a>
 								
-							${sessionScope.id }								
 								            
 							</div>
 							<div class="card_area d-flex align-items-center">
 								
 							<c:if test="${sessionScope.id!=null }">
 								<c:if test="${bcount==0 }">
-								<a class="icon_btn" href="../game/basket_insert.do?game_no=${vo.game_no }"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" href="../game/basket_insert.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
 								</c:if>
 								<c:if test="${bcount==1 }">
-								<a class="icon_btn" href="../game/basket_delete.do?game_no=${vo.game_no }"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" href="../game/basket_delete.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-shopping-cart-full" style="color: #9E01F9;"></i></a>
 								</c:if>
 							</c:if>
 							
 							<c:if test="${sessionScope.id==null }">
-								<a class="icon_btn" onclick="alert('로그인이 필요합니다.');"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" onclick="alert('로그인이 필요합니다.');" style="background: white;"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
 							</c:if>	
 								
 								
@@ -273,15 +271,15 @@ $(function() {
 								
 							<c:if test="${sessionScope.id!=null }">
 								<c:if test="${wcount==0 }">
-								<a class="icon_btn" href="../game/wish_insert.do?game_no=${vo.game_no }"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" href="../game/wish_insert.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-heart-broken" style="color: #9E01F9;"></i></a>
 								</c:if>
 								<c:if test="${wcount==1 }">
-								<a class="icon_btn" href="../game/wish_delete.do?game_no=${vo.game_no }"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" href="../game/wish_delete.do?game_no=${vo.game_no }" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
 								</c:if>
 							</c:if>
 							
 							<c:if test="${sessionScope.id==null }">
-								<a class="icon_btn" onclick="alert('로그인이 필요합니다.');"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+								<a class="icon_btn" onclick="alert('로그인이 필요합니다.');" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
 							</c:if>
 								
 								

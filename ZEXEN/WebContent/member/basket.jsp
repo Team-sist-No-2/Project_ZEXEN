@@ -32,7 +32,7 @@
                                           <p>Minimalistic shop for multipurpose use</p>
                                       </div>
                                   </div>
-                              </td>
+                              	</td>
                               <td>
                                   <h5>$360.00</h5>
                               </td>

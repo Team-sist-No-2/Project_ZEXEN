@@ -7,147 +7,209 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<style type="text/css">
+a {
+    color: #9E01F9;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+.button-review {
+    padding: 0px 20px;
+    border-radius: 30px;
+}
+</style>
 </head>
 <body>
-<!--           <input type="button" class="btn btn-sm btn-primary" id="allBtn" -->
-<!--           value="게임 목록"/>&nbsp;&nbsp; -->
-<!--           <input type="button" class="btn btn-sm btn-primary" id="allBtn" -->
-<!--           value="컴퓨터 목록"/> -->
-
 
   <!--================Cart Area =================-->
-  <section class="cart_area">
-      <div class="container">
-          <div class="cart_inner">
-              <div class="table-responsive">
-                  <table class="table">
-                      <thead>
-                          <tr>
-                              <th scope="col">Product</th>
-                              <th scope="col"></th>
-                              <th scope="col"></th>
-                              <th scope="col"></th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          
-                          
-                          <c:forEach items="${gList }" var="gvo">
-                          <tr>
-                              <td>
-                                  <div class="media">
-                                      <div class="d-flex">
-                                          <img src="${gvo.list_poster }" alt="" width="200px" height="100px">
-                                      </div>
-                                      <div class="media-body">
-                                          <p>${gvo.name }</p>
-                                      </div>
-                                  </div>
-                              </td>
-                              <td>
-                                  <h5><fmt:formatNumber value="${gvo.price }" pattern="#,###"/> ₩</h5>
-                              </td>
-                              <td>
-                                  <div class="product_count">
-                                  </div>
-                              </td>
-                              <td>
-                                  <h5>체크박스</h5>
-                              </td>
-                          </tr>
-                         </c:forEach>
-                         
-                          
-                          <tr class="bottom_button">
-                              <td>
-                                  <a class="primary-btn" href="#">삭제하기</a>
-                                  <a class="primary-btn" href="#">장바구니</a>
-                              </td>
-                              <td>
+  	<section class="product_description_area">
+		<div class="container">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+			
+				<li class="nav-item"><a class="nav-link active" id="game-tab"
+					data-toggle="tab" href="#game" role="tab" 
+					aria-controls="game"
+					aria-selected="true">GAME</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" id="computer-tab"
+					data-toggle="tab" href="#computer" role="tab"
+					aria-controls="computer" 
+					aria-selected="false">COMPUTER</a>
+				</li>
+				<li class="nav-item"><a class="nav-link" id="news-tab"
+					data-toggle="tab" href="#news" role="tab" 
+					aria-controls="news"
+					aria-selected="false">NEWS</a>
+				</li>
+			</ul>
 
-                              </td>
-                              <td>
+			<div class="tab-content" id="myTabContent">
 
-                              </td>
-                              <td>
-                                  <div class="cupon_text d-flex align-items-center">
-<!--                                       <input type="text" placeholder="Coupon Code"> -->
-                                      <a class="primary-btn" href="#">Apply</a>
-                                      <a class="button" href="#">버튼</a>
-                                  </div>
-                              </td>
-                          </tr>
-<!--                           <tr> -->
-<!--                               <td> -->
+				<div class="tab-pane fade show active" id="game" role="tabpanel" aria-labelledby="game-tab">
+					<div class="cart_inner">
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+									<c:forEach items="${gList }" var="gvo">
+										<tr>
+											<td>
+												<div class="media">
+													<div class="d-flex">
+														<img src="${gvo.list_poster }" alt="" width="200px"
+															height="100px">
+													</div>
+													<div class="media-body">
+														<p>${gvo.name }</p>
+													</div>
+												</div>
+											</td>
+											<td>
+												<h5>
+													<fmt:formatNumber value="${gvo.price }" pattern="#,###" />
+													₩
+												</h5>
+											</td>
+											<td>
+												<div class="product_count"></div>
+											</td>
+											<td>
+											<a href="../member/wish_delete.do?wish_no=${gvo.gwish_no }"><input
+														type="submit" class="button button--active button-review"
+														style="background-color: #FA00A2; margin-bottom: 5px"
+														value="삭제하기"></a>
+											
+											<a href="../member/basket_insert.do?wish_no=${gvo.gwish_no }"><input
+														type="submit" class="button button--active button-review"
+														style="background-color: #FA00A2; margin-bottom: 5px"
+														value="장바구니"></a>
+											</td>
+										</tr>
+									</c:forEach>
 
-<!--                               </td> -->
-<!--                               <td> -->
 
-<!--                               </td> -->
-<!--                               <td> -->
-<!--                                   <h5>Subtotal</h5> -->
-<!--                               </td> -->
-<!--                               <td> -->
-<!--                                   <h5>$2160.00</h5> -->
-<!--                               </td> -->
-<!--                           </tr> -->
-<!--                           <tr class="shipping_area"> -->
-<!--                               <td class="d-none d-md-block"> -->
+									<tr class="bottom_button">
+										<td><a class="primary-btn" href="#">삭제하기</a> <a
+											class="primary-btn" href="#">장바구니</a></td>
+										<td></td>
+										<td></td>
+										<td>
+											<div class="cupon_text d-flex align-items-center">
+												<a class="primary-btn" href="#">장바구니</a> <a class="button"
+													href="#">삭제하기</a>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
-<!--                               </td> -->
-<!--                               <td> -->
+				<div class="tab-pane fade" id="computer" role="tabpanel" aria-labelledby="computer-tab">
+					<div class="cart_inner">
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+									<c:forEach items="${cList }" var="cvo">
+										<tr>
+											<td>
+												<div class="media">
+													<div class="d-flex">
+														<img src="${cvo.image }" alt="" width="100px"
+															height="100px">
+													</div>
+													<div class="media-body">
+														<p>${cvo.product }</p>
+													</div>
+												</div>
+											</td>
+											<td>
+												<h5>
+													<fmt:formatNumber value="${cvo.cost }" pattern="#,###" />
+													₩
+												</h5>
+											</td>
+											<td>
+												<div class="product_count"></div>
+											</td>
+											<td>
+												<h5>체크박스</h5>
+											</td>
+										</tr>
+									</c:forEach>
 
-<!--                               </td> -->
-<!--                               <td> -->
-<!--                                   <h5>Shipping</h5> -->
-<!--                               </td> -->
-<!--                               <td> -->
-<!--                                   <div class="shipping_box"> -->
-<!--                                       <ul class="list"> -->
-<!--                                           <li><a href="#">Flat Rate: $5.00</a></li> -->
-<!--                                           <li><a href="#">Free Shipping</a></li> -->
-<!--                                           <li><a href="#">Flat Rate: $10.00</a></li> -->
-<!--                                           <li class="active"><a href="#">Local Delivery: $2.00</a></li> -->
-<!--                                       </ul> -->
-<!--                                       <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6> -->
-<!--                                       <select class="shipping_select"> -->
-<!--                                           <option value="1">Bangladesh</option> -->
-<!--                                           <option value="2">India</option> -->
-<!--                                           <option value="4">Pakistan</option> -->
-<!--                                       </select> -->
-<!--                                       <select class="shipping_select"> -->
-<!--                                           <option value="1">Select a State</option> -->
-<!--                                           <option value="2">Select a State</option> -->
-<!--                                           <option value="4">Select a State</option> -->
-<!--                                       </select> -->
-<!--                                       <input type="text" placeholder="Postcode/Zipcode"> -->
-<!--                                       <a class="gray_btn" href="#">Update Details</a> -->
-<!--                                   </div> -->
-<!--                               </td> -->
-<!--                           </tr> -->
-<!--                           <tr class="out_button_area"> -->
-<!--                               <td class="d-none-l"> -->
 
-<!--                               </td> -->
-<!--                               <td class=""> -->
+									<tr class="bottom_button">
+										<td><a class="primary-btn" href="#">삭제하기</a> <a
+											class="primary-btn" href="#">장바구니</a></td>
+										<td></td>
+										<td></td>
+										<td>
+											<div class="cupon_text d-flex align-items-center">
+												<a class="primary-btn" href="#">Apply</a> <a class="button"
+													href="#">버튼</a>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
-<!--                               </td> -->
-<!--                               <td> -->
+				<div class="tab-pane fade" id="news" role="tabpanel" aria-labelledby="news-tab">
+					<div class="cart_inner">
+						<div class="table-responsive">
+							<table class="table">
+								<tbody>
+									<c:forEach items="${nList }" var="nvo">
+										<tr>
+											<td>
+												<div class="media">
+													<div class="d-flex">
+														<img src="${nvo.poster }" alt="" width="200px"
+															height="100px">
+													</div>
+													<div class="media-body">
+														<p>${nvo.subject }</p>
+													</div>
+												</div>
+											</td>
+											<td>
+												<h5></h5>
+											</td>
+											<td>
+												<div class="product_count"></div>
+											</td>
+											<td>
+												<h5>체크박스</h5>
+											</td>
+										</tr>
+									</c:forEach>
 
-<!--                               </td> -->
-<!--                               <td> -->
-<!--                                   <div class="checkout_btn_inner d-flex align-items-center"> -->
-<!--                                       <a class="gray_btn" href="#">Continue Shopping</a> -->
-<!--                                       <a class="primary-btn ml-2" href="#">Proceed to checkout</a> -->
-<!--                                   </div> -->
-<!--                               </td> -->
-<!--                           </tr> -->
-                      </tbody>
-                  </table>
-              </div>
-          </div>
-      </div>
-  </section>
+
+									<tr class="bottom_button">
+										<td><a class="primary-btn" href="#">삭제하기</a></td>
+										<td></td>
+										<td></td>
+										<td>
+											<div class="cupon_text d-flex align-items-center">
+												<a class="primary-btn" href="#">Apply</a> <a class="button"
+													href="#">버튼</a>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
   <!--================End Cart Area =================-->
 
 

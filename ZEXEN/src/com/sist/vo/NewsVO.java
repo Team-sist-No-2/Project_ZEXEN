@@ -1,6 +1,12 @@
 package com.sist.vo;
 
 public class NewsVO {
+	public int getNwish_no() {
+		return nwish_no;
+	}
+	public void setNwish_no(int nwish_no) {
+		this.nwish_no = nwish_no;
+	}
 	private int news_no;
 	   private String subject;
 	   private String content;
@@ -10,7 +16,7 @@ public class NewsVO {
 	   private int like_cnt;
 	   private int hate_cnt;
 	   private String member_id;
-	   
+	   private int nwish_no;
 	   
 	public int getNews_no() {
 		return news_no;

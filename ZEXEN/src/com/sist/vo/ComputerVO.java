@@ -16,7 +16,19 @@ package com.sist.vo;
  */
 
 public class ComputerVO {
-   private int com_no; // �젣�뭹踰덊샇
+   public int getCwish_no() {
+		return cwish_no;
+	}
+	public void setCwish_no(int cwish_no) {
+		this.cwish_no = cwish_no;
+	}
+	public int getCbasket_no() {
+		return cbasket_no;
+	}
+	public void setCbasket_no(int cbasket_no) {
+		this.cbasket_no = cbasket_no;
+	}
+private int com_no; // �젣�뭹踰덊샇
    private int cate_no; // 移댄뀒怨좊━
    private String product; // �젣�뭹紐�
    private String spec; // �뒪�럺
@@ -27,6 +39,8 @@ public class ComputerVO {
    private int sell_cnt; //�쁽�옱源뚯� �뙋留ㅻ��닔 default 0
    private int stock_cnt; //�옱怨좎닔�웾 default 50?
    private int hit;
+   private int cwish_no;
+   private int cbasket_no;
    
    public int getCom_no() {
       return com_no;
