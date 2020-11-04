@@ -14,10 +14,35 @@
 </insert>
 
 <select id="gameReplyListData" resultType="ReplyVO" parameterType="int">
-    select reply_no,game_no,msg,regdate,member_tb.id,reply_tb.id,member_tb.pimg
-	FROM reply_tb,member_tb
-	where reply_tb.id=member_tb.id AND game_no=#{game_no}
+    SELECT reply_no,category,game_no,msg,id,regdate
+    FROM reply_tb
+    WHERE game_no=#{game_no}
+    ORDER BY regdate desc
+</select>
+
+
+<insert id="newsReplyInsert" parameterType="ReplyVO">
+	INSERT INTO reply_tb(reply_no,category,news_no,msg,id) VALUES (
+	(SELECT NVL(max(reply_no)+1,1) FROM reply_tb),
+	#{category},
+	#{news_no},
+	#{msg},
+	#{id}
+	)
+</insert>
+
+<select id="newsReplyListData" resultType="ReplyVO">
+	SELECT reply_no,category,news_no,msg,id,regdate,
+	(SELECT COUNT(*)FROM reply_tb where news_no=n.news_no) reply_count
+	FROM reply_tb n
+	WHERE news_no=#{news_no}
 	ORDER BY regdate desc
+</select>
+
+
+<select id="replyCount" resultType="int" parameterType="int">
+SELECT COUNT(*) FROM reply_tb
+WHERE news_no=#{news_no}
 </select>
 
 

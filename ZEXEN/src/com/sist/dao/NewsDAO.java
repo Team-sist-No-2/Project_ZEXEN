@@ -1,10 +1,16 @@
 package com.sist.dao;
 import java.util.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import com.sist.controller.RequestMapping;
 import com.sist.vo.NewsVO;
+import com.sist.vo.ReplyVO;
+import com.sist.vo.WishVO;
 public class NewsDAO {
 	
 	private static SqlSessionFactory ssf;
@@ -53,10 +59,43 @@ public class NewsDAO {
 	public static NewsVO newsDetailData(int news_no) {
 		SqlSession session=ssf.openSession();
 		
+//		session.update("hitIncrement",news_no);
+//		session.commit();
 		NewsVO vo=session.selectOne("newsDetailData",news_no);
+		
+		
+//		try {
+//			session.update("hitIncrement", news_no);
+//			session.commit();
+//		}catch(Exception ex) {
+//			ex.printStackTrace();
+//		}finally {
+//			if(session!=null)
+//				
+//		}
 		session.close();
 		return vo;
 	}
+	
+//	public static NewsVO newsDetailData(int news_no) {
+//		SqlSession session=ssf.openSession();
+//		NewsVO vo=session.selectOne("newsDetailData",news_no);
+//		try {
+//			
+//			session.update("hitIncrement", news_no);
+//			session.commit();
+//			
+//		}catch(Exception ex) {
+//			ex.printStackTrace();
+//			}finally {
+//				if(session!=null)
+//					session.close();
+//		}
+//		
+//		return vo;
+//	}
+	
+	
 	
 	/*
 	 *  <update id="hitIncrement" parameterType="int">
@@ -66,9 +105,10 @@ public class NewsDAO {
 		</update>
 	 */
 	
-	public static void hitIncrement(int hit) {
+	public static void hitIncrement(int news_no) {
 		SqlSession session=ssf.openSession(true);
-		session.update("hitIncrement",hit);
+		session.update("com.sist.mapper.news-mapper.hitIncrement",news_no);
+		session.commit();
 		session.close();
 	}
 	
@@ -84,4 +124,68 @@ public class NewsDAO {
 		session.update("like",news_no);
 		session.close();
 	}
+	
+	
+	public static void hate(int news_no) {
+		SqlSession session=ssf.openSession(true);
+		session.update("hate",news_no);
+		session.close();
+	}
+	
+//	
+	
+	
+	
+	
+	
+	/*
+	 * <insert id="newsReplyInsert" parameterType="ReplyVO">
+		INSERT INTO reply_tb(reply_no,category,news_no,msg,id) VALUES (
+		(SELECT NVL(reply_no)+1,1) FROM reply_tb),
+		#{category},
+		#{news_no},
+		#{msg},
+		${id}
+		)
+	</insert>
+	
+	<select id="newsReplyListData" resultType="ReplyVO">
+		SELECT reply_no,category,news_no,msg,id,regdate
+		FROM reply_tb
+		WHERE news_no=#{news_no}
+		ORDER BY regdate desc
+	</select>
+	 */
+	
+	public static void newsReplyInsert(ReplyVO nvo) {
+		SqlSession session=ssf.openSession();
+		session=ssf.openSession(true);
+		session.insert("newsReplyInsert",nvo);
+		session.close();
+	}
+	
+	public static List<ReplyVO> newsReplyListData(int news_no){
+		SqlSession session=ssf.openSession();
+		List<ReplyVO> list=session.selectList("newsReplyListData",news_no);
+		session.close();
+		return list;
+	}
+
+	
+	/*
+	 * <select id="newsHitCount" resultType="NewsVO" parameterType="hashmap">
+		SELECT poster,subject,content,num 
+		FROM(SELECT poster,subject,content,rownum as num
+		FROM(SELECT poster,subject,content
+		FROM news ORDER BY hit)) 
+		WHERE num BETWEEN 1 AND 4;
+		</select>
+	 */
+	public static NewsVO newsHitCount(int news_no) {
+		SqlSession session=ssf.openSession();
+		NewsVO vo=session.selectOne("newsHitCount",news_no);
+		session.close();
+		return vo;
+	}
+	
 }

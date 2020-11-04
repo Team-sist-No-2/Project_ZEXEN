@@ -27,7 +27,7 @@ MEMBER_ID          VARCHAR2(500)
 </select>
 
 <select id="newsTotalPage" resultType="int">
-SELECT CEIL(count(*)/10.0) FROM news
+SELECT CEIL(count(*)/5.0) FROM news
 </select>
 
 
@@ -36,6 +36,7 @@ UPDATE news SET
 hit=hit+1
 WHERE news_no=#{news_no}
 </update>
+
 
 
 <select id="newsDetailData" resultType="NewsVO" parameterType="int">
@@ -49,5 +50,26 @@ WHERE news_no=#{news_no}
 	SET like_cnt=like_cnt+1
 	WHERE news_no=#{news_no} 
 </update>
+
+<update id="hate" parameterType="NewsVO">
+	UPDATE news
+	SET hate_cnt=hate_cnt+1
+	WHERE news_no=#{news_no}
+</update>
+
+<select id="newsCount" resultType="int" parameterType="int">
+SELECT count(msg) FROM reply_tb
+WHERE news_no=${news_no};
+</select>
+
+<select id="newsHitCount" resultType="NewsVO" parameterType="int">
+SELECT news_no,poster,subject,content,num 
+FROM(SELECT news_no,poster,subject,content,rownum as num
+FROM(SELECT news_no,poster,subject,content
+FROM news ORDER BY hit)) 
+WHERE num BETWEEN 1 AND 4;
+</select>
+
+
 
 </mapper>

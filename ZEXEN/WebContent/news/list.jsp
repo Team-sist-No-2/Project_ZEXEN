@@ -10,13 +10,13 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 
-$(function() {
+/* $(function() {
 	console.log("선택한 카테고리 번호: "+cate+"  , 검색비활성화");
 // 	function reload(){
 		
 // 	      $("#newsposter").load(window.location.href + "#newsposter");
 // 	}
-});
+}); */
 
 $(function() {
 	$('.page-item').click(function(){
@@ -35,9 +35,17 @@ $(function() {
 });
 
 
+
+
+
+
 </script>
 </head>
 <body>
+
+
+
+
 <c:forEach var="vo" items="${List }"> 
                       <article class="row blog_item">
                           <div class="col-md-3">
@@ -52,36 +60,45 @@ $(function() {
                                   <ul class="blog_meta list">
                                   
                                       <li>
-                                          <a href="#">${vo.hit }
-                                              <i class="lnr lnr-user"></i>
+                                      <br></br>
+                                      	<br></br>
+                                      	<br></br>
+                                      	<br></br>
+                                      		${vo.hit}
+                                          <%-- <a href="#">${vo.hit } --%>
+                                          <img value="${vo.hit }" id="#" src="../assets/img/news/nhit.png" width=20 height=20>
+                                              
                                           </a>
                                       </li>
                                     
                                       <li>
-                                          <a href="#">좋아요
-                                              <i class="lnr lnr-eye"></i>
-                                          </a>
+                                      		${vo.like_cnt }
+                                      			<img value="${vo.like_cnt }" id="like_btn" src="../assets/img/news/nlike.PNG" width=20 height=20>
+                                      		<h1 id="like_out"></h1>
+                                             
                                       </li>
                                       <li>
-                                          <a href="#">싫어요
-                                              <i class="lnr lnr-bubble"></i>
-                                          </a>
+                                      		${vo.hate_cnt }
+                                      			<img value="${vo.hate_cnt }" id="hate_btn" src="../assets/img/news/nhate.PNG" width=20 height=20>
+                                      		<h1 id="like_out"></h1>
+                                             
                                       </li>
                                        <li>
                                           <%-- <a href="#">${vo.regdate } --%>
                                            <a href="#">${fn:substring(vo.regdate, 0, 10) }
                                         
-                                              <i class="lnr lnr-bubble"></i>
+                                             
                                           </a>
                                       </li>
                                   </ul>
                               </div>
                           </div> 
                           <div class="col-md-9">
-                              <div class="blog_post">                             
-                               	  <img src=${vo.poster } alt="" id="newsposter">
+                              <div class="blog_post">   
+                              <a href="../news/detail_before.do?news_no=${vo.news_no }">                          
+                               	  <img src=${vo.poster } alt="" id="newsposter" width=500 height=250>
                                      <div class="blog_details">
-                                      <a href="../news/detail.do?news_no=${vo.news_no }">
+                                      
                                       <%-- <img src="${vo.poster }" alt=""> --%> 
                                       
                                       <h2>
@@ -151,5 +168,8 @@ $(function() {
                           </ul>
                           
                           </nav>
+              
+     
+                          
 </body>
 </html>

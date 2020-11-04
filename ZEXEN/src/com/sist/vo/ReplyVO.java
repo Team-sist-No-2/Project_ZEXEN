@@ -4,12 +4,6 @@ import java.sql.Date;
 
 public class ReplyVO {
 
-	public String getPimg() {
-		return pimg;
-	}
-	public void setPimg(String pimg) {
-		this.pimg = pimg;
-	}
 	public java.util.Date getRegdate() {
 		return regdate;
 	}
@@ -101,6 +95,13 @@ public class ReplyVO {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
+	public int getNews_no() {
+		return news_no;
+	}
+	public void setNews_no(int news_no) {
+		this.news_no = news_no;
+	}
+
 	private int reply_no;
 	private int game_no;
 	private int com_no;
@@ -116,5 +117,18 @@ public class ReplyVO {
 	private int group_tab; // 종류
 	private int root; //상위 댓글 삭제용
 	private int depth; //댓글 몇개? 삭제용
-	private String pimg;
+	private int news_no;
+	
+	
+	
+	private int replyCount;
+	
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	
+	
 }
