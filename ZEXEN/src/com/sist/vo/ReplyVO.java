@@ -4,6 +4,12 @@ import java.sql.Date;
 
 public class ReplyVO {
 
+	public String getPimg() {
+		return pimg;
+	}
+	public void setPimg(String pimg) {
+		this.pimg = pimg;
+	}
 	public java.util.Date getRegdate() {
 		return regdate;
 	}
@@ -118,7 +124,7 @@ public class ReplyVO {
 	private int root; //상위 댓글 삭제용
 	private int depth; //댓글 몇개? 삭제용
 	private int news_no;
-	
+	private String pimg;
 	
 	
 	private int replyCount;

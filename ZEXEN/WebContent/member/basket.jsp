@@ -30,6 +30,13 @@ a {
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 $(function(){
+	$("input:checkbox[id='gAllBtn']").prop("checked", true);
+	$("input:checkbox[class='gcb']").prop("checked", true);
+	$("input:checkbox[id='cAllBtn']").prop("checked", true);
+	$("input:checkbox[class='ccb']").prop("checked", true);
+});
+
+$(function(){
 	$('#gAllBtn').click(function(){
 		let len=$('.gcb:checked').length;
 		if(len==0)
@@ -44,26 +51,116 @@ $(function(){
 			}
 	})
 	
-	$('#basketDelete').click(function(){
+	$('.gcb').click(function(){
+		let len=$('.gcb:checked').length;
+		if(len==$('#gcnt').val())
+			{
+				$("input:checkbox[id='gAllBtn']").prop("checked", true);
+			}
+		else
+			{
+				$("input:checkbox[id='gAllBtn']").prop("checked", false);
+			}
+	})
+	
+	$('#cAllBtn').click(function(){
+		let len=$('.ccb:checked').length;
+		if(len==0)
+			{
+				$("input:checkbox[class='ccb']").prop("checked", true);
+				$("input:checkbox[id='cAllBtn']").prop("checked", true);
+			}
+		else
+			{
+				$("input:checkbox[class='ccb']").prop("checked", false);
+				$("input:checkbox[id='cAllBtn']").prop("checked", false);
+			}
+	})
+	
+	$('.ccb').click(function(){
+		let len=$('.ccb:checked').length;
+		if(len==$('#ccnt').val())
+			{
+				$("input:checkbox[id='cAllBtn']").prop("checked", true);
+			}
+		else
+			{
+				$("input:checkbox[id='cAllBtn']").prop("checked", false);
+			}
+	})
+	
+	
+	$('#gbasketDelete').click(function(){
 		$('#gForm').submit();
 	});
+
+	$('#cbasketDelete').click(function(){
+		$('#cForm').submit();
+	});
 	
-	$('.increase').click(function(){
+	$('.increase').on('click', function () {
 		let id=$(this).attr("id_value");
+		let basket_no=$(this).attr("data_value");
+		
 		let count=$('#'+id).val();
 		count=Number(count)+1;
 		$('#'+id).val(count);
 		
 		$.ajax({
 			type:'post',
-			url:'../game/hate.do?game_no=${vo.game_no}',
-			success:function(result)
-			{
-				console.log("싫어요 누른 결과는 "+result);
-			}
-	})
+			url:'../member/basket_cnt_update.do',
+			data:{basket_no:basket_no,count:count},
+		 	success: function(result){
+			 console.log("업버튼완료");
+		 	}
+		})
+	});
+	
+	$('.reduced').on('click', function () {
+		let id=$(this).attr("id_value");
+		let basket_no=$(this).attr("data_value");
+		
+		let count=$('#'+id).val();
+		count=Number(count)-1;
+		$('#'+id).val(count);
+		
+		$.ajax({
+			type:'post',
+			url:'../member/basket_cnt_update.do',
+			data:{basket_no:basket_no,count:count},
+		 	success: function(result){
+			 console.log("다운버튼완료");
+		 	}
+		})
+	});
+	
+	
+	$('.gcb').click(function(){
+	 	var sum = 0;
+	 	var count = $('.gcb').length;
+	 	alert(count);
+	 	for(var i=0; i < count; i++ ){
+	 	       if( gForm.basket_no[i].checked == true ){
+	 		    sum += parseInt(gForm.hprice[i].value);
+	 	       }
+	 	   }
+	 	console.log(sum);
 		
 	});
+		
+
+// 	   for(var i=0; i < count; i++ ){
+// 	       if(  $("input:checkbox[class='gcb']").is("checked").val()   ){
+// 		    sum += parseInt(frm.chkbox[i].value);
+// 			alert("실행");
+// 	       }
+// 	   }
+// 	   frm.total_sum.text = sum;
+
+					<h5><fmt:formatNumber value="${result }" pattern="#,###"/>₩</h5>
+// 	})
+	
+	
 })
 </script>
 </head>
@@ -106,6 +203,7 @@ $(function(){
                           <tr>
                               <td colspan=2>
                               <input type="checkbox" class="gcb" name="basket_no" value="${gvo.gbasket_no }">
+                              <input type="hidden" value="${gvo.price }" name="hprice">
                                   <div class="media">
                                       <div class="d-flex">
                                           <img src="${gvo.list_poster }" alt="" width="200px">
@@ -145,6 +243,7 @@ $(function(){
                               <td>
                               </td>
                               <td>
+                              
                               <c:set var="result" value="0"/>
 	                              <c:forEach items="${gList }" var="gvo" >
 	                              	  <c:set var="result" value="${result+gvo.price }"/>
@@ -158,6 +257,9 @@ $(function(){
 											₩</h5>
 									</c:when>
 								  </c:choose>
+								  
+								  
+								  
                               </td>
                           </tr>
                           
@@ -175,10 +277,10 @@ $(function(){
                               <td>
                                   <div class="cupon_text d-flex align-items-center">
                         
-			<c:if test="${fn:length(gList)!=0}"> <button class="primary-btn" style="background-color: #FA00A2" id="basketDelete">All Delete</button> </c:if> 
+			<c:if test="${fn:length(gList)!=0}"> <button class="primary-btn" style="background-color: #FA00A2" id="gbasketDelete">선택 삭제</button> </c:if> 
+                                      <input type="hidden" value="${fn:length(gList)}" id="gcnt"> 
                                       
-                                      
-                                      <button class="primary-btn" onclick="alert('구매완료')">B U Y</button>
+                                      <button class="primary-btn" onclick="alert('구매완료')">구매</button>
                                   </div>
                               </td>
                           </tr>
@@ -219,20 +321,7 @@ $(function(){
                                   </div>
                               	</td>
                               	<td>
-                              	 <h5>$360.00</h5>
-                              	</td>
-                              <td>
-                                 <div class="product_count">
-                                      <input type="text" name="qty" id="sst${status.index}" maxlength="12" value="${cvo.cbasket_cnt}" title="Quantity:"
-                                          class="input-text qty">
-                                      <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} )) return false;"
-                                          class="increase items-count" data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-up"></i></button>
-                                      <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} ) &amp;&amp; sst${status.index} > 0 ) result.value--;return false;"
-                                          class="reduced items-count"  data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                  </div>
-                              </td>
-                              <td>
-                                  <h5 style="text-align: center">
+                              	 <h5 style="text-align: center">
                                   <c:choose>
 									<c:when test="${cvo.cost== 0}">
 										무료
@@ -242,6 +331,21 @@ $(function(){
 											₩
 									</c:when>
 								  </c:choose>
+								  </h5>
+                              	</td>
+                              <td>
+                                 <div class="product_count">
+                                      <input type="text" name="qty" id="sst${status.index}" maxlength="12" value="${cvo.cbasket_cnt}" title="Quantity:"
+                                          class="input-text qty">
+                                      <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} )) return false;"
+                                          class="increase items-count" data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                      <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} ) &amp;&amp; sst${status.index} > 0 ) return false;"
+                                          class="reduced items-count"  data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                  </div>
+                              </td>
+                              <td>
+                                  <h5 style="text-align: center">
+                                  <!-- 컴퓨터토탈 -->
 								  </h5>
                               </td>
                           </tr>
@@ -287,10 +391,10 @@ $(function(){
                               <td>
                                   <div class="cupon_text d-flex align-items-center">
                         
-			<c:if test="${fn:length(gList)!=0}"> <button class="primary-btn" style="background-color: #FA00A2" id="basketDelete">All Delete</button> </c:if> 
+			<c:if test="${fn:length(cList)!=0}"> <button class="primary-btn" style="background-color: #FA00A2" id="cbasketDelete">선택 삭제</button> </c:if> 
+                                      <input type="hidden" value="${fn:length(cList)}" id="ccnt"> 
                                       
-                                      
-                                      <button class="primary-btn" onclick="alert('구매완료')" id="buyBtn">B U Y</button>
+                                      <button class="primary-btn" onclick="alert('구매완료')" id="buyBtn">구매</button>
                                   </div>
                               </td>
                           </tr>
