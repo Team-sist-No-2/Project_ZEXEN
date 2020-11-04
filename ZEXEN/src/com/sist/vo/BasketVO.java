@@ -1,7 +1,13 @@
 package com.sist.vo;
 
 public class BasketVO {
-	   public int getBasket_no() {
+	   public int getComputer_count() {
+		return computer_count;
+	}
+	public void setComputer_count(int computer_count) {
+		this.computer_count = computer_count;
+	}
+	public int getBasket_no() {
 		return basket_no;
 	}
 	public void setBasket_no(int basket_no) {
@@ -36,4 +42,5 @@ public class BasketVO {
 	   private int com_no;
 	   private String id;
 	   private int cate;
+	   private int computer_count;
 }

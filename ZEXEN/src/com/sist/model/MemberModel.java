@@ -252,6 +252,7 @@ public class MemberModel {
 			{
 				ComputerVO cvo=ComputerDAO.computerDetailData(vo.getCom_no());
 				cvo.setCbasket_no(vo.getBasket_no());
+				cvo.setCbasket_cnt(vo.getComputer_count());
 				cList.add(cvo);
 			}
 			request.setAttribute("cList", cList);
@@ -314,13 +315,11 @@ public class MemberModel {
 	public String computerBasketUpdate(HttpServletRequest request)
 	{
 		String basket_no=request.getParameter("basket_no");
-		String cate=request.getParameter("cate"); //카테고리 화면유지용
-		if(cate==null)
-			cate="1";
-		String pm=request.getParameter("pm");
+		String cate="2";
+		String count=request.getParameter("count");
 		
 		Map map=new HashMap();
-		map.put("pm", pm);
+		map.put("count", count);
 		map.put("basket_no", basket_no);
 		
 		MemberDAO.computerBasketUpdate(map);

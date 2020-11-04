@@ -49,16 +49,20 @@ $(function(){
 	});
 	
 	$('.increase').click(function(){
-		let basket_no=$(this).attr("data_value");
+		let id=$(this).attr("id_value");
+		let count=$('#'+id).val();
+		count=Number(count)+1;
+		$('#'+id).val(count);
+		
 		$.ajax({
 			type:'post',
-			url:'../member/basket_cnt_update.do',
-			data: {basket_no:basket_no,pm:"+1"}, //페이지 넘길 때  검색단어, 선언된 정렬 기준으로 페이지 넘기기
+			url:'../game/hate.do?game_no=${vo.game_no}',
 			success:function(result)
 			{
-			        $('#tagin').html(result);
-				}
-	       });
+				console.log("싫어요 누른 결과는 "+result);
+			}
+	})
+		
 	});
 })
 </script>
@@ -219,12 +223,12 @@ $(function(){
                               	</td>
                               <td>
                                  <div class="product_count">
-                                      <input type="text" name="qty" id="sst${status.index}" maxlength="12" value="1" title="Quantity:"
+                                      <input type="text" name="qty" id="sst${status.index}" maxlength="12" value="${cvo.cbasket_cnt}" title="Quantity:"
                                           class="input-text qty">
-                                      <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} )) result.value++;return false;"
-                                          class="increase items-count" data_value="${cvo.cbasket_no }" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                      <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} )) return false;"
+                                          class="increase items-count" data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-up"></i></button>
                                       <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} ) &amp;&amp; sst${status.index} > 0 ) result.value--;return false;"
-                                          class="reduced items-count" data_value="${cvo.cbasket_no }" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                          class="reduced items-count"  data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-down"></i></button>
                                   </div>
                               </td>
                               <td>
@@ -286,7 +290,7 @@ $(function(){
 			<c:if test="${fn:length(gList)!=0}"> <button class="primary-btn" style="background-color: #FA00A2" id="basketDelete">All Delete</button> </c:if> 
                                       
                                       
-                                      <button class="primary-btn" onclick="alert('구매완료')">B U Y</button>
+                                      <button class="primary-btn" onclick="alert('구매완료')" id="buyBtn">B U Y</button>
                                   </div>
                               </td>
                           </tr>

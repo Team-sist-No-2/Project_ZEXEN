@@ -117,7 +117,7 @@ $(function() {
 							<div class="col-lg-8 posts-list">
 									<div class="single-post row">
 											<div class="col-lg-12">
-													<div class="feature-img" >
+													<div class="feature-img" style="text-align: center;">
 															<img class="img-fluid" src="${vo.poster }" alt="">
 															
 													</div>
