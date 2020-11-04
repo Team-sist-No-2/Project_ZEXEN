@@ -111,4 +111,14 @@ public class MemberDAO {
 		return basket_cnt;
 	}
 
+	/*
+	 *   	UPDATE shopping_basket SET computer_count=computer_count+1
+    		WHERE basket_no=#{basket_no}
+	 */
+	public static void computerBasketUpdate(Map map)
+	{
+		SqlSession session = ssf.openSession(true);
+		session.update("computerBasketUpdate", map);
+		session.close();
+	}
 }

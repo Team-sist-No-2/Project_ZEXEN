@@ -73,5 +73,9 @@
 	 where cate=2 AND id=#{id} AND com_no=#{com_no}
   </select>
   
+  <update id="computerBasketUpdate" parameterType="hashmap">
+  	UPDATE shopping_basket SET computer_count=computer_count${pm}
+    WHERE basket_no=#{basket_no}
+  </update>
 
 </mapper>

@@ -51,10 +51,17 @@ a {
 					<div class="cart_inner">
 						<div class="table-responsive">
 							<table class="table">
+							<thead>
+                          <tr>
+                              <th scope="col" colspan=2><span style="margin-left: 42px">Image</span></th>
+                              <th scope="col"  style="text-align: center;">Price</th>
+                              <th scope="col" style="text-align: center;">Action</th>
+                          </tr>
+                      		</thead>
 								<tbody>
 									<c:forEach items="${gList }" var="gvo">
 										<tr>
-											<td>
+											<td colspan=2>
 												<div class="media">
 													<div class="d-flex">
 														<img src="${gvo.list_poster }" alt="" width="200px"
@@ -66,7 +73,7 @@ a {
 												</div>
 											</td>
 											<td>
-												<h5>
+												<h5 style="text-align: center">
 													<c:choose>
 														<c:when test="${gvo.price== 0}">
 															무료
@@ -77,9 +84,6 @@ a {
 														</c:when>
 													</c:choose>
 												</h5>
-											</td>
-											<td>
-												<div class="product_count"></div>
 											</td>
 											<td>
 											<a href="../member/wish_delete.do?wish_no=${gvo.gwish_no }&cate=1" onclick="alert('삭제되었습니다.');" ><input
@@ -105,7 +109,7 @@ a {
 									<tr class="bottom_button">
 										<td colspan=3></td>
 										<td>
-										<c:if test="${fn:length(gList)!=0}"> <a class="primary-btn" href="../member/wish_alldelete.do?cate=1">전체삭제하기</a> </c:if>
+										<c:if test="${fn:length(gList)!=0}"> <a class="primary-btn" href="../member/wish_alldelete.do?cate=1" style="margin-left: 8px">전체삭제하기</a> </c:if>
 										</td>	
 									</tr>
 								</tbody>
@@ -118,10 +122,17 @@ a {
 					<div class="cart_inner">
 						<div class="table-responsive">
 							<table class="table">
+							<thead>
+                          <tr>
+                              <th scope="col" colspan=2><span style="margin-left: 42px">Image</span></th>
+                              <th scope="col"  style="text-align: center;">Price</th>
+                              <th scope="col" style="text-align: center;">Action</th>
+                          </tr>
+                      		</thead>
 								<tbody>
 									<c:forEach items="${cList }" var="cvo">
 										<tr>
-											<td>
+											<td colspan=2>
 												<div class="media">
 													<div class="d-flex">
 														<img src="${cvo.image }" alt="" width="100px"
@@ -146,9 +157,6 @@ a {
 												</h5>
 											</td>
 											<td>
-												<div class="product_count"></div>
-											</td>
-											<td>
 												<a href="../member/wish_delete.do?wish_no=${cvo.cwish_no }&cate=2" onclick="alert('삭제되었습니다.');" ><input
 														type="submit" class="button button--active button-review"
 														style="background-color: #FA00A2; margin-bottom: 5px"
@@ -164,7 +172,7 @@ a {
 									<tr class="bottom_button">
 										<td colspan=3></td>
 										<td>
-										<c:if test="${fn:length(cList)!=0}"> <a class="primary-btn" href="../member/wish_alldelete.do?cate=2">전체삭제하기</a> </c:if>
+										<c:if test="${fn:length(cList)!=0}"> <a class="primary-btn" href="../member/wish_alldelete.do?cate=2" style="margin-left: 8px">전체삭제하기</a> </c:if>
 										</td>	
 									</tr>
 								</tbody>
@@ -177,6 +185,12 @@ a {
 					<div class="cart_inner">
 						<div class="table-responsive">
 							<table class="table">
+							<thead>
+                          <tr>
+                              <th scope="col" colspan=3><span style="margin-left: 42px">Image</span></th>
+                              <th scope="col" style="text-align: center;">Action</th>
+                          </tr>
+                      		</thead>
 								<tbody>
 									<c:forEach items="${nList }" var="nvo">
 										<tr>
@@ -209,7 +223,7 @@ a {
 									<tr class="bottom_button">
 										<td colspan=3></td>
 										<td>
-										<c:if test="${fn:length(nList)!=0}"> <a class="primary-btn" href="../member/wish_alldelete.do?cate=3">전체삭제하기</a> </c:if>
+										<c:if test="${fn:length(nList)!=0}"> <a class="primary-btn" href="../member/wish_alldelete.do?cate=3" style="margin-left: 8px">전체삭제하기</a> </c:if>
 										</td>	
 									</tr>
 								</tbody>

@@ -59,10 +59,6 @@ public class MemberModel {
 	@RequestMapping("member/join.do")
 	public String member_join(HttpServletRequest request)
 	{	
-		String pimg=request.getParameter("pimg");
-		
-		request.setAttribute("pimg", pimg);
-		System.out.println(pimg);
 		request.setAttribute("main_jsp", "../member/join.jsp"); 	//main.jsp에서 include의 경로
 		return "../main/main.jsp";
 	}
@@ -132,9 +128,9 @@ public class MemberModel {
     }
 	
 	@RequestMapping("member/wish.do") // 찜목록
-	public String wish(HttpServletRequest request) 
+	public String wish_list(HttpServletRequest request) 
 	{
-		String cate=request.getParameter("cate");
+		String cate=request.getParameter("cate"); //화면유지용
 		if(cate==null)
 		{
 			cate="1";
@@ -227,7 +223,7 @@ public class MemberModel {
 	@RequestMapping("member/basket.do") // 장바구니
 	public String basket_list(HttpServletRequest request) 
 	{
-		String cate = request.getParameter("cate");
+		String cate = request.getParameter("cate"); //화면유지용
 		if (cate == null)
 			cate = "1";
 		
@@ -235,30 +231,32 @@ public class MemberModel {
 		String id = (String) session.getAttribute("id");
 		
 		Map map = new HashMap();
-		map.put("cate", cate);
 		map.put("id", id);
 
+		
+		map.put("cate", 1);
 		List<BasketVO> bList = MemberDAO.basketListData(map);
-		
-		
-
-		if (cate == "1") 
-		{
-			List<GameVO> gList = new ArrayList<GameVO>();
+		List<GameVO> gList = new ArrayList<GameVO>();
 			for (BasketVO vo : bList) 
 			{
 				GameVO gvo = GameDAO.gameDetailData(vo.getGame_no());
-				gvo.setGwish_no(vo.getBasket_no());
+				gvo.setGbasket_no(vo.getBasket_no());
 				gList.add(gvo);
 			}
 			request.setAttribute("gList", gList);
-		}
 		
-		else
-		{
-			List<ComputerVO> cList = new ArrayList<ComputerVO>();
-		}
+		map.put("cate", 2);
+		bList = MemberDAO.basketListData(map);
+		List<ComputerVO> cList = new ArrayList<ComputerVO>();
+			for (BasketVO vo : bList) 
+			{
+				ComputerVO cvo=ComputerDAO.computerDetailData(vo.getCom_no());
+				cvo.setCbasket_no(vo.getBasket_no());
+				cList.add(cvo);
+			}
+			request.setAttribute("cList", cList);
 		
+		request.setAttribute("cate", cate); //선택되어서 보여질 페이지 조건
 		request.setAttribute("main_jsp", "../member/basket.jsp");
 		return "../main/main.jsp";
 	}
@@ -298,19 +296,37 @@ public class MemberModel {
 	@RequestMapping("member/basket_delete.do")
 	public String basket_delete(HttpServletRequest request)
 	{
-		String basket_no=request.getParameter("basket_no");
+		String[] basket_no=request.getParameterValues("basket_no"); //체크된 basket_no 가져옴
 		String cate=request.getParameter("cate"); //카테고리 화면유지용
 		if(cate==null)
 			cate="1";
 		
-		MemberDAO.basketDelete(Integer.parseInt(basket_no));
+		for(String n:basket_no)
+		{
+			MemberDAO.basketDelete(Integer.parseInt(n));
+		}
 		
-		request.setAttribute("cate", cate);
-		return("redirect:../member/basket.do");
+		return("redirect:../member/basket.do?cate="+cate);
 	}
 	
 	
-	
+	@RequestMapping("member/basket_cnt_update.do")
+	public String computerBasketUpdate(HttpServletRequest request)
+	{
+		String basket_no=request.getParameter("basket_no");
+		String cate=request.getParameter("cate"); //카테고리 화면유지용
+		if(cate==null)
+			cate="1";
+		String pm=request.getParameter("pm");
+		
+		Map map=new HashMap();
+		map.put("pm", pm);
+		map.put("basket_no", basket_no);
+		
+		MemberDAO.computerBasketUpdate(map);
+		
+		return("redirect:../member/basket.do?cate="+cate);
+	}
 
 	
 }

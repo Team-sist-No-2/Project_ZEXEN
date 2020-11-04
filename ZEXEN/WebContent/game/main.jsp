@@ -188,8 +188,7 @@ $(function() {
             
             <div>
               <div class="input-group filter-bar-search">
-               
-
+               <input type="text" placeholder="Search" id="gameKewword">
                 <div class="input-group-append">
                   <button type="button" id="gameSearch"><i class="ti-search"></i></button>
                 </div>
