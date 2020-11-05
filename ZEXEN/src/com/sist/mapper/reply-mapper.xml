@@ -47,7 +47,7 @@
 </insert>
 
 <select id="newsReplyListData" resultType="ReplyVO">
-	SELECT reply_no,category,news_no,msg,id,regdate,reply_tb.id,member_tb.pimg
+	SELECT reply_no,category,news_no,msg,member_tb.id,regdate,reply_tb.id,member_tb.pimg
 	FROM reply_tb,member_tb 
 	where reply_tb.id=member_tb.id AND news_no=#{news_no}
 	ORDER BY regdate desc
