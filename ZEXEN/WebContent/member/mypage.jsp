@@ -100,6 +100,7 @@
 </div>
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+<a href="../member/memberinfo.do">
 <div class="confirmation-card">
 <p style="text-align: center;">
 <img src="https://img.icons8.com/pastel-glyph/50/000000/search-account.png"/>
@@ -111,6 +112,7 @@
       </tr>
   </table>
 </div>
+</a>
 </div>
 
 
@@ -132,6 +134,7 @@
 
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+<a href="../member/basket.do">
 <div class="confirmation-card">
 <p style="text-align: center;">
 <img src="https://img.icons8.com/pastel-glyph/50/000000/shopping-cart--v1.png"/>
@@ -143,6 +146,7 @@
       </tr>
   </table>
 </div>
+</a>
 </div>
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
@@ -160,7 +164,9 @@
 </div>
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+<a href="../board/main.do">
 <div class="confirmation-card">
+
 <p style="text-align: center;">
 <img src="https://img.icons8.com/pastel-glyph/50/000000/edit.png"/>
 </p>
@@ -171,7 +177,9 @@
       </tr>
   </table>
 </div>
+</a>
 </div>
+
 </div>
 </section>
 </body>

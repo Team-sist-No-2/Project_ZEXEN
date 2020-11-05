@@ -13,15 +13,6 @@
 	)
 </insert>
 
-<insert id="computerReplyInsert" parameterType="ReplyVO">
-	INSERT INTO reply_tb(reply_no,category,com_no,msg,id) VALUES (
-	(SELECT NVL(MAX(reply_no)+1,1) FROM reply_tb), 
-	#{category},
-	#{com_no},
-	#{msg},
-	#{id}
-	)
-</insert>
 <select id="gameReplyListData" resultType="ReplyVO" parameterType="int">
     select reply_no,game_no,msg,regdate,member_tb.id,reply_tb.id,member_tb.pimg
 	FROM reply_tb,member_tb
@@ -29,12 +20,6 @@
 	ORDER BY regdate desc
 </select>
 
-<select id="computerReplyListData" resultType="ReplyVO" parameterType="int">
-    select reply_no,com_no,msg,regdate,member_tb.id,reply_tb.id,member_tb.pimg
-	FROM reply_tb,member_tb
-	where reply_tb.id=member_tb.id AND com_no=#{com_no}
-	ORDER BY regdate desc
-</select>
 
 <insert id="newsReplyInsert" parameterType="ReplyVO">
 	INSERT INTO reply_tb(reply_no,category,news_no,msg,id) VALUES (

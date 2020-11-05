@@ -125,7 +125,13 @@ public class ReplyVO {
 	private int depth; //댓글 몇개? 삭제용
 	private int news_no;
 	private String pimg;
-	
+	private String dbday;
+	public String getDbday() {
+		return dbday;
+	}
+	public void setDbday(String dbday) {
+		this.dbday = dbday;
+	}
 	
 	private int replyCount;
 	

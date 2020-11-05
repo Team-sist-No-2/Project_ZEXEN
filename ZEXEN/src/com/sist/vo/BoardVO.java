@@ -27,7 +27,29 @@ public class BoardVO {
 	private String file_name;	//파일이름
 	private int file_size;	//파일사이즈
 	private int board_cate_no;	//카테고리종류
+	private String dbday;
+	private int replyCount; //댓글 총 갯수
+	private int boardCount; //게시글 총갯수
 	
+	
+	public int getBoardCount() {
+		return boardCount;
+	}
+	public void setBoardCount(int boardCount) {
+		this.boardCount = boardCount;
+	}
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	public String getDbday() {
+		return dbday;
+	}
+	public void setDbday(String dbday) {
+		this.dbday = dbday;
+	}
 	public int getBoard_no() {
 		return board_no;
 	}

@@ -39,6 +39,7 @@ public class MainModel {
 		  request.setAttribute("clist", clist);
 		  
 		  request.setAttribute("main_jsp", "../main/home.jsp"); 	//main.jsp�뿉�꽌 include�쓽 寃쎈줈
+		  request.setAttribute("main_jsp", "../main/home.jsp"); 	//main.jsp에서 include의 경로
 	      return "../main/main.jsp";
 	   }
 	   

@@ -7,110 +7,120 @@
 <head>
 <meta charset="UTF-8">
 <title>커뮤니티 게시판</title>
+<style type="text/css">
+.product_description_area .nav.nav-tabs li a{cursor:pointer;}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+var cate_no=0;
+
+$(function(){
+	$.ajax({
+		type:'post',
+		url:'../board/count.do?cate='+cate_no,
+		success:function(result)
+		{
+			console.log(result);
+			$('#bcnt').text(result);
+		}
+  })
+	
+	
+	console.log("gd");
+	 $.ajax({
+		 type:'post',
+		 url:'../board/list.do',
+		 success:function(result)
+		 {
+			 $('#tagin').html(result);
+		 }
+	 });
+});
+
+
+$(function() {
+	$('.nav-item').click(function(){	//카테고리 선택시 해당하는 리스트 출력
+		cate_no=$(this).attr("value_data");
+	
+		$.ajax({
+			type:'post',
+			url:'../board/count.do?cate='+cate_no,
+			success:function(result)
+			{
+				$('#bcnt').text(result);
+			}
+	  })
+	
+	
+		if(cate_no!=0)
+		{
+		console.log("선택한 카테고리 번호: "+cate_no);
+		$.ajax({
+					type:'post',
+					url:'../board/catelist.do?cate_no='+cate_no,
+					success:function(result)
+					{
+						$('#tagin').html(result);
+					}
+			  })
+	    
+		}
+		
+		if(cate_no==0)
+		{
+		console.log("전체페이지출력");
+		$.ajax({
+					type:'post',
+					url:'../board/list.do',
+					success:function(result)
+					{
+						$('#tagin').html(result);
+					}
+			  })
+			  
+// 		$.ajax({
+// 					type:'post',
+// 					url:'../board/main.do',
+// 					success:function(result)
+// 					{
+// 						$('#tagin').html(result);
+// 					}
+// 			  })
+		}
+		
+		})
+});
+</script>
 </head>
 <body>
-
 	<!--================게시판=================-->
     <section class="product_description_area">
         <div class="container">
             <h1 class="cont_tit">게시판</h1>
             <!--탭-->
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">전체</a>
+                <li class="nav-item" value_data="0">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="home" aria-selected="true">전체</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">자유</a>
+                <li class="nav-item" value_data="1">
+                    <a class="nav-link"  id="profile-tab" data-toggle="tab"  role="tab" aria-controls="profile" aria-selected="false">자유</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">게임</a>
+                <li class="nav-item" value_data="2" >
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" role="tab" aria-controls="contact" aria-selected="false">게임</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">컴퓨터</a>
+                <li class="nav-item" value_data="3">
+                    <a class="nav-link"  id="review-tab" data-toggle="tab"  role="tab" aria-controls="review" aria-selected="false">컴퓨터</a>
                 </li>
-                <li style="float:right"><span class="info_count">총 <em>88880</em>개의 글이 있습니다.</span></li>
+                <li style="float:right"><span class="info_count">총 <em id="bcnt">${count }</em>개의 글이 있습니다.</span></li>
             </ul>
             <!--//탭-->
             <!--탭 컨텐츠-->
             <div class="tab-content" id="myTabContent">
                 <!--탭1 전체게시판-->
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="table-responsive">
-                        <table class="tbl_board">
-                            <caption class="ir_caption screen_out">게시판 목록</caption>
-                            <colgroup>
-                                <col class="col_cate">
-                                <col class="col_tit">
-                                <col class="col_writer">
-                                <col class="col_date">
-                                <col class="col_view">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th scope="col">구분</th>
-                                    <th scope="col" class="cell_tit">제목</th>
-                                    <th scope="col">작성자</th>
-                                    <th scope="col">작성일</th>
-                                    <th scope="col">조회수</th>
-                                </tr>
-                            </thead>
-                            <c:forEach var="vo" items="${list }">
-                            <tbody>
-                                <tr class="tr_emph">
-                                    <td class="">
-	                                    <c:choose>
-	                                    	<c:when test="${vo.board_cate_no == 0}">자유</c:when>
-	                                    	<c:when test="${vo.board_cate_no == 1}">게임</c:when>
-	                                    	<c:when test="${vo.board_cate_no == 2}">게시판</c:when>
-	                                    </c:choose>
-                                    </td>
-                                    <td>
-                                        <a href="../board/detail.do?board_no=${vo.board_no }" class="link_subject">${vo.subject }</a>
-                                        <span class="num_cmt emph_g2"><span class="screen_out">댓글 수</span>[9]</span>
-                                        <span class="img_board ico_new">새글</span>
-                                    </td>
-                                    <td>${vo.member_id }</td>
-                                    <td class="cell_date"><fmt:formatDate value="${vo.regdate }" pattern="yyyy-MM-dd"/> </td>
-                                    <td>${vo.hit }</td>
-                                </tr>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                            </tbody>
-                            </c:forEach>
-                        </table>
+                <div id=tagin>
+                 
                     </div>
-                    <!--pagination-->
-                    <nav class="blog-pagination justify-content-center d-flex" style="padding-bottom: 0px">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Previous">
-                                    <span aria-hidden="true">
-                                        <span class="lnr lnr-chevron-left"></span>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">01</a>
-                            </li>
-                            <li class="page-item active">
-                                <a href="#" class="page-link">02</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">03</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">04</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link">05</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="#" class="page-link" aria-label="Next">
-                                    <span aria-hidden="true">
-                                        <span class="lnr lnr-chevron-right"></span>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
                     <!--//pagination-->
                     <div class="form-group text-center text-md-right mt-3">
                         <!--검색-->
@@ -145,7 +155,14 @@
                             </div>
                         </form>
                         <!--//검색-->
-                        <button type="submit" class="button button--active button-contactForm">글쓰기</button>
+                        <c:if test="${sessionScope.id!=null }">
+                        <button type="submit" onclick="location.href='../board/insert.do'" class="button button--active button-contactForm">글쓰기</button>
+                        </c:if>
+                        <c:if test="${sessionScope.id==null }">
+                        <button type="submit" onclick="alert('로그인이 필요합니다.');" class="button button--active button-contactForm">글쓰기</button>
+                        
+                        </c:if>
+                       
                     </div>
                 </div>
                 <!--//탭1 전체게시판-->

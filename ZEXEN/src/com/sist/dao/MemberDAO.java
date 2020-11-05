@@ -121,4 +121,24 @@ public class MemberDAO {
 		session.update("computerBasketUpdate", map);
 		session.close();
 	}
+	
+	public static MemberVO memberinfo(String id) 
+	{
+		MemberVO vo = new MemberVO();
+		SqlSession session = ssf.openSession();
+		vo = session.selectOne("memberinfo", id);
+
+		return vo;
+	}
+	
+	
+	  public static MemberVO memberinfo_update(String id) 
+	  { 
+		  MemberVO vo = new MemberVO();
+		  SqlSession session = ssf.openSession(); 
+		  vo = session.selectOne("memberinfo_update", id);
+	  
+	  return vo; }
+	 
+	
 }
