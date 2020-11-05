@@ -36,6 +36,52 @@ $(function(){
 	$("input:checkbox[class='ccb']").prop("checked", true);
 });
 
+
+$(function(){
+	var sum = 0;
+ 	var count = $('.gcb').length;
+ 	for(var i=0; i < count; i++ ){
+ 	       if( gForm.basket_no[i].checked == true ){
+ 		    sum += parseInt(gForm.hprice[i].value);
+ 	       }
+ 	   }
+ 			let gtotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+ 	
+				$.ajax({
+					type:'post',
+					url:'../member/basket.do',
+				 	success: function(result){
+					 	$('#gtotal').text(gtotal+' '+'₩');
+				 	}
+				})
+});
+
+$(function(){
+	$('.gcb').click(function(){
+	var sum = 0;
+ 	var count = $('.gcb').length;
+ 	for(var i=0; i < count; i++ ){
+ 	       if( gForm.basket_no[i].checked == true ){
+ 		    sum += parseInt(gForm.hprice[i].value);
+ 	       }
+ 	   }
+ 			let gtotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+ 	
+				$.ajax({
+					type:'post',
+					url:'../member/basket.do',
+				 	success: function(result){
+					 	$('#test').text(gtotal+' '+'₩');
+				 	}
+				})
+				
+	});
+				
+});
+
+
+
+
 $(function(){
 	$('#gAllBtn').click(function(){
 		let len=$('.gcb:checked').length;
@@ -43,11 +89,43 @@ $(function(){
 			{
 				$("input:checkbox[class='gcb']").prop("checked", true);
 				$("input:checkbox[id='gAllBtn']").prop("checked", true);
+				var sum = 0;
+			 	var count = $('.gcb').length;
+			 	for(var i=0; i < count; i++ ){
+			 	       if( gForm.basket_no[i].checked == true ){
+			 		    sum += parseInt(gForm.hprice[i].value);
+			 	       }
+			 	   }
+			 			let gtotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			 	
+							$.ajax({
+								type:'post',
+								url:'../member/basket.do',
+							 	success: function(result){
+								 	$('#test').text(gtotal+' '+'₩');
+							 	}
+							})
 			}
 		else
 			{
 				$("input:checkbox[class='gcb']").prop("checked", false);
 				$("input:checkbox[id='gAllBtn']").prop("checked", false);
+				var sum = 0;
+			 	var count = $('.gcb').length;
+			 	for(var i=0; i < count; i++ ){
+			 	       if( gForm.basket_no[i].checked == true ){
+			 		    sum += parseInt(gForm.hprice[i].value);
+			 	       }
+			 	   }
+			 			let gtotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			 	
+							$.ajax({
+								type:'post',
+								url:'../member/basket.do',
+							 	success: function(result){
+								 	$('#test').text(gtotal+' '+'₩');
+							 	}
+							})
 			}
 	})
 	
@@ -134,33 +212,6 @@ $(function(){
 		})
 	});
 	
-	
-	$('.gcb').click(function(){
-	 	var sum = 0;
-	 	var count = $('.gcb').length;
-	 	alert(count);
-	 	for(var i=0; i < count; i++ ){
-	 	       if( gForm.basket_no[i].checked == true ){
-	 		    sum += parseInt(gForm.hprice[i].value);
-	 	       }
-	 	   }
-	 	console.log(sum);
-		
-	});
-		
-
-// 	   for(var i=0; i < count; i++ ){
-// 	       if(  $("input:checkbox[class='gcb']").is("checked").val()   ){
-// 		    sum += parseInt(frm.chkbox[i].value);
-// 			alert("실행");
-// 	       }
-// 	   }
-// 	   frm.total_sum.text = sum;
-
-					<h5><fmt:formatNumber value="${result }" pattern="#,###"/>₩</h5>
-// 	})
-	
-	
 })
 </script>
 </head>
@@ -203,7 +254,7 @@ $(function(){
                           <tr>
                               <td colspan=2>
                               <input type="checkbox" class="gcb" name="basket_no" value="${gvo.gbasket_no }">
-                              <input type="hidden" value="${gvo.price }" name="hprice">
+                              <input type="hidden" value="${gvo.price }" name="hprice"> <!-- 토탈가격용 -->
                                   <div class="media">
                                       <div class="d-flex">
                                           <img src="${gvo.list_poster }" alt="" width="200px">
@@ -253,8 +304,7 @@ $(function(){
 										<h5>0₩</h5>
 									</c:when>
 									<c:when test="${result!= 0}">
-											<h5><fmt:formatNumber value="${result }" pattern="#,###" />
-											₩</h5>
+											<h5 id="gtotal"></h5>
 									</c:when>
 								  </c:choose>
 								  
@@ -322,6 +372,7 @@ $(function(){
                               	</td>
                               	<td>
                               	 <h5 style="text-align: center">
+                              	 <input type="hidden" name="comCost" value="${cvo.cost }">
                                   <c:choose>
 									<c:when test="${cvo.cost== 0}">
 										무료
@@ -344,8 +395,8 @@ $(function(){
                                   </div>
                               </td>
                               <td>
-                                  <h5 style="text-align: center">
-                                  <!-- 컴퓨터토탈 -->
+                                  <h5 style="text-align: center" id="ctotal">
+                                  123
 								  </h5>
                               </td>
                           </tr>
