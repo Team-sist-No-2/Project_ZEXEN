@@ -47,10 +47,9 @@
 </insert>
 
 <select id="newsReplyListData" resultType="ReplyVO">
-	SELECT reply_no,category,news_no,msg,id,regdate,
-	(SELECT COUNT(*)FROM reply_tb where news_no=n.news_no) reply_count
-	FROM reply_tb n
-	WHERE news_no=#{news_no}
+	SELECT reply_no,category,news_no,msg,member_tb.id,regdate,reply_tb.id,member_tb.pimg
+	FROM reply_tb,member_tb 
+	where reply_tb.id=member_tb.id AND news_no=#{news_no}
 	ORDER BY regdate desc
 </select>
 

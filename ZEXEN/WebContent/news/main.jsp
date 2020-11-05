@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,11 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+
+
+var sort=1;
+var search_on=false;
+
 $(function() {
 	$('.page-item').click(function(){
 		
@@ -23,10 +29,8 @@ $(function() {
 					$('.blog_left_sidebar').html(result);
 				}
 		})
-	
-	
 	})
-});
+})
 
 // 좋아요
 
@@ -53,6 +57,26 @@ $(function(){
 	})
 	
 })
+
+
+
+$(document).read(function(){
+	$("#newsKeyword").keyup(function(key){
+		search_on=true;
+		consol.log("검색활성화됨");
+		$('.pixel-radio').prop("checked", false);
+		let keyword=$('#newsKeyword').val();
+		
+		$.ajax({
+			type:'post',
+			url:'../news/search.do',
+			data:{key:keyword,sort:sort},
+			success:function(result){
+				$('#tagin').html(result);
+			}
+		});
+	});
+});
 
 
 </script>
@@ -221,6 +245,25 @@ $(function(){
                   <div class="blog_right_sidebar">
                       
                       
+                      <!-- -- -->
+                       <!-- <aside class="single_sidebar_widget popular_post_widget">
+                          <h3 class="widget_title">검색</h3>
+                          
+	              <div>
+	              <div class="input-group filter-bar-search">
+	               <input type="text" placeholder="Search" id="newsKeyword">
+	                <div class="input-group-append">
+	                  <button type="button" id="newsSearch"><i class="ti-search"></i></button>
+	                </div>
+	              </div>
+	            </div>
+                          
+                          <div class="br"></div>
+                      </aside> -->
+                      
+                      
+                      
+                      <!-- -- -->
                       <aside class="single_sidebar_widget popular_post_widget">
                           <h3 class="widget_title">최근본 뉴스</h3>
                           
@@ -234,7 +277,7 @@ $(function(){
                               <div class="media-body">
                                   <a href="single-blog.html">
                                   <a href="../news/detail.do?news_no=${vo.news_no }">
-                                       <h3>${fn:substring(vo.subject,0,15) }</h3>
+                                       <h3>${fn:substring(vo.subject,0,14) }</h3>
                                       </a>
                                       
                                   </a>

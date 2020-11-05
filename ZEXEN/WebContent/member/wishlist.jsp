@@ -213,7 +213,7 @@ a {
 <!-- 											</td> -->
 											
 											<td>
-												<a href="../member/wish_delete.do?wish_no=${cvo.cwish_no }&cate=3" onclick="alert('삭제되었습니다.');" ><input
+												<a href="../member/wish_delete.do?wish_no=${nvo.nwish_no }&cate=3" onclick="alert('삭제되었습니다.');" ><input
 														type="submit" class="button button--active button-review"
 														style="background-color: #FA00A2; margin-bottom: 5px"
 														value="삭제하기"></a>

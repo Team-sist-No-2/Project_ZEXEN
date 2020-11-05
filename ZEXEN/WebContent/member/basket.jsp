@@ -37,7 +37,7 @@ $(function(){
 });
 
 
-$(function(){
+$(function(){ //페이지 로딩되자마자 게임페이지에서, 체크되어진 게임들의 가격을 총 가격 출력하는 gtotal.text()에 뿌린다
 	var sum = 0;
  	var count = $('.gcb').length;
  	for(var i=0; i < count; i++ ){
@@ -57,7 +57,8 @@ $(function(){
 });
 
 $(function(){
-	$('.gcb').click(function(){
+	$('.gcb').click(function(){ //게임 체크박스 누를때마다, 체크되어진 게임들의 가격을 총 가격 출력하는 gtotal.text()에 뿌린다
+	console.log("게임체크박스");
 	var sum = 0;
  	var count = $('.gcb').length;
  	for(var i=0; i < count; i++ ){
@@ -71,7 +72,7 @@ $(function(){
 					type:'post',
 					url:'../member/basket.do',
 				 	success: function(result){
-					 	$('#test').text(gtotal+' '+'₩');
+					 	$('#gtotal').text(gtotal+' '+'₩');
 				 	}
 				})
 				
@@ -79,16 +80,64 @@ $(function(){
 				
 });
 
+// $(function(){ //페이지 로딩되자마자 컴퓨터페이지에서, 체크되어진 컴퓨터들의 가격을 총 가격 출력하는 cctotal.text()에 뿌린다
+// 	var sum = 0;
+//  	var count = $('.ccb').length;
+//  	console.log(count);
+//  	console.log(cFom.cbasket_no[1]);
+//  	for(var i=0; i < count; i++ ){
+//  	       if( cForm.cbasket_no[i].checked == true ){
+ 	    	  
+//  		    sum += parseInt(gForm.hcost[i].value);
+//  	       }
+//  	   }
+//  			let ctotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+ 	
+// 				$.ajax({
+// 					type:'post',
+// 					url:'../member/basket.do',
+// 				 	success: function(result){
+// 					 	$('#cctotal').text(ctotal+' '+'₩');
+// 				 	}
+// 				})
+// });
 
+// $(function(){
+// 	$('.ccb').click(function(){ //컴퓨터 체크박스 누를때마다, 체크되어진 컴퓨터들의 가격을 총 가격 출력하는 cctotal.text()에 뿌린다
+// 	console.log("컴퓨터체크박스");
+// 	var sum = 0;
+//  	var count = $('.ccb').length;
+//  	for(var i=0; i < count; i++ ){
+//  	       if( cForm.cbasket_no[i].checked == true ){
+//  		    sum += parseInt(cForm.hcost[i].value);
+//  	       }
+//  	   }
+//  			let ctotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+ 	
+// 				$.ajax({
+// 					type:'post',
+// 					url:'../member/basket.do',
+// 				 	success: function(result){
+// 					 	$('#cctotal').text(ctotal+' '+'₩');
+// 				 	}
+// 				})
+				
+// 	});
+				
+// });
 
 
 $(function(){
-	$('#gAllBtn').click(function(){
-		let len=$('.gcb:checked').length;
-		if(len==0)
+	$('#gAllBtn').click(function(){ //올버튼 클릭시 모든 체크박스 체크, 해제
+		let len=$('.gcb:checked').length; //체크된 박스의 개수
+		console.log("len");
+		if(len==0) //올버튼 눌렀는데 체크된게 없으면
 			{
 				$("input:checkbox[class='gcb']").prop("checked", true);
 				$("input:checkbox[id='gAllBtn']").prop("checked", true);
+				
+				
+				//체크된 모든 게임의 가격
 				var sum = 0;
 			 	var count = $('.gcb').length;
 			 	for(var i=0; i < count; i++ ){
@@ -102,14 +151,16 @@ $(function(){
 								type:'post',
 								url:'../member/basket.do',
 							 	success: function(result){
-								 	$('#test').text(gtotal+' '+'₩');
+								 	$('#gtotal').text(gtotal+' '+'₩');
 							 	}
 							})
 			}
-		else
+		else //올버튼 눌렀는데 체크된게 있을때
 			{
 				$("input:checkbox[class='gcb']").prop("checked", false);
 				$("input:checkbox[id='gAllBtn']").prop("checked", false);
+				
+				//체크해체된 모든 게임의 가격(0원)
 				var sum = 0;
 			 	var count = $('.gcb').length;
 			 	for(var i=0; i < count; i++ ){
@@ -123,7 +174,7 @@ $(function(){
 								type:'post',
 								url:'../member/basket.do',
 							 	success: function(result){
-								 	$('#test').text(gtotal+' '+'₩');
+								 	$('#gtotal').text(gtotal+' '+'₩');
 							 	}
 							})
 			}
@@ -147,11 +198,45 @@ $(function(){
 			{
 				$("input:checkbox[class='ccb']").prop("checked", true);
 				$("input:checkbox[id='cAllBtn']").prop("checked", true);
+				
+				var sum = 0;
+			 	var count = $('.ccb').length;  //컴퓨터 대수
+			 	
+			 	for(var i=0; i < count; i++ ){ //컴퓨터 대수 만큼 for문 돌리는데
+			 	       if( cForm.cbasket_no[i].checked == true ){  //for문 돌아가면서 체크되어진! 컴퓨터만
+			 		    sum += parseInt(cForm.hcost[i].value);
+			 	       }
+			 	   }
+			 			let ctotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							$.ajax({
+								type:'post',
+								url:'../member/basket.do',
+							 	success: function(result){
+								 	$('#cctotal').text(ctotal+' '+'₩');
+							 	}	
+							})
 			}
 		else
 			{
 				$("input:checkbox[class='ccb']").prop("checked", false);
 				$("input:checkbox[id='cAllBtn']").prop("checked", false);
+				
+				var sum = 0;
+			 	var count = $('.ccb').length;  //컴퓨터 대수
+			 	
+			 	for(var i=0; i < count; i++ ){ //컴퓨터 대수 만큼 for문 돌리는데
+			 	       if( cForm.cbasket_no[i].checked == true ){  //for문 돌아가면서 체크되어진! 컴퓨터만
+			 		    sum += parseInt(cForm.hcost[i].value);
+			 	       }
+			 	   }
+			 			let ctotal=sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+							$.ajax({
+								type:'post',
+								url:'../member/basket.do',
+							 	success: function(result){
+								 	$('#cctotal').text(ctotal+' '+'₩');
+							 	}	
+							})
 			}
 	})
 	
@@ -168,21 +253,31 @@ $(function(){
 	})
 	
 	
-	$('#gbasketDelete').click(function(){
+	$('#gbasketDelete').click(function(){ //체크된 게임 모두 지우기
 		$('#gForm').submit();
 	});
 
-	$('#cbasketDelete').click(function(){
+	$('#cbasketDelete').click(function(){ //체크된 컴퓨터 모두 지우기
 		$('#cForm').submit();
 	});
 	
-	$('.increase').on('click', function () {
-		let id=$(this).attr("id_value");
-		let basket_no=$(this).attr("data_value");
+	
+	$('.increase').on('click', function () { //컴퓨터 대수 올리기
+// 		let test=$(this).attr(cost);
+// 		console.log(test);	
+	
+		let id=$(this).attr("id_value");     // 컴퓨터 대수(테이블에 저장된) 출력되는 텍스트박스의 id
+		let basket_no=$(this).attr("data_value"); //테이블에서 UPDATE 할 때 넣을 basket_no값
 		
-		let count=$('#'+id).val();
-		count=Number(count)+1;
-		$('#'+id).val(count);
+		let count=$('#'+id).val(); //컴퓨터 대수(테이블에 저장된) 출력되는 텍스트박스의 대수를 읽어옴
+		count=Number(count)+1;     //업버튼을 눌렀으니 출력되는 텍스트 박스에 +1
+		$('#'+id).val(count);      // 컴퓨터 대수 출력되는 텍스트박스 출력값을 +1한 값으로 바꿈
+		
+		let costid=$(this).attr("costid");   //해당 행의 컴퓨터 가격을 출력할 맨오른쪽 열의 id
+		let comcost=$(this).attr("cost");	 //해당 행의 컴퓨터 한 대당 가격
+		ctotal=Number(comcost)*Number(count) //컴퓨터대수 X 가격
+		ctotal=ctotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //3자리 마다 자르기
+		$('#'+costid).text(ctotal); //한 컴퓨터당 대수X가격 보여주는 로직
 		
 		$.ajax({
 			type:'post',
@@ -194,13 +289,19 @@ $(function(){
 		})
 	});
 	
-	$('.reduced').on('click', function () {
-		let id=$(this).attr("id_value");
-		let basket_no=$(this).attr("data_value");
+	$('.reduced').on('click', function () { //컴퓨터 대수 내리기
+		let id=$(this).attr("id_value");    // 컴퓨터 대수(테이블에 저장된) 출력되는 텍스트박스의 id
+		let basket_no=$(this).attr("data_value"); //테이블에서 UPDATE 할 때 넣을 basket_no값
+		 
+		let count=$('#'+id).val(); //컴퓨터 대수(테이블에 저장된) 출력되는 텍스트박스의 대수를 읽어옴
+		count=Number(count)-1;     //다운버튼을 눌렀으니 출력되는 텍스트 박스에 -1
+		$('#'+id).val(count);      // 컴퓨터 대수 출력되는 텍스트박스 출력값을 -1한 값으로 바꿈
 		
-		let count=$('#'+id).val();
-		count=Number(count)-1;
-		$('#'+id).val(count);
+		let costid=$(this).attr("costid");   //해당 행의 컴퓨터 가격을 출력할 맨오른쪽 열의 id
+		let comcost=$(this).attr("cost");	 //해당 행의 컴퓨터 한 대당 가격
+		ctotal=Number(comcost)*Number(count) //컴퓨터대수 X 가격
+		ctotal=ctotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //3자리 마다 자르기
+		$('#'+costid).text(ctotal); //한 컴퓨터당 대수X가격 보여주는 로직
 		
 		$.ajax({
 			type:'post',
@@ -254,7 +355,7 @@ $(function(){
                           <tr>
                               <td colspan=2>
                               <input type="checkbox" class="gcb" name="basket_no" value="${gvo.gbasket_no }">
-                              <input type="hidden" value="${gvo.price }" name="hprice"> <!-- 토탈가격용 -->
+                              <input type="hidden" value="${gvo.price }" name="hprice"> <!-- 게임의 토탈가격용 -->
                                   <div class="media">
                                       <div class="d-flex">
                                           <img src="${gvo.list_poster }" alt="" width="200px">
@@ -304,7 +405,7 @@ $(function(){
 										<h5>0₩</h5>
 									</c:when>
 									<c:when test="${result!= 0}">
-											<h5 id="gtotal"></h5>
+										<h5 id="gtotal"></h5>
 									</c:when>
 								  </c:choose>
 								  
@@ -328,9 +429,9 @@ $(function(){
                                   <div class="cupon_text d-flex align-items-center">
                         
 			<c:if test="${fn:length(gList)!=0}"> <button class="primary-btn" style="background-color: #FA00A2" id="gbasketDelete">선택 삭제</button> </c:if> 
-                                      <input type="hidden" value="${fn:length(gList)}" id="gcnt"> 
+                                      <input type="hidden" value="${fn:length(gList)}" id="gcnt">
                                       
-                                      <button class="primary-btn" onclick="alert('구매완료')">구매</button>
+                                      <c:if test="${fn:length(gList)!=0}"><button class="primary-btn" onclick="alert('구매완료')">구매</button></c:if>
                                   </div>
                               </td>
                           </tr>
@@ -360,7 +461,7 @@ $(function(){
                       <c:forEach items="${cList }" var="cvo" varStatus="status">
                           <tr>
                               <td colspan>
-                              <input type="checkbox" class="ccb" name="basket_no" value="${cvo.cbasket_no }">
+                              <input type="checkbox" class="ccb" name="cbasket_no" value="${cvo.cbasket_no }">
                                   <div class="media">
                                       <div class="d-flex">
                                           <img src="${cvo.image }" alt="" width="100px">
@@ -372,7 +473,8 @@ $(function(){
                               	</td>
                               	<td>
                               	 <h5 style="text-align: center">
-                              	 <input type="hidden" name="comCost" value="${cvo.cost }">
+                              	 
+                              	 <input type="hidden" value="${cvo.cost* cvo.cbasket_cnt}" id="comCost" name="hcost">
                                   <c:choose>
 									<c:when test="${cvo.cost== 0}">
 										무료
@@ -389,14 +491,14 @@ $(function(){
                                       <input type="text" name="qty" id="sst${status.index}" maxlength="12" value="${cvo.cbasket_cnt}" title="Quantity:"
                                           class="input-text qty">
                                       <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} )) return false;"
-                                          class="increase items-count" data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                          class="increase items-count" data_value="${cvo.cbasket_no }" id_value="sst${status.index}" costid="costid${status.index}" cost="${cvo.cost}" type="button"><i class="lnr lnr-chevron-up"></i></button>
                                       <button onclick="var result = document.getElementById('sst${status.index}'); var sst${status.index} = result.value; if( !isNaN( sst${status.index} ) &amp;&amp; sst${status.index} > 0 ) return false;"
-                                          class="reduced items-count"  data_value="${cvo.cbasket_no }" id_value="sst${status.index}" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                          class="reduced items-count"  data_value="${cvo.cbasket_no }" id_value="sst${status.index}" costid="costid${status.index}" cost="${cvo.cost}" type="button"><i class="lnr lnr-chevron-down"></i></button>
                                   </div>
                               </td>
                               <td>
-                                  <h5 style="text-align: center" id="comListTotal${status.index}">
-                                  123123
+                                  <h5 style="text-align: center; width: 50px" id="costid${status.index}">
+                                  <fmt:formatNumber value="${cvo.cost* cvo.cbasket_cnt}" pattern="#,###" />
 								  </h5>
                               </td>
                           </tr>
@@ -421,8 +523,7 @@ $(function(){
 										<h5>0₩</h5>
 									</c:when>
 									<c:when test="${result!= 0}">
-											<h5><fmt:formatNumber value="${result }" pattern="#,###" />
-											₩</h5>
+										<h5 id="cctotal" style="width: 50px"></h5>
 									</c:when>
 								  </c:choose>
                               </td>
@@ -445,7 +546,7 @@ $(function(){
 			<c:if test="${fn:length(cList)!=0}"> <button class="primary-btn" style="background-color: #FA00A2" id="cbasketDelete">선택 삭제</button> </c:if> 
                                       <input type="hidden" value="${fn:length(cList)}" id="ccnt"> 
                                       
-                                      <button class="primary-btn" onclick="alert('구매완료')" id="buyBtn">구매</button>
+                                      <c:if test="${fn:length(cList)!=0}"><button class="primary-btn" onclick="alert('구매완료')" id="buyBtn">구매</button></c:if> 
                                   </div>
                               </td>
                           </tr>

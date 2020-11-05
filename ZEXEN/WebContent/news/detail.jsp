@@ -168,12 +168,18 @@ $(function() {
 																				<!-- <i class="fab fa-github"></i> -->																				
 																			</a>
 																	</li>
-																	<li>
-																			<a href="#">
-																				<!-- <i class="fab fa-behance"></i>	 -->																			
-																			</a>
-																	</li>
-													
+																	찜하기 &nbsp;&nbsp;
+																	<c:if test="${sessionScope.id!=null }">
+																		<c:if test="${jcount==0 }">
+																		<a class="icon_btn" href="../news/wish_insert.do?news_no=${vo.news_no }" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+																		</c:if>
+																		<c:if test="${jcount==1 }">
+																		<a class="icon_btn" href="../news/wish_delete.do?news_no=${vo.news_no }" style="background: white;"><i class="ti-heart-broken" style="color: #9E01F9;"></i></a>
+																		</c:if>
+																	</c:if>
+																	<c:if test="${sessionScope.id==null }">
+																		<a class="icon_btn" onclick="alert('로그인이 필요합니다.');" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+																	</c:if>
 																	
 								<!-- like / hate -->
 								<div class="row total_rate" style="margin-bottom: 10px;">
@@ -287,7 +293,7 @@ $(function() {
 									<div class="review_item">
 										<div class="media">
 											<div class="d-flex">
-												<img src="../assets/img/icon1/001.png" width="70px" height="70px" alt="">
+												<img src="../assets/img/news/rere.PNG" width="70px" height="70px" alt="">
 											</div>
 											<div class="media-body">
 												<h4>${nvo.id } </h4>

@@ -70,6 +70,39 @@ FROM news ORDER BY hit))
 WHERE num BETWEEN 1 AND 4;
 </select>
 
+<select id="newsSerchData" resultType="NewsVO" parameterType="hashmap">
+SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id,num
+ FROM (SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id,rownum as num
+ FROM (SELECT news_no,subject,content,poster,regdate,hit,like_cnt,hate_cnt,member_id
+ FROM news WHERE ROWID IN(SELECT MAX(ROWID) FROM news WHERE UPPER(subject) LIKE UPPER('%'||#{key}||'%') GROUP BY subject)ORDER BY ${sort}))
+ WHERE num BETWEEN #{start} AND #{end}
+</select>
+
+<select id="newsSearchTotalPage" resultType="int" parameterType="hashmap">
+SELECT CEIL(COUNT(*)/5.0)
+FROM ((SELECT * FROM news WHERE ROWID IN(SELECT MAX(ROWID)
+FROM news WHERE UPPER(subject) LIKE UPPER('%'||#{key}||'%') GROUP BY subject)ORDER BY news_no))
+</select>
+
+<insert id="newsWishInsert" parameterType="WishVO">
+	INSERT INTO wish_list(wish_no,news_no,id,cate)
+	VALUES(
+	(SELECT NVL(MAX(wish_no)+1,1) FROM wish_list),
+	#{news_no},
+	#{id},
+	3
+	)
+</insert>
+
+<select id="newsWishCount" parameterType="WishVO" resultType="int">
+SELECT COUNT(*) FROM wish_list
+WHERE id=#{id} AND news_no=#{news_no}
+</select>
+
+<delete id="newsWishDelete" parameterType="WishVO">
+DELETE FROM wish_list
+WHERE id=#{id} AND news_no=#{news_no}
+</delete>
 
 
 </mapper>
