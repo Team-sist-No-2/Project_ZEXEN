@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+
+import com.sist.vo.ComputerVO;
 import com.sist.vo.MainVO;
 
 
@@ -21,6 +23,13 @@ public class MainDAO {
 			return list;
 		}
 		
+		public static List<ComputerVO> computerListData(Map map)
+		{
+			SqlSession session=ssf.openSession();
+			List<ComputerVO> list=session.selectList("computerListData",map);
+			session.close();
+			return list;
+		}
 		
 	}
 	
