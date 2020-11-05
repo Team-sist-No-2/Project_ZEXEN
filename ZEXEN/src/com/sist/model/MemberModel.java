@@ -236,6 +236,9 @@ public class MemberModel {
 		
 		map.put("cate", 1);
 		List<BasketVO> bList = MemberDAO.basketListData(map);
+		System.out.println("리스트사이즈:"+bList.size());
+		System.out.println(bList.get(0).getBasket_no());
+		
 		List<GameVO> gList = new ArrayList<GameVO>();
 			for (BasketVO vo : bList) 
 			{
