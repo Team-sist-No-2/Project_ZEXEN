@@ -395,8 +395,8 @@ $(function(){
                                   </div>
                               </td>
                               <td>
-                                  <h5 style="text-align: center" id="ctotal">
-                                  123
+                                  <h5 style="text-align: center" id="comListTotal${status.index}">
+                                  123123
 								  </h5>
                               </td>
                           </tr>
