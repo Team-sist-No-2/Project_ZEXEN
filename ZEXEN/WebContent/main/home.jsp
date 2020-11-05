@@ -53,8 +53,8 @@
   	margin: 0; padding: 0;
   	}
   	.slide{
-  		width: 1000px;
-        height: 4s00px;
+  		width: 1072px;
+        height: 310px;
         overflow: hidden;
         position: relative;
         margin: 0 auto;
@@ -71,14 +71,14 @@
     }
     #back{
     	position: absolute;
-        top: 250px;
+        top: 150px;
         left: 0;
         cursor: pointer;
         z-index: 1;
     }
     #next{
     	position: absolute;
-        top: 250px;
+        top: 150px;
         right: 0;
         cursor: pointer;
         z-index: 1;
@@ -122,11 +122,10 @@
 	    <div class="slide">
           <img id="back" src="img/next.png" alt="" width="50">
           <ul>
-    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/553/012/12553_42.jpg" alt="" width="1000" height="400"></li>
-    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/868/013/13868_42.jpg" alt="" width="1000" height="400"></li>
-    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/799/013/13799_42.jpg" alt="" width="1000" height="400"></li>
-    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/463/014/14463_42.jpg" alt="" width="1000" height="400"></li>
-    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/707/014/14707_42.jpg" alt="" width="1000" height="400"></li>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/868/013/13868_42.jpg" alt="" width="1072" height="310"></li>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/979/014/14979_42.jpg" alt="" width="1072" height="310"></li>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/799/013/13799_42.jpg" alt="" width="1072" height="310"></li>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/463/014/14463_42.jpg" alt="" width="1072" height="310"></li>
    		  </ul>
     	  <img id="next" src="img/back.png" alt="" width="50">
     	</div>
@@ -235,7 +234,7 @@ $(document).ready(function(){
     function back() {
     	if(1<img_position){
     		imgs.animate({
-            left:'+=1000px'
+            left:'+=1072px'
             });
     		img_position--;
     	}
@@ -243,7 +242,7 @@ $(document).ready(function(){
     function next() {
     	if(img_count>img_position){
     		imgs.animate({
-    		left:'-=1000px'
+    		left:'-=1072px'
     		});
     		img_position++;
     	}
