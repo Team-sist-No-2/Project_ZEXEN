@@ -327,5 +327,27 @@ public class MemberModel {
 		return("redirect:../member/basket.do?cate="+cate);
 	}
 
+	@RequestMapping("member/memberinfo.do")
+    public String member_memberinfo(HttpServletRequest request)
+    {
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		MemberVO vo=MemberDAO.memberinfo(id);
+		request.setAttribute("vo",vo);
+		
+		request.setAttribute("main_jsp", "../member/memberinfo.jsp"); 	//main.jsp에서 include의 경로
+		return "../main/main.jsp";
+    }
 	
+	@RequestMapping("member/memberinfo_update.do")
+    public String member_memberinfo_update(HttpServletRequest request)
+    {
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		MemberVO vo=MemberDAO.memberinfo(id);
+		request.setAttribute("vo",vo);
+		
+		request.setAttribute("main_jsp", "../member/memberinfo_update.jsp"); 	//main.jsp에서 include의 경로
+		return "../main/main.jsp";
+    }
 }

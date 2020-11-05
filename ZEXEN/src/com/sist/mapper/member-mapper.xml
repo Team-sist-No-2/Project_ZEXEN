@@ -77,5 +77,15 @@
   	UPDATE shopping_basket SET computer_count=#{count}
     WHERE basket_no=#{basket_no}
   </update>
+  
+   <select id="memberinfo" parameterType="String" resultType="com.sist.vo.MemberVO">
+   	 SELECT * FROM member_tb
+	 WHERE id=#{id}
+   </select>
+   
+   <update id="memberinfo_update" parameterType="String" >
+  	UPDATE member_tb SET id=#{id}
+    WHERE id=#{id}
+  </update>
 
 </mapper>
