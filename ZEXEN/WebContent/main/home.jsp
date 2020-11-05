@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,6 +45,19 @@
   width: 100%;
   height: 100%;
 }
+
+.gradtext {
+    background: #55ffaa;
+    background: -webkit-linear-gradient(left, #9E01F9, #55ffff);
+    background:    -moz-linear-gradient(right, #9E01F9, #55ffff);
+    background:      -o-linear-gradient(right, #9E01F9, #55ffff);
+    background:         linear-gradient(to right, #9E01F9, #55ffff);
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    font-size: 48px;
+    font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -53,7 +67,6 @@
 
 <main class="site-main">
     <div class="container123">
- 
  <c:forEach items="${glist }" var="vo" begin="0" end="3">
   <div class="box123">
     <img src="${vo.gimg }">
@@ -61,16 +74,16 @@
   </c:forEach>
   
 </div>
-
+<h4 style="text-align: center;"><span class="gradtext" >Best game Top 10</span></h4>
     <!--================ Hero Carousel start =================-->
     <section class="section-margin mt-0">
       <div class="owl-carousel owl-theme hero-carousel">
-       <c:forEach items="${glist }" var="vo">
+       <c:forEach items="${gglist }" var="vo">
         <div class="hero-carousel__slide">
-          <img src="${vo.gimg }" alt="" class="img-fluid">
-          <a href="#" class="hero-carousel__slideOverlay">
-            <h3>게임명</h3>
-            <p>Accessories Item</p>
+          <img src="${vo.list_poster }" alt="" class="img-fluid">
+          <a href="../game/detail_before.do?game_no=${vo.game_no}" class="hero-carousel__slideOverlay">
+            <h3>${vo.name }</h3>
+            <p>좋아요 : <fmt:formatNumber value="${vo.like_cnt }" pattern="#,###"/> 개</p>  
           </a>
         </div>
        </c:forEach> 

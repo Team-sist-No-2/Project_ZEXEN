@@ -53,13 +53,14 @@ $(function() {
 <div class="row">
 <c:forEach var="vo" items="${list }"> 
         <div class="col-sm-6 col-lg-6 mb-4 mb-lg-0" style="margin-bottom: 10px !important; display: flex;" >
+                    
             <div class="categories_post" style="display: flex; align-items: center;">
-            
+                <a href="../game/detail_before.do?game_no=${vo.game_no}">
                    	<img class="card-img rounded-0" style="align-items: center;"  src="${vo.list_poster }" alt="">
-                
+
                 <div class="categories_details" style="background: rgba(34, 34, 34, 0.3);">
                     <div class="categories_text">
-                        <a href="../game/detail_before.do?game_no=${vo.game_no}">
+<%--                         <a href="../game/detail_before.do?game_no=${vo.game_no}"> --%>
                             <h5 style="font-weight: 800" >
 
 						     <c:choose>
@@ -73,7 +74,7 @@ $(function() {
 					          </c:choose>
 
 							</h5>
-                        </a>
+                       
                         <div class="border_line"></div>
                         <c:forTokens var="tag" items="${vo.tag }" delims="," begin="0" end="2">
                							${tag } 
@@ -94,6 +95,7 @@ $(function() {
 								    
                     </div>
                 </div>
+                 </a>
             </div>
         </div>
    </c:forEach> 				        

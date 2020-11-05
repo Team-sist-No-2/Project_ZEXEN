@@ -23,6 +23,7 @@
    )
   </insert>
   
+  
 <select id="gameListData" resultType="GameVO" parameterType="hashmap">
 	SELECT game_no,name,list_poster,price,tag,like_cnt,num
 	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
@@ -115,5 +116,15 @@
  	DELETE FROM shopping_basket
 	WHERE id=#{id} AND game_no=#{game_no}
 </delete>
+
+
+<select id="gameBannerData" resultType="GameVO">
+	SELECT game_no,name,list_poster,price,tag,like_cnt,num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt,rownum as num
+	FROM (SELECT game_no,name,list_poster,price,tag,like_cnt
+	FROM game_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM game_tb GROUP BY name)ORDER BY like_cnt desc))
+	WHERE num BETWEEN 1 AND 10
+</select>
+  
 
 </mapper>

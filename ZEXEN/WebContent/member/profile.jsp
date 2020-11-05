@@ -91,7 +91,7 @@
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5b337485031a671b9c23d56d/iPhone/035.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5b337485031a671b9c23d56d/iPhone/036.png"width="70" height="70"/>
   </div>
-  <h3 style="background: #9E01F9 color: white;">Section 2</h3>
+  <h3 style="background: #9E01F9; color: white;">Section 2</h3>
   <div>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/001.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/002.png"width="70" height="70"/>
@@ -130,7 +130,7 @@
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/035.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5add4dbc040ab14a7b11d14c/iPhone/036.png"width="70" height="70"/>
   </div>
-  <h3 style="background: #9E01F9 color: white;">Section 3</h3>
+  <h3 style="background: #9E01F9; color: white;">Section 3</h3>
   <div>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/001.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/002.png"width="70" height="70"/>
@@ -169,7 +169,7 @@
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/039.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5bd998f6031a6704f8d008a2/iPhone/040.png"width="70" height="70"/>
   </div>
-  <h3 style="background: #9E01F9 color: white;">Section 4</h3>
+  <h3 style="background: #9E01F9; color: white;">Section 4</h3>
   <div>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/001.png"width="70" height="70"/>
 <img src="https://stickershop.line-scdn.net/sticonshop/v1/sticon/5c949815031a677a3a49ee91/iPhone/002.png"width="70" height="70"/>

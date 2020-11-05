@@ -5,6 +5,8 @@ import java.util.Map;
 	
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+
+import com.sist.vo.GameVO;
 import com.sist.vo.MainVO;
 
 
@@ -16,11 +18,17 @@ public class MainDAO {
 		{
 			SqlSession session=ssf.openSession();
 			List<MainVO> list=session.selectList("gameBanner");
-			System.out.println(list.size());
 			session.close();
 			return list;
 		}
 		
+		public static List<GameVO> ggameBanner()
+		{
+			SqlSession session=ssf.openSession();
+			List<GameVO> list=session.selectList("gameBannerData");
+			session.close();
+			return list;
+		}
 		
 	}
 	
