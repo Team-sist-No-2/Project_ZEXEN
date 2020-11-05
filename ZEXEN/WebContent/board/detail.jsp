@@ -21,9 +21,7 @@
 			} 	
 		});	
 	}else{
-		
 	}
-		
 }); 
 
  //댓글 글자수 카운트 출력
@@ -159,6 +157,7 @@ $("#btn_reply_reply").click(function(){
                         <div class="cont_user">
                             <a href="#" class="user_name" data-rank-id="9112168">
                                 <span class="txt_writer">${rvo.id}</span>
+                                <img src="${rvo.pimg }" width="100px">
                             </a>
                         </div>
                         <div class="cont_cmt">
