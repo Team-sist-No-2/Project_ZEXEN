@@ -1,61 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.board-mapper">
-<!-- 
-<insert id="boardInsert" parameterType="BoardVO">
-   INSERT INTO board(board_no,member_id,subject,content,regdate,hit,like_cnt,hate_cnt,file_name,file_size,board_cate_no)
-   VALUES(
-     (SELECT NVL(MAX(board_no)+1,1) FROM board),
-     #{member_id},
-     #{subject},
-     #{content},
-     #{regdate},
-     #{hit},
-     #{like_cnt},
-     #{hate_cnt},
-     #{file_name},
-     #{file_size},
-     #{board_cate_no}
-   )
-</insert>
-  -->
+
   
   <select id="boardListData" resultType="BoardVO" parameterType="hashmap">
-   SELECT board_no,subject,member_id,regdate,hit,num
-   FROM (SELECT board_no,subject,member_id,regdate,hit,rownum as num
-   FROM (SELECT board_no,subject,member_id,regdate,hit 
+   SELECT board_no,subject,member_id,TO_CHAR(regdate,'YYYY-MM-DD') as dbday,hit,board_cate_no,num
+   FROM (SELECT board_no,subject,member_id,regdate,hit,board_cate_no,rownum as num
+   FROM (SELECT board_no,subject,member_id,regdate,hit,board_cate_no 
    FROM board ORDER BY board_no DESC))
-   WHERE num BETWEEN #{start} AND #{end}
+   WHERE num BETWEEN #{start} AND #{end}    
   </select>
   
+  <insert id="boardInsert" parameterType="BoardVO">
+  	<selectKey keyProperty="board_no" resultType="int" order="BEFORE">
+  		SELECT NVL(MAX(board_no)+1,1) as board_no FROM board
+  	</selectKey>
+  	 
+  	INSERT INTO board(
+  		board_no,
+  		member_id,
+  		subject, 
+  		content, 
+  		regdate,
+  		hit, 
+  		board_cate_no
+  	) 
+  	VALUES(
+  		#{board_no}, 
+  		#{member_id},
+  		#{subject},
+  		#{content},
+  		SYSDATE,
+  		0,
+  		#{board_cate_no}
+  	)
+  </insert>
+
   <!--게시글 총갯수-->
   <select id="boardListCount" resultType="BoardVO" parameterType="hashmap">
    SELECT COUNT(*) FROM board;  
   </select>
   
   <select id="boardCateListData" resultType="BoardVO" parameterType="hashmap">
-   SELECT board_no,subject,member_id,regdate,hit,num
-   FROM (SELECT board_no,subject,member_id,regdate,hit,rownum as num
-   FROM (SELECT board_no,subject,member_id,regdate,hit 
+   SELECT board_no,subject,member_id,TO_CHAR(regdate,'YYYY-MM-DD') as dbday,hit,board_cate_no,num
+   FROM (SELECT board_no,subject,member_id,regdate,hit,board_cate_no,rownum as num
+   FROM (SELECT board_no,subject,member_id,regdate,hit,board_cate_no
    FROM board WHERE board_cate_no=#{board_cate_no} ORDER BY board_no DESC))
    WHERE num BETWEEN #{start} AND #{end}
-  </select> 
+  </select>
   
+  <select id="boardCateTotalPage" resultType="int" parameterType="int">
+   SELECT CEIL(COUNT(*)/10.0) FROM board
+   WHERE board_cate_no=#{board_cate_no}
+  </select>
+  
+  <!-- 총페이지 -->
   <select id="boardTotalPage" resultType="int">
    SELECT CEIL(COUNT(*)/10.0) FROM board
   </select>
+  <!-- 상세보기 : 조회수 증가 , 게시물 1개를 읽어 온다(VO)
+       mybatis에서 태그에 SQL문장은 1번만 사용이 가능 
+    -->
+   <!-- 조회수 증가 -->
+   <!-- 
+         resultType (X) ==> void
+         parameterType(매개변수) ==> (int no)
+    -->
+   <update id="boardHitIncrement" parameterType="int">
+     UPDATE board SET
+     hit=hit+1
+     WHERE board_no=#{board_no}
+   </update>
+   <select id="boardDetailData" resultType="BoardVO" parameterType="int">
+     <!-- public BoardVO boardDetailData(int no) -->
+     SELECT *
+     FROM board
+     WHERE board_no=#{board_no}
+   </select>
+ <!-- 댓글 올리기  -->
+  <insert id="replyInsert" parameterType="ReplyVO">
+    <!-- 적용할 수 없다(한번) -->
+    <selectKey keyProperty="reply_no" resultType="int" order="BEFORE">
+      SELECT NVL(MAX(reply_no)+1,1) as reply_no FROM reply_tb
+    </selectKey>
+     INSERT INTO reply_tb(reply_no,category,board_no,id,msg,group_id) VALUES(
+      #{reply_no},
+      #{category},
+      #{board_no},
+      #{id},
+      #{msg},
+      (SELECT NVL(MAX(group_id)+1,1) FROM reply_tb)
+     )
+  </insert>
   
-  <update id="boardhitIncrement" parameterType="int">
-   UPDATE board SET
-   hit=hit+1
-   WHERE board_no=#{board_no}
-  </update>
-
-  <select id="boardDetailData" resultType="BoardVO" parameterType="int">
-   SELECT board_no,member_id,subject,content,regdate,hit
-   FROM board
+  <select id="replyListData" resultType="ReplyVO" parameterType="int">
+    SELECT reply_no,board_no,id,msg,TO_CHAR(regdate,'YYYY-MM-DD HH24:MI:SS') as dbday,
+    group_tab FROM reply_tb 
+    WHERE board_no=#{board_no}
+    ORDER BY group_id DESC , group_step ASC
+  </select>
+  
+  <select id="boardreplyCount" resultType="int" parameterType="int">
+   SELECT COUNT(*) FROM reply_tb
    WHERE board_no=#{board_no}
   </select>
+<!--전체게시글 총 갯수-->
+  <select id="boardCount" resultType="int">
+   SELECT COUNT(*) FROM board
+  </select>
+  <select id="boardCountCate" resultType="int" parameterType="int">
+   SELECT COUNT(*) FROM board 
+   WHERE board_cate_no=#{cate}
+  </select>
+  
+  
+<!--카테고리별 게시글 총 갯수-->  
+
+  
+
 
 
 </mapper>

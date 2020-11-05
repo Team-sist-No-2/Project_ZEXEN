@@ -1,20 +1,21 @@
 package com.sist.dao;
 import java.util.*;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
 import com.sist.vo.BoardVO;
+import com.sist.vo.ReplyVO;
 
 import java.io.*;
+
 public class BoardDAO {
    // 파싱(XML) => SqlSessionFactory
 	private static SqlSessionFactory ssf;
 	// 구동하기전에 자동으로 파싱을 한다 => 초기화블럭 (static => static{} , instance => {})
 	static
 	{
+		/*
 		// 오류 처리  => Mybatis (컴파일 오류(X) => 에러가 발생시에 찾기 어렵다)
 		try
 		{
@@ -28,6 +29,8 @@ public class BoardDAO {
 		{
 			ex.printStackTrace();
 		}
+		*/
+		ssf=CreateSqlSessionFactory.getSsf();
 	}
 	/*
 	 *   <select id="boardListData" resultType="BoardVO" parameterType="hashmap">
@@ -41,10 +44,14 @@ public class BoardDAO {
 		   SELECT CEIL(COUNT(*)/10.0) FROM freeboard
 		  </select>
 	 */
+	
+
+	
+	
 	//            resultType                parameterType
 	public static List<BoardVO> boardListData(Map map)
 	{
-		System.out.println("boardList 호출");
+		System.out.println("boardList 호출 DAO");
 		List<BoardVO> list=new ArrayList<BoardVO>();
 		SqlSession session=null;
 		try {
@@ -59,6 +66,14 @@ public class BoardDAO {
 		System.out.println("boardList종료");
 		return list;// null 
 	}
+	//게시글작성
+	public static void boardInsert(BoardVO vo) {
+		SqlSession session=ssf.openSession(true);
+		session.insert("boardInsert",vo);
+		session.close();
+	}	
+	
+	//총페이지
 	public static int boardTotalPage()
 	{
 		int total=0;
@@ -99,7 +114,7 @@ public class BoardDAO {
 	{
 		SqlSession session=ssf.openSession();
 		// 조회수 증가
-		session.update("boardhitIncrement", board_no);
+		session.update("boardHitIncrement", board_no);
 		session.commit();// 정상적으로 저장 
 		// 데이터 읽기
 		BoardVO vo=session.selectOne("boardDetailData", board_no);
@@ -107,6 +122,72 @@ public class BoardDAO {
 		session.close();
 		return vo;
 	}
+	
+	public static List<BoardVO> boardCateListData(Map map)
+	{
+		System.out.println("boardCateListData 호출 DAO");
+		List<BoardVO> list=new ArrayList<BoardVO>();
+		SqlSession session=null;
+		try {
+			session=ssf.openSession();// Connection얻기
+			list=session.selectList("boardCateListData",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if(session!=null)
+			session.close();//Connection반환
+		}
+		System.out.println("boardCateListData종료");
+		return list;// null 
+	}
+	
+	public static int boardCateTotalPage(int board_cate_no)
+	{
+		SqlSession session=ssf.openSession();
+		int total=session.selectOne("boardCateTotalPage",board_cate_no);
+		session.close();
+		return total;
+	}
+	//게시글 댓글 입력
+	public static void replyInsert(ReplyVO rvo)
+	   {
+		   SqlSession session=ssf.openSession(true);// commit(X)
+		   // commit() ==> DML
+		   session.insert("replyInsert",rvo);
+		   session.close();
+	   }
+	//게시글 댓글 리스트 출력
+	public static List<ReplyVO> replyListData(int board_no)
+	   {
+		   SqlSession session=ssf.openSession();
+		   List<ReplyVO> list=session.selectList("replyListData",board_no);
+		   session.close();
+		   return list;
+	   }
+	//리스트에 게시글 댓글 총 갯수 출력
+	 public static int replyCount(int board_no)
+	   {
+		   SqlSession session=ssf.openSession();
+		   int count=session.selectOne("boardreplyCount", board_no);
+		   session.close();
+		   return count;
+	   }
+	//게시글 총 갯수
+	 public static int boardCount()
+	   {
+		   SqlSession session=ssf.openSession();
+		   int boardCount=session.selectOne("boardCount");
+		   session.close();
+		   return boardCount;
+	   }
+	 public static int boardCountCate(int cate)
+	   {
+		   SqlSession session=ssf.openSession();
+		   int boardCount=session.selectOne("boardCountCate", cate);
+		   session.close();
+		   return boardCount;
+	   }
+
 }
 
 

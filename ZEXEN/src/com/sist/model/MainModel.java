@@ -24,6 +24,14 @@ public class MainModel {
 		  Collections.shuffle(list);
 		  request.setAttribute("glist", list);
 		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		  request.setAttribute("main_jsp", "../main/home.jsp"); 	//main.jsp에서 include의 경로
 	      return "../main/main.jsp";
 	   }
