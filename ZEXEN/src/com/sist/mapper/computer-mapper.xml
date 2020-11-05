@@ -34,14 +34,30 @@
     FROM computer_tb WHERE cate_no=#{cate_no} GROUP BY product)
   </select>
   
+  <!-- 4. 디테일 페이지 -->
   <select id="computerDetailData" resultType="ComputerVO" parameterType="int">
 	SELECT com_no,product,spec,image,cost,gift FROM computer_tb
 	where com_no=#{com_no}
   </select>
   
+  <!-- 5. 토탈 페이지 -->
   <select id="computerTotalPage" resultType="int" parameterType="int">
     SELECT CEIL(COUNT(*)/12.0) FROM computer_tb
     WHERE cate_no=#{cate_no}
+  </select>
+
+  <select id="computerSearchData" resultType="ComputerVO" parameterType="hashmap">
+	SELECT com_no,cate_no,product,image,cost,num
+    FROM (SELECT com_no,cate_no,product,image,cost,rownum as num
+    FROM (SELECT com_no,cate_no,product,image,cost
+    FROM computer_tb WHERE ROWID IN(SELECT MAX(ROWID) FROM computer_tb WHERE UPPER(product) LIKE UPPER('%'||#{key}||'%') GROUP BY product)ORDER BY ${sort}))
+	WHERE num BETWEEN #{start} AND #{end}
+  </select>
+
+  <select id="computerSearchTotalPage" resultType="int" parameterType="hashmap">
+	SELECT CEIL(COUNT(*)/10.0)
+	FROM ((SELECT * FROM computer_tb WHERE ROWID IN(SELECT MAX(ROWID)
+	FROM computer_tb WHERE UPPER(product) LIKE UPPER('%'||#{key}||'%') GROUP BY product)ORDER BY com_no))
   </select>
 
 </mapper>

@@ -12,11 +12,9 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
-
 var cate=1;	//카테고리 전역변수
 var sort=1; //정렬기준
 var search_on=false;
-
 // 카테고리 선택
 $(function() {
 	$('.pixel-radio').click(function(){	//카테고리 선택시 해당하는 리스트 출력
@@ -35,18 +33,17 @@ $(function() {
 		})
 	$("#popular").trigger("click"); //시작하자마자 인디클릭 
 	
-
-/* 	$('.option').click(function(){	//인기순위,낮은가격,높은가격 등등 정렬기준 리스트 출력 (정렬기준은 카테고리 변경시에도 유지)
+	$('.option').click(function(){	//인기순위,낮은가격,높은가격 등등 정렬기준 리스트 출력 (정렬기준은 카테고리 변경시에도 유지)
 	// 옵션버튼 누를때마다 페이지는 자동 1으로 리셋
 	
 		if(search_on) //키워드가 있다면 키워드에대해서 선택한 정렬기준으로 리스트 출력
 		{
 			sort=$(this).attr("data-value")
-			let keyword=$('#gameKewword').val();
+			let keyword=$('#comKeyword').val();
 			
 			$.ajax({
 						type:'post',
-						url:'../game/search.do',
+						url:'../computer/search.do',
 						data: {key:keyword,sort:sort},
 						success:function(result)
 						{
@@ -63,8 +60,8 @@ $(function() {
 			
 			$.ajax({
 						type:'post',
-						url:'../game/list.do',
-						data: {cate:cate,sort:sort},
+						url:'../computer/list.do',
+						data: {cate_no:cate,sort:sort},
 						success:function(result)
 						{
 							$('#tagin').html(result);
@@ -72,19 +69,19 @@ $(function() {
 				   })
 		}
 		
-		}) */
+		}) 
 	
 	
-/*    	  $(document).ready(function() {
-      $("#gameKewword").keyup(function(key) {	//검색창에 입력시 실시간 타이핑된 단어로 검색하기
+    $(document).ready(function() {
+      $("#comKeyword").keyup(function(key) {	//검색창에 입력시 실시간 타이핑된 단어로 검색하기
     	 search_on=true;
       	 console.log("검색활성화됨");
       	 $('.pixel-radio').prop("checked", false);
-         let keyword=$('#gameKewword').val();
+         let keyword=$('#comKeyword').val();
       	      
          $.ajax({
 					type:'post',
-					url:'../game/search.do',
+					url:'../computer/search.do',
 					data: {key:keyword,sort:sort},
 					success:function(result)
 					{
@@ -94,7 +91,7 @@ $(function() {
             });
          });
 	
-	 */
+
 // 	$('#gameSearch').click(function(){ //서치버튼 클릭시 검색창에 입려된 텍스트로 검색하기
 //	    $('.pixel-radio').prop("checked", false);
 //     let keyword=$('#gameKewword').val();
@@ -110,9 +107,7 @@ $(function() {
 //			        }
 //	          });
 //		})
-
 });
-
 </script>
 </head>
 <body>
@@ -184,9 +179,9 @@ $(function() {
             
             <div>
               <div class="input-group filter-bar-search">
-                <input type="text" placeholder="Search" id="gameKewword">
+               <input type="text" placeholder="Search" id="comKeyword">
                 <div class="input-group-append">
-                  <button type="button" id="gameSearch"><i class="ti-search"></i></button>
+                  <button type="button" id="computerSearch"><i class="ti-search"></i></button>
                 </div>
               </div>
             </div>

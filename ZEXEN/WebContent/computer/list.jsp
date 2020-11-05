@@ -17,7 +17,7 @@ $(function() {
 		if(search_on)
 		{
 			console.log("검색활성화 : 검색어에대한 페이지 번호:"+page)
-			let keyword=$('#CompKeyword').val();
+			let keyword=$('#comKeyword').val();
 			$.ajax({
 				type:'post',
 				url:'../computer/search.do',

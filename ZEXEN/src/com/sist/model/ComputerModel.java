@@ -125,4 +125,64 @@ public class ComputerModel {
 		
 		return "../main/main.jsp";
 	}
+	
+    @RequestMapping("computer/search.do")
+    public String computer_search(HttpServletRequest request)
+    {
+       String key=request.getParameter("key");
+       String page = request.getParameter("page");
+       if(page==null)
+  			page="1";
+       String sort=request.getParameter("sort");
+       if(sort==null)
+  			sort="1";
+  		
+  		System.out.println(sort);
+  	
+  		switch(sort){
+       case "1": 
+           sort="com_no";
+           break;
+       case "2" :
+       	sort="cost desc";
+           break;
+       case "3" :
+       	sort="cost asc";
+           break;
+  		}
+       if (page == null)
+          page = "1";
+       
+       int curpage = Integer.parseInt(page);
+       
+       int rowSize = 10;
+       int start = (curpage * rowSize) - (rowSize - 1);
+       int end = curpage * rowSize;
+
+       Map map = new HashMap();
+       map.put("key", key);
+       map.put("start", start);
+       map.put("end", end);
+       map.put("sort",sort);
+       
+       List<ComputerVO> list=ComputerDAO.computerSearchData(map);
+       int totalpage=ComputerDAO.computerSearchTotalPage(map);
+       
+       int BLOCK = 10;
+       int startPage = ((curpage - 1) / BLOCK * BLOCK) + 1;
+       int endPage = ((curpage - 1) / BLOCK * BLOCK) + BLOCK;
+
+       if(endPage>totalpage)
+          endPage = totalpage;
+
+
+       request.setAttribute("list", list);
+       request.setAttribute("curpage", curpage);
+       request.setAttribute("totalpage", totalpage);
+       request.setAttribute("BLOCK", BLOCK);
+       request.setAttribute("startPage", startPage);
+       request.setAttribute("endPage", endPage);
+       
+       return "../computer/list.jsp";
+    }
 }
