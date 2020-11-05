@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,11 +60,45 @@
     font-weight: bold;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<style media="screen">
+  *{
+  	margin: 0; padding: 0;
+  	}
+  	.slide{
+  		width: 1072px;
+        height: 310px;
+        overflow: hidden;
+        position: relative;
+        margin: 0 auto;
+    }
+    .slide ul{
+    	width: 5000px;
+        position: absolute;
+        top:0;
+        left:0;
+        font-size: 0;
+    }
+    .slide ul li{
+    	display: inline-block;
+    }
+    #back{
+    	position: absolute;
+        top: 150px;
+        left: 0;
+        cursor: pointer;
+        z-index: 1;
+    }
+    #next{
+    	position: absolute;
+        top: 150px;
+        right: 0;
+        cursor: pointer;
+        z-index: 1;
+    }
+</style>
 </head>
 <body>
-
-
-
 
 <main class="site-main">
     <div class="container123">
@@ -94,20 +129,20 @@
 
 
     <!-- ================ offer section start ================= --> 
-    <section class="offer" id="parallax-1" data-anchor-target="#parallax-1" data-300-top="background-position: 20px 30px" data-top-bottom="background-position: 0 20px">
-      <div class="container">
-        <div class="row">
-          <div class="col-xl-5">
-            <div class="offer__content text-center">
-              <h3>컴퓨터 배너</h3>
-              <h4>Winter Sale</h4>
-              <p>Him she'd let them sixth saw light</p>
-              <a class="button button--active mt-3 mt-xl-4" href="#">Shop Now</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- <section class="offer" id="parallax-1" data-anchor-target="#parallax-1" data-300-top="background-position: 20px 30px" data-top-bottom="background-position: 0 20px"> -->
+	  <div class="container">
+	    <div class="slide">
+          <img id="back" src="img/next.png" alt="" width="50">
+          <ul>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/868/013/13868_42.jpg" alt="" width="1072" height="310"></li>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/979/014/14979_42.jpg" alt="" width="1072" height="310"></li>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/799/013/13799_42.jpg" alt="" width="1072" height="310"></li>
+    	    <li><img src="http://img.danawa.com/shop/shop_main/mainDisplay/463/014/14463_42.jpg" alt="" width="1072" height="310"></li>
+   		  </ul>
+    	  <img id="next" src="img/back.png" alt="" width="50">
+    	</div>
+   	  </div>
+    <!-- </section> -->
     <!-- ================ offer section end ================= --> 
 
     <!-- ================ Best Selling item  carousel ================= --> 
@@ -117,9 +152,11 @@
           <h2>Best <span class="section-intro__style">Sellers</span></h2>
         </div>
         <div class="owl-carousel owl-theme" id="bestSellerCarousel">
+          
+          <c:forEach items="${clist }" var="vo" begin="1" end="10">	
           <div class="card text-center card-product">
             <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product1.png" alt="">
+              <img class="img-fluid" src="${vo.image }" alt="">
               <ul class="card-product__imgOverlay">
                 <li><button><i class="ti-search"></i></button></li>
                 <li><button><i class="ti-shopping-cart"></i></button></li>
@@ -128,122 +165,12 @@
             </div>
             <div class="card-body">
               <p>Accessories</p>
-              <h4 class="card-product__title"><a href="single-product.html">Quartz Belt Watch</a></h4>
-              <p class="card-product__price">$150.00</p>
+              <h6 class="card-product__title"><a href="../computer/detail_before.do?com_no=${vo.com_no}">${vo.product }</a></h6>
+              ₩<fmt:formatNumber value="${vo.cost }" pattern="#,###"/> 
             </div>
           </div>
-
-          <div class="card text-center card-product">
-            <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product2.png" alt="">
-              <ul class="card-product__imgOverlay">
-                <li><button><i class="ti-search"></i></button></li>
-                <li><button><i class="ti-shopping-cart"></i></button></li>
-                <li><button><i class="ti-heart"></i></button></li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <p>Beauty</p>
-              <h4 class="card-product__title"><a href="single-product.html">Women Freshwash</a></h4>
-              <p class="card-product__price">$150.00</p>
-            </div>
-          </div>
-
-          <div class="card text-center card-product">
-            <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product3.png" alt="">
-              <ul class="card-product__imgOverlay">
-                <li><button><i class="ti-search"></i></button></li>
-                <li><button><i class="ti-shopping-cart"></i></button></li>
-                <li><button><i class="ti-heart"></i></button></li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <p>Decor</p>
-              <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
-              <p class="card-product__price">$150.00</p>
-            </div>
-          </div>
-
-          <div class="card text-center card-product">
-            <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product4.png" alt="">
-              <ul class="card-product__imgOverlay">
-                <li><button><i class="ti-search"></i></button></li>
-                <li><button><i class="ti-shopping-cart"></i></button></li>
-                <li><button><i class="ti-heart"></i></button></li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <p>Decor</p>
-              <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
-              <p class="card-product__price">$150.00</p>
-            </div>
-          </div>
-
-          <div class="card text-center card-product">
-            <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product1.png" alt="">
-              <ul class="card-product__imgOverlay">
-                <li><button><i class="ti-search"></i></button></li>
-                <li><button><i class="ti-shopping-cart"></i></button></li>
-                <li><button><i class="ti-heart"></i></button></li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <p>Accessories</p>
-              <h4 class="card-product__title"><a href="single-product.html">Quartz Belt Watch</a></h4>
-              <p class="card-product__price">$150.00</p>
-            </div>
-          </div>
-
-          <div class="card text-center card-product">
-            <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product2.png" alt="">
-              <ul class="card-product__imgOverlay">
-                <li><button><i class="ti-search"></i></button></li>
-                <li><button><i class="ti-shopping-cart"></i></button></li>
-                <li><button><i class="ti-heart"></i></button></li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <p>Beauty</p>
-              <h4 class="card-product__title"><a href="single-product.html">Women Freshwash</a></h4>
-              <p class="card-product__price">$150.00</p>
-            </div>
-          </div>
-
-          <div class="card text-center card-product">
-            <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product3.png" alt="">
-              <ul class="card-product__imgOverlay">
-                <li><button><i class="ti-search"></i></button></li>
-                <li><button><i class="ti-shopping-cart"></i></button></li>
-                <li><button><i class="ti-heart"></i></button></li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <p>Decor</p>
-              <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
-              <p class="card-product__price">$150.00</p>
-            </div>
-          </div>
-
-          <div class="card text-center card-product">
-            <div class="card-product__img">
-              <img class="img-fluid" src="../assets/img/product/product4.png" alt="">
-              <ul class="card-product__imgOverlay">
-                <li><button><i class="ti-search"></i></button></li>
-                <li><button><i class="ti-shopping-cart"></i></button></li>
-                <li><button><i class="ti-heart"></i></button></li>
-              </ul>
-            </div>
-            <div class="card-body">
-              <p>Decor</p>
-              <h4 class="card-product__title"><a href="single-product.html">Room Flash Light</a></h4>
-              <p class="card-product__price">$150.00</p>
-            </div>
-          </div>
+          </c:forEach>
+          
         </div>
       </div>
     </section>
@@ -298,4 +225,40 @@
 
 
 </body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var imgs;
+	var img_count;
+	var img_position = 1;
+
+    imgs = $(".slide ul");
+    img_count = imgs.children().length;
+
+    //버튼을 클릭했을 때 함수 실행
+    $('#back').click(function () {
+    	back();
+    });
+    $('#next').click(function () {
+        next();
+    });
+
+    function back() {
+    	if(1<img_position){
+    		imgs.animate({
+            left:'+=1072px'
+            });
+    		img_position--;
+    	}
+    }
+    function next() {
+    	if(img_count>img_position){
+    		imgs.animate({
+    		left:'-=1072px'
+    		});
+    		img_position++;
+    	}
+    }
+});
+  </script>
 </html>
