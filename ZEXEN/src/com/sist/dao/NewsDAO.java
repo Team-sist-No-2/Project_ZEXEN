@@ -181,11 +181,41 @@ public class NewsDAO {
 		WHERE num BETWEEN 1 AND 4;
 		</select>
 	 */
-	public static NewsVO newsHitCount(int news_no) {
+	
+	public static List<NewsVO> newsSearchData(Map map){
 		SqlSession session=ssf.openSession();
-		NewsVO vo=session.selectOne("newsHitCount",news_no);
+		List<NewsVO> list=session.selectList("newsSearchData",map);
 		session.close();
-		return vo;
+		return list;
 	}
+	
+	public static int newsSearchTotalPage(Map map) {
+		SqlSession session=ssf.openSession();
+		int total=session.selectOne("newsSearchTotalPage",map);
+		session.close();
+		return total;
+	}
+	
+	public static void newsWishInsert(WishVO vo) {
+		SqlSession session=ssf.openSession(true);
+		session.insert("newsWishInsert",vo);
+		session.close();
+	}
+	
+	public static int newsWishCount(WishVO vo) {
+		SqlSession session=ssf.openSession();
+		int count =session.selectOne("newsWishCount",vo);
+		session.close();
+		return count;
+	}
+	
+	public static void newsWishDelete(WishVO vo) {
+		SqlSession session =ssf.openSession(true);
+		session.delete("newsWishDelete",vo);
+		session.close();
+	}
+	
+	
+	
 	
 }
