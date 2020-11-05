@@ -13,8 +13,10 @@ import javax.servlet.http.HttpSession;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.ComputerDAO;
 import com.sist.dao.GameDAO;
+import com.sist.vo.BasketVO;
 import com.sist.vo.ComputerVO;
-import com.sist.vo.GameVO;
+import com.sist.vo.ReplyVO;
+import com.sist.vo.WishVO;
 
 
 
@@ -117,11 +119,34 @@ public class ComputerModel {
 	public String computer_detail(HttpServletRequest request) {
 		
 		String no=request.getParameter("com_no");
-		if(no == null) no = "1";
-		// DB연동
+		if(no==null) no="1";
+		int com_no=Integer.parseInt(no);
+		
+		//상세화면
 		ComputerVO vo=ComputerDAO.computerDetailData(Integer.parseInt(no));
 		request.setAttribute("vo", vo);
 		request.setAttribute("main_jsp", "../computer/detail.jsp");
+		
+		//댓글리스트
+    	List<ReplyVO> list=ComputerDAO.computerReplyListData(com_no);
+   	    request.setAttribute("rList", list);
+   	    
+   	    HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		if(id!=null)
+		{
+		WishVO wvo=new WishVO();
+		wvo.setId(id);
+		wvo.setCom_no(com_no);
+		int wcount=ComputerDAO.computerWishCount(wvo);
+   	    request.setAttribute("wcount", wcount);
+   	    
+   	    BasketVO bvo=new BasketVO();
+		bvo.setId(id);
+		bvo.setCom_no(com_no);
+		int bcount=ComputerDAO.computerBasketCount(bvo);
+	    request.setAttribute("bcount", bcount);
+		}
 		
 		return "../main/main.jsp";
 	}
@@ -184,5 +209,130 @@ public class ComputerModel {
        request.setAttribute("endPage", endPage);
        
        return "../computer/list.jsp";
+    }
+    
+	@RequestMapping("computer/wish_insert.do")
+	public String computer_wish_insert(HttpServletRequest request)
+	{
+		String com_no=request.getParameter("com_no");
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		
+		WishVO vo=new WishVO();
+		vo.setId(id);
+		vo.setCom_no(Integer.parseInt(com_no));
+		
+		ComputerDAO.computerWishInsert(vo);
+		
+		
+		return "redirect:../computer/detail.do?com_no="+com_no;
+	}
+
+	@RequestMapping("computer/wish_delete.do")
+	public String computer_wish_delete(HttpServletRequest request)
+	{
+		String com_no = request.getParameter("com_no");
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		WishVO vo=new WishVO();
+		vo.setId(id);
+		vo.setCom_no(Integer.parseInt(com_no));
+		
+		ComputerDAO.computerWishDelete(vo);
+
+		return "redirect:../computer/detail.do?com_no="+com_no;
+	}
+	
+	@RequestMapping("computer/basket_insert.do")
+	public String computer_basket_insert(HttpServletRequest request)
+	{
+		String com_no=request.getParameter("com_no");
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		
+		BasketVO vo=new BasketVO();
+		vo.setId(id);
+		vo.setCom_no(Integer.parseInt(com_no));
+		
+		ComputerDAO.computerBasketInsert(vo);
+		
+		
+		return "redirect:../computer/detail.do?com_no="+com_no;
+	}
+
+	@RequestMapping("computer/basket_delete.do")
+	public String computer_basket_delete(HttpServletRequest request)
+	{
+		String com_no = request.getParameter("com_no");
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("id");
+		
+		BasketVO vo=new BasketVO();
+		vo.setId(id);
+		vo.setCom_no(Integer.parseInt(com_no));
+		
+		ComputerDAO.computerBasketDelete(vo);
+
+		return "redirect:../computer/detail.do?com_no="+com_no;
+	}
+	
+	@RequestMapping("computer/like.do")
+	public String computer_like(HttpServletRequest request) {
+		String no=request.getParameter("com_no");
+		int com_no=Integer.parseInt(no);
+		
+		ComputerVO vo=ComputerDAO.computerDetailData(com_no);
+		ComputerDAO.computerLikeUp(com_no);
+		
+		request.setAttribute("vo", vo);
+		request.setAttribute("main_jsp", "../computer/detail.jsp");
+		return "../main/main.jsp";
+	}
+	
+	
+	@RequestMapping("computer/hate.do")
+	public String computer_hate(HttpServletRequest request) {
+		String no=request.getParameter("com_no");
+		int com_no=Integer.parseInt(no);
+		
+		ComputerVO vo=ComputerDAO.computerDetailData(com_no);
+		ComputerDAO.computerHateUp(com_no);
+		
+		request.setAttribute("vo", vo);
+		request.setAttribute("main_jsp", "../computer/detail.jsp");
+		return "../main/main.jsp";
+	}
+	
+
+	@RequestMapping("computer/reply_insert.do")
+    public String computer_reply_insert(HttpServletRequest request)
+    {
+ 	   try
+ 	   {
+ 		   request.setCharacterEncoding("UTF-8");
+ 		   
+ 	   }catch(Exception ex) {}
+ 	   
+ 	   
+ 	   String com_no=request.getParameter("com_no");
+ 	   String msg=request.getParameter("msg");
+ 	   System.out.println("reply_insert실행");
+ 	  
+ 	   HttpSession session=request.getSession();
+ 	   String id=(String)session.getAttribute("id");
+ 	   
+ 	   System.out.println("reply_insert에서 받아온 id:"+id);
+ 	   // VO에 담아서 => DAO
+ 	   ReplyVO rvo=new ReplyVO();
+ 	   
+ 	   
+ 	   rvo.setCom_no(Integer.parseInt(com_no));
+ 	   rvo.setId(id);
+ 	   rvo.setMsg(msg);
+ 	   rvo.setCategory(2);
+ 	   // DAO연결 
+ 	   ComputerDAO.computerReplyInsert(rvo);
+ 	   return "redirect:../computer/detail.do?com_no="+com_no;
     }
 }

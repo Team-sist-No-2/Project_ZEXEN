@@ -3,6 +3,196 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ 
+ <style type="text/css">
+
+.btnxx,
+.btnxx2 {
+  margin-top:30px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 50px;
+  color: rgba(255,255,255,0.9);
+  border-radius: 50px;
+  background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5, #9E01F9, #9E01F9);
+  background-size: 600%;
+  -webkit-animation: anime 16s linear infinite;
+          animation: anime 16s linear infinite;
+}
+.btnxx2 {
+  position: absolute;
+  margin-top: -50px;
+  z-index: -1;
+  -webkit-filter: blur(30px);
+          filter: blur(20px);
+  opacity: 0.4;
+}
+
+.btnxx:hover{color:black;}
+.btnxx2:hover{color:black;}
+
+@-webkit-keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+
+
+#like_btn {
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+}
+#like_btn:hover {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+}
+#hate_btn {
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transition: all 0.3s ease-in-out;   /* 부드러운 모션을 위해 추가*/
+}
+#hate_btn:hover {
+  transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+}
+
+
+  </style>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	
+	var alreadyClick=false;
+	
+	$('#like_btn').click(function(){
+		
+		
+		if(!alreadyClick){
+		
+		let lcnt=${vo.like_cnt+1};
+		lcnt=lcnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		$('#like_out').html(lcnt);
+
+		$.ajax({
+				type:'post',
+				url:'../computer/like.do?com_no=${vo.com_no}',
+				success:function(result)
+				{
+					console.log("좋아요 누른 결과는 "+result);
+				}
+		})
+		alreadyClick=true;
+		}
+		else{
+			alert('이미 평가하셨습니다.')
+		}
+	})
+	
+	
+	
+	$('#hate_btn').click(function(){
+		
+		if(!alreadyClick){
+		
+		let hcnt=${vo.hate_cnt+1};
+		hcnt=hcnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		$('#hate_out').html(hcnt);
+
+		$.ajax({
+				type:'post',
+				url:'../computer/hate.do?com_no=${vo.com_no}',
+				success:function(result)
+				{
+					console.log("싫어요 누른 결과는 "+result);
+				}
+		})
+		alreadyClick=true;
+		}
+		else{
+			alert('이미 평가하셨습니다.')
+		}
+	})
+	
+	
+	$('#reply_btn').click(function(){
+		let textarea=$('#textarea').val();
+		console.log(textarea);
+		
+			if(textarea.trim()=="")
+			{
+				$('#textarea').focus();
+				return;
+			}
+		
+			else
+			{
+				var no = ${vo.com_no};
+ 				var allData = {"textarea": textarea, "com_no": no};
+				$.ajax({
+					type: 'post',
+					 url: '../computer/replyIn.do',
+					 data : allData,
+					 success: function(result){
+						 console.log("댓글 작성완료");
+// 						  댓글 append
+					 }
+					});
+				
+				
+			}
+		
+	})
+	
+	
+})
+
+</script>
+
+
+</head>
+<body>
 <!--================Single Product Area =================-->
 	<div class="product_image_area" style="padding-top: 50px">
 		<div class="container">
@@ -39,12 +229,46 @@
                                       <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
                                           class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
                                   </div>
+					
+						
+
+
+						
 						<div class="card_area d-flex align-items-center">
-						<a class="button button-hero" href="#">바로구매</a> &nbsp;&nbsp;
-							<a class="icon_btn" href="#"><i class="ti-shopping-cart"></i></a>
-							<a class="icon_btn" href="#"><i class="ti-heart"></i></a>
-							<a class="icon_btn" href="../computer/main.do"><i class="ti-search"></i></a>
+						  <!-- 구매버튼 -->	
+						    <a class="button button-hero" href="#" onclick="alert('구매 완료!');">바로구매</a> &nbsp;&nbsp;	
+						  
+						  <!-- 장바구니 버튼 -->  
+							<c:if test="${sessionScope.id!=null }">
+								<c:if test="${bcount==0 }">
+								<a class="icon_btn" href="../computer/basket_insert.do?com_no=${vo.com_no }" style="background: white;"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
+								</c:if>
+								<c:if test="${bcount==1 }">
+								<a class="icon_btn" href="../computer/basket_delete.do?com_no=${vo.com_no }" style="background: white;"><i class="ti-shopping-cart-full" style="color: #9E01F9;"></i></a>
+								</c:if>
+							</c:if>
+							<c:if test="${sessionScope.id==null }">
+								<a class="icon_btn" onclick="alert('로그인이 필요합니다.');" style="background: white;"><i class="ti-shopping-cart" style="color: #9E01F9;"></i></a>
+							</c:if>	
+								
+						  <!-- 찜 버튼 -->  
+							<c:if test="${sessionScope.id!=null }">
+								<c:if test="${wcount==0 }">
+								<a class="icon_btn" href="../computer/wish_insert.do?com_no=${vo.com_no }" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+								</c:if>
+								<c:if test="${wcount==1 }">
+								<a class="icon_btn" href="../computer/wish_delete.do?com_no=${vo.com_no }" style="background: white;"><i class="ti-heart-broken" style="color: #9E01F9;"></i></a>
+								</c:if>
+							</c:if>
+							
+							<c:if test="${sessionScope.id==null }">
+								<a class="icon_btn" onclick="alert('로그인이 필요합니다.');" style="background: white;"><i class="ti-heart" style="color: #9E01F9;"></i></a>
+							</c:if>
+								
+						 <!-- 목록버튼 -->		
+							<a class="icon_btn" href="../computer/main.do" style="background: white"><i class="ti-search" style="color: #9E01F9;"></i></a>
 						</div>
+							
 					</div>
 				</div>
 			</div>
@@ -150,125 +374,87 @@
 					</div>
 				</div>
 				
-				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
-					<div class="row">
-						<div class="col-lg-6">
-							<div class="row total_rate">
-								<div class="col-6">
-									<div class="box_total">
-										<h5>Overall</h5>
-										<h4>4.0</h4>
-										<h6>(03 Reviews)</h6>
+									<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="row total_rate" style="margin-bottom: 10px;">
+									<div class="col-6">
+										<div class="box_total">
+										<button style="background-color: #f1f6f7; border:0;" value="${vo.like_cnt }" id="like_btn">
+											<img src="../assets/img/like.png" width="100px">
+											</button>
+											<h4 style="color: #9E01F9" id="like_out"><fmt:formatNumber value="${vo.like_cnt }" pattern="#,###"/></h4>
+<%-- 											<h4>${vo.like_cnt}</h4> --%>
+										</div>
+									</div>
+									<div class="col-6">
+										<div class="box_total">
+										<button style="background-color: #f1f6f7; border:0;" value="${vo.like_cnt }" id="hate_btn">
+											<img src="../assets/img/hate.png" width="100px" >
+											</button>
+											<h4 style="color: #fa00a2" id="hate_out"><fmt:formatNumber value="${vo.hate_cnt }" pattern="#,###"/></h4>
+<%-- 											<h4>${vo.hate_cnt}</h4> --%>
+										</div>
+
 									</div>
 								</div>
-								<div class="col-6">
-									<div class="rating_list">
-										<h3>Based on 3 Reviews</h3>
-										<ul class="list">
-											<li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-										</ul>
+								
+								
+								<div class="review_list">
+									
+									
+								<c:forEach items="${rList }" var="rvo">
+									<div class="review_item">
+										<div class="media">
+											<div class="d-flex">
+												<img src="${rvo.pimg }" width="70px" height="70px" alt="">
+											</div>
+											<div class="media-body">
+												<h4>${rvo.id } </h4>
+												<h4> <fmt:formatDate value="${rvo.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </h4>
+											</div>
+										</div>
+										<p>${rvo.msg }</p>
 									</div>
+								</c:forEach>
+									
 								</div>
+								
+								
+								
 							</div>
-							<div class="review_list">
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
+							
+							<div class="col-lg-6">
+								<div class="review_box">
+									<h4>Add a Review</h4>
+									
+									
+	                <form action="../computer/reply_insert.do" class="form-contact form-review mt-3" id="reply_form" method="post">
+	                  <div class="form-group">
+	                 
+	                   <c:if test="${sessionScope.id==null }">
+	                    <textarea disabled class="form-control different-control w-100"  cols="30" rows="5" placeholder="로그인이 필요합니다."></textarea>
+	                  </div>
+	                  <div class="form-group text-center text-md-right mt-3">
+	                  </div>
+	                  </c:if>
+	                  
+	                  <c:if test="${sessionScope.id!=null }">
+	                   <input type=hidden name="com_no" value="${vo.com_no }">
+	                   <textarea class="form-control different-control w-100" name="msg" cols="30" rows="5" placeholder="최대  500자까지 입력가능합니다."></textarea>
+	                  </div>
+	                  <div class="form-group text-center text-md-right mt-3">
+	                    <input type="submit" class="button button--active button-review" id="reply_btn"  value="댓글쓰기"/>
+	                  </c:if>
+	                </form>
+
+	                
+	                
+	                
 								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="review_box">
-								<h4>Add a Review</h4>
-								<p>Your Rating:</p>
-								<ul class="list">
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-								</ul>
-								<p>Outstanding</p>
-                <form action="#/" class="form-contact form-review mt-3">
-                  <div class="form-group">
-                    <input class="form-control" name="name" type="text" placeholder="Enter your name" required>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="email" type="email" placeholder="Enter email address" required>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="subject" type="text" placeholder="Enter Subject">
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5" placeholder="Enter Message"></textarea>
-                  </div>
-                  <div class="form-group text-center text-md-right mt-3">
-                    <button type="submit" class="button button--active button-review">리뷰쓰기</button>
-                  </div>
-                </form>
 							</div>
 						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	</section>

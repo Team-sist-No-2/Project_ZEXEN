@@ -40,6 +40,26 @@
 	where com_no=#{com_no}
   </select>
   
+  <!-- 5. 조회수 카운트 -->
+  <update id="hitIncrement" parameterType="int">
+	UPDATE computer_tb SET
+	hit=hit+1
+	WHERE com_no=#{com_no}
+  </update>
+  
+  <!-- 5. 좋아요/싫어요 -->
+  <update id="computerLikeUp" parameterType="int">
+	update computer_tb
+	set like_cnt = like_cnt+1
+	where com_no=#{com_no}
+</update>
+
+<update id="computerHateUp" parameterType="int">
+	update computer_tb
+	set hate_cnt = hate_cnt+1
+	where com_no=#{com_no}
+</update>
+  
   <!-- 5. 토탈 페이지 -->
   <select id="computerTotalPage" resultType="int" parameterType="int">
     SELECT CEIL(COUNT(*)/12.0) FROM computer_tb
@@ -59,5 +79,47 @@
 	FROM ((SELECT * FROM computer_tb WHERE ROWID IN(SELECT MAX(ROWID)
 	FROM computer_tb WHERE UPPER(product) LIKE UPPER('%'||#{key}||'%') GROUP BY product)ORDER BY com_no))
   </select>
+
+<!-- 찜 -->
+<insert id="computerWishInsert" parameterType="WishVO">
+	INSERT INTO wish_list(wish_no,com_no,id,cate) <!-- cate1: 게임 cate2: 컴퓨터 cate3: 뉴스 -->
+	VALUES(
+	(SELECT NVL(MAX(wish_no)+1,1) FROM wish_list),
+	#{com_no},
+	#{id},
+	2
+	)
+</insert>
+
+<select id="computerWishCount" parameterType="WishVO" resultType="int"> <!-- 찜목록에 추가 했나 안했나 -->
+    SELECT COUNT(*) FROM wish_list
+    WHERE id=#{id} AND com_no=#{com_no}
+</select>
+ 
+<delete id="computerWishDelete" parameterType="WishVO"> 
+ 	DELETE FROM wish_list
+	WHERE id=#{id} AND com_no=#{com_no}
+</delete>
+
+<!-- 장바구니 -->
+<insert id="computerBasketInsert" parameterType="BasketVO">
+	INSERT INTO shopping_basket(basket_no,com_no,id,cate) <!-- cate1: 게임 cate2: 컴퓨터 -->
+	VALUES(
+	(SELECT NVL(MAX(basket_no)+1,1) FROM shopping_basket),
+	#{com_no},
+	#{id},
+	2
+	)
+</insert>
+
+<select id="computerBasketCount" parameterType="BasketVO" resultType="int"> <!-- 장바구니에 추가 했나 안했나 -->
+    SELECT COUNT(*) FROM shopping_basket
+    WHERE id=#{id} AND com_no=#{com_no}
+</select>
+ 
+<delete id="computerBasketDelete" parameterType="BasketVO"> 
+ 	DELETE FROM shopping_basket
+	WHERE id=#{id} AND com_no=#{com_no}
+</delete>
 
 </mapper>
