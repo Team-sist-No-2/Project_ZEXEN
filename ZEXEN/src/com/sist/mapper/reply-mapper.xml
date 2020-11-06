@@ -13,6 +13,14 @@
 	)
 </insert>
 
+<delete id="gameReplyDelete" parameterType="int">
+	DELETE FROM reply_tb WHERE reply_no=#{no}
+</delete>
+
+<update id="gameReplyUpdate" parameterType="ReplyVO">
+	UPDATE reply_tb SET msg = #{msg} WHERE reply_no=#{no}
+</update>
+
 <insert id="computerReplyInsert" parameterType="ReplyVO">
 	INSERT INTO reply_tb(reply_no,category,com_no,msg,id) VALUES (
 	(SELECT NVL(MAX(reply_no)+1,1) FROM reply_tb), 

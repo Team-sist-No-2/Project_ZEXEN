@@ -9,6 +9,7 @@
 <html>
 <head>
   <title>Aroma Shop - Category</title>
+  
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 
@@ -188,7 +189,7 @@ $(function() {
             
             <div>
               <div class="input-group filter-bar-search">
-               <input type="text" placeholder="Search" id="gameKewword">
+               <input type="text" placeholder="Search" id="gameKewword" title="전체 조건에 대해서 검색합니다.">
                 <div class="input-group-append">
                   <button type="button" id="gameSearch"><i class="ti-search"></i></button>
                 </div>

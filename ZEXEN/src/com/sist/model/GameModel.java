@@ -244,6 +244,32 @@ public class GameModel {
  	   GameDAO.gameReplyInsert(rvo);
  	   return "redirect:../game/detail.do?game_no="+game_no;
     }
+    
+    @RequestMapping("game/reply_delete.do")
+    public String game_reply_delete(HttpServletRequest request)
+    {
+ 	   String no=request.getParameter("reply_no");
+ 	   String game_no=request.getParameter("game_no");
+ 	   
+ 	   GameDAO.gameReplyDelete(Integer.parseInt(no));
+ 	   return "redirect:../game/detail.do?game_no="+game_no;
+    }
+    
+    @RequestMapping("game/reply_update.do")
+    public String game_reply_update(HttpServletRequest request)
+    {
+ 	   String no=request.getParameter("reply_no");
+ 	   String msg=request.getParameter("msg");
+ 	   String game_no=request.getParameter("game_no");
+ 	   
+ 	   ReplyVO vo=new ReplyVO();
+ 	   vo.setReply_no(Integer.parseInt(no));
+ 	   vo.setMsg(msg);
+ 	   
+ 	   GameDAO.gameReplyUpdate(vo);
+ 	   
+ 	   return "redirect:../game/detail.do?game_no="+game_no;
+    }
 
     @RequestMapping("game/search.do")
     public String game_search(HttpServletRequest request)

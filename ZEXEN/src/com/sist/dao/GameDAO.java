@@ -88,6 +88,24 @@ public class GameDAO {
 		session.close();
 	}
 	
+	//게임 댓글 삭제
+	public static void gameReplyDelete(int no)
+	{
+		SqlSession session=ssf.openSession();
+		session=ssf.openSession(true);
+		session.delete("gameReplyDelete",no);
+		session.close();
+	}
+	
+	//게임 댓글 수정
+	public static void gameReplyUpdate(ReplyVO vo)
+	{
+		SqlSession session=ssf.openSession();
+		session=ssf.openSession(true);
+		session.update("gameReplyUpdate",vo);
+		session.close();
+	}
+	
 	//게임 디테일 페이지에 댓글 리스트 출력
 	public static List<ReplyVO> gameReplyListData(int game_no)
     {

@@ -178,11 +178,19 @@ $(function() {
 // 						  댓글 append
 					 }
 					});
-				
-				
 			}
-		
 	})
+	
+	
+	$('#gameReplyUpdateBtn').click(function(){
+		let no=$(this).attr("idvalue");
+		$('#replymsg'+no).attr("")
+		
+		
+		let msg=$('#replymsg'+no).text();
+		console.log(msg);
+	})
+	
 	
 	
 })
@@ -394,11 +402,20 @@ $(function() {
 												<img src="${rvo.pimg }" width="70px" height="70px" alt="">
 											</div>
 											<div class="media-body">
-												<h4>${rvo.id } </h4>
+											
+												<h4>${rvo.id }  
+												<c:if test="${rvo.id == sessionScope.id}">
+												<button style="color: #9D01F8; margin-left: 10pt; background-color: white; border:none; font-weight:900;" id="gameReplyUpdateBtn" idvalue="${rvo.reply_no }">수정</button>
+												<button style="color: #9D01F8; background-color: white; border:none; font-weight:900;" 
+													onclick="location.href='../game/reply_delete.do?reply_no=${rvo.reply_no}&game_no=${vo.game_no }'">삭제</button></h4>
+												</c:if>
 												<h4> <fmt:formatDate value="${rvo.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/> </h4>
 											</div>
 										</div>
-										<p>${rvo.msg }</p>
+<!-- 										<form method=post action="../game/reply_update.do" id="gameReUpFrm"> -->
+											<textarea style="width: 100%; height: 150px; background-color: white; resize: none; border-color:#9E01F9;" id="replymsg${rvo.reply_no }" readonly=false>${rvo.msg }</textarea>
+<!-- 										</form> -->
+<%-- 										<input type="" value="${rvo.msg }"> --%>
 									</div>
 								</c:forEach>
 									
