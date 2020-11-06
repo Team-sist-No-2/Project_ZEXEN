@@ -37,9 +37,9 @@ $(function(){
 				<div class="col-lg-6">
 					<div class="login_box_img">
 						<div class="hover">
-							<h4>New to our website?</h4>
-							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
-							<a class="button button-account" href="../member/join.do">Create an Account</a>
+							<h4><b>WELCOME</b></h4>
+							<p><b>Welcome to ZEXEN!</b></p>
+							<a class="button button-account" href="../member/join.do">회원가입</a>
 						</div>
 					</div>
 				</div>

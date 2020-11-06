@@ -150,6 +150,7 @@
 </div>
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
+<a href="../board/main.do">
 <div class="confirmation-card">
 <p style="text-align: center;">
 <img src="https://img.icons8.com/pastel-glyph/50/000000/comments.png"/>
@@ -161,12 +162,12 @@
       </tr>
   </table>
 </div>
+</a>
 </div>
 
 <div class="col-md-6 col-xl-4 mb-4 mb-xl-0">
 <a href="../board/main.do">
 <div class="confirmation-card">
-
 <p style="text-align: center;">
 <img src="https://img.icons8.com/pastel-glyph/50/000000/edit.png"/>
 </p>

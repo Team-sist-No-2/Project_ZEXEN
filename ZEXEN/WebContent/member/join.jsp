@@ -231,8 +231,8 @@ $(function(){
 				<div class="col-lg-6">
 					<div class="login_box_img" style="height: 700px;">
 						<div class="hover">
-							<h4>Already have an account?</h4>
-							<p>There are advances being made in science and technology everyday, and a good example of this is the</p>
+							<h4><b>WELCOME</b></h4>
+							<p><b>Welcome to ZEXEN!</b></p>
 							<a class="button button-account" href="../member/login.do">Login Now</a>
 						</div>
 					</div>
