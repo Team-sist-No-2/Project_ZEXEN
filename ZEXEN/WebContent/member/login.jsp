@@ -37,7 +37,7 @@ $(function(){
 				<div class="col-lg-6">
 					<div class="login_box_img">
 						<div class="hover">
-							<h4><b>WELCOME</b></h4>
+							<h4><b>WELCOMEb</b></h4>
 							<p><b>Welcome to ZEXEN!</b></p>
 							<a class="button button-account" href="../member/join.do">회원가입</a>
 						</div>

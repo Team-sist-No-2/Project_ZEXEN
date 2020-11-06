@@ -10,10 +10,11 @@
 /*    #wrap { text-align:center; } */
 
 
-   .box { margin:0 auto; width:500px;/*   width:1200px; height:100px; *//*  background-color: rgb(255,153,0); */ }
+   .box { margin:0 auto; width:500px; /*   width:1200px; height:100px; *//*  background-color: rgb(255,153,0); */ }
 
    .row1 { margin:0 auto;}
    .login_box_area section-margin{margin:0 auto;}
+/* p{color:#000000;} */
 
    </style>
 </head>
@@ -34,22 +35,23 @@
   <div class="container" >
 
    <div class="box" >
+   
       <section class="login_box_area section-margin">
 
-            <div class="col-md-12">
+            <div class="col-md-18">
                <div class="login_form_inner register_form_inner">
-       
+       			
                   <h3>회원정보</h3>
+                 	
                   <form class="row login_form" action="#/" id="register_form" >
-
+					
                      <div class="col-md-12 form-group">
-
+					
                         <input type="text" value="${vo.id }" class="" id="id" name="id" readonly="readonly">
-
+						
                      </div>
 
                     <div class="col-md-12 form-group">
-
                         <input type="text" value="${vo.name }" class="" id="name" name="name" readonly="readonly" >
              	 	</div>
              
@@ -102,8 +104,7 @@
 
                      </div>
                      
-                     
-                     
+                   
                       <!-- 회원정보변경버튼 -->
 
                      <div class="col-md-12 form-group">
@@ -111,7 +112,7 @@
                        
                       
                         <a href="../member/memberinfo_update.do">  
-                        <button type="button" value="submit" id="logBtn" class="button button-login w-100">회원정보변경</button>
+                        <button type="button" value="submit" id="logBtn" class="button button-login w-100">회원정보 수정</button>
                         </a>
 
                      </div>

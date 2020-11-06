@@ -23,7 +23,7 @@
 
     <div class="container" > 
 
-    <h1 class="cont_tit">회원정보</h1>
+    <h1 class="cont_tit">회원정보 수정</h1>
 
       <div class="row">
 
