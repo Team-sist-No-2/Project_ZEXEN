@@ -101,6 +101,7 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
+
 $(function() {
 	
 	
@@ -114,10 +115,12 @@ $(function() {
 		let lcnt=${vo.like_cnt+1};
 		lcnt=lcnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		$('#like_out').html(lcnt);
+		let a=$('#aaa').attr("value");
 
 		$.ajax({
 				type:'post',
-				url:'../computer/like.do?com_no=${vo.com_no}',
+				url:'../computer/like.do',
+				data:{"com_no":a},
 				success:function(result)
 				{
 					console.log("좋아요 누른 결과는 "+result);
@@ -139,10 +142,12 @@ $(function() {
 		let hcnt=${vo.hate_cnt+1};
 		hcnt=hcnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		$('#hate_out').html(hcnt);
+		let a=$('#aaa').attr("value");
 
 		$.ajax({
 				type:'post',
-				url:'../computer/hate.do?com_no=${vo.com_no}',
+				url:'../computer/hate.do?com_no',
+				data:{"com_no":a},
 				success:function(result)
 				{
 					console.log("싫어요 누른 결과는 "+result);
@@ -212,7 +217,7 @@ $(function() {
 				</div>
 				<div class="col-lg-5 offset-lg-1">
 					<div class="s_product_text">
-						<h3>${vo.product}</h3>
+						<h3 id="aaa" value="${vo.com_no }">${vo.product}</h3>
 						<h5>${vo.spec}</h5>
 						<h2>₩<fmt:formatNumber value="${vo.cost }" pattern="#,###"/> </h2>
 						<ul class="list">
@@ -282,7 +287,7 @@ $(function() {
 		<div class="container">
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">사양변경</a>
+					<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">취소/반품/교환정보</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
@@ -290,16 +295,25 @@ $(function() {
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
-					 aria-selected="false">상품리뷰</a>
+					 aria-selected="false">구매후기</a>
 				</li>
 			</ul>
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-					<p>It is often frustrating to attempt to plan meals that are designed for one. Despite this fact, we are seeing
-						more and more recipe books and Internet websites that are dedicated to the act of cooking for one. Divorce and
-						the death of spouses or grown children leaving for college are all reasons that someone accustomed to cooking for
-						more than one would suddenly need to learn how to adjust all the cooking practices utilized before into a
-						streamlined plan of cooking that is more efficient for one person creating less</p>
+					<p><b>쇼핑몰명</b><br>
+					㈜피씨블로그<br><br>
+<b>A/S 정보안내</b><br>
+1. 구입 후 7일 이내의 제품불량시 불량 제품 1:1 교체<br>
+2. 프린터,LG,삼성 모니터의 경우 불량 판정서 동봉시 1:1 교환 반품 가능<br>
+3. 7일 이내의 불량은 배송비 왕복 부담 7일 이후는 고객 부담<br><br>
+<b>반품일</b><br>
+상품을 수령한 날부터 7일 이내<br><br>
+<b>교환 반품 정보</b><br>
+1. 조립PC의 경우 단순변심 반품 불가<br>
+2. CPU,SSD,프린터,LG 삼성 모니터 개봉시 반품불가<br>
+3. 제품이 물리적으로 파손시 AS 불가<br>
+4. 불법 소프트웨어를 취급/설치 해드리지 않습니다.<br>
+5. 환불 및 교환시에는 CJ택배를 이용하여 보내주셔야 합니다.</p>
 				</div>
 				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 					<div class="table-responsive">
@@ -307,68 +321,46 @@ $(function() {
 							<tbody>
 								<tr>
 									<td>
-										<h5>Width</h5>
+										<h5>CPU</h5>
 									</td>
 									<td>
-										<h5>128mm</h5>
+										<h5>라이젠 R5-3500</h5>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<h5>Height</h5>
+										<h5>메인보드</h5>
 									</td>
 									<td>
-										<h5>508mm</h5>
+										<h5>A320</h5>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<h5>Depth</h5>
+										<h5>메모리</h5>
 									</td>
 									<td>
-										<h5>85mm</h5>
+										<h5>16G</h5>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<h5>Weight</h5>
+										<h5>그래픽카드</h5>
 									</td>
 									<td>
-										<h5>52gm</h5>
+										<h5> GTX1650</h5>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<h5>Quality checking</h5>
+										<h5>SSD</h5>
 									</td>
 									<td>
-										<h5>yes</h5>
+										<h5>240GB</h5>
 									</td>
 								</tr>
-								<tr>
-									<td>
-										<h5>Freshness Duration</h5>
-									</td>
-									<td>
-										<h5>03days</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>When packeting</h5>
-									</td>
-									<td>
-										<h5>Without touch of hand</h5>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<h5>Each Box contains</h5>
-									</td>
-									<td>
-										<h5>60pcs</h5>
-									</td>
-								</tr>
+								
+			
 							</tbody>
 						</table>
 					</div>
