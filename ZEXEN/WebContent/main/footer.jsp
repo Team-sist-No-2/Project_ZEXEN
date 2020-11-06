@@ -17,19 +17,19 @@
                         <li>
                             <dl>
                                 <dt class="sm-head"><span class="fa fa-location-arrow"></span>Head Office</dt>
-                                <dd>123, Main Street, Your City</dd>
+                                <dd>서울특별시 마포구 월드컵북로 21 풍성빌딩 2층 ZEXEN</dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt class="sm-head"><span class="fa fa-phone"></span>Phone Number</dt>
-                                <dd>02-336-8545</dd>
+                                <dd>02-336-8546~8</dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt class="sm-head"><span class="fa fa-envelope"></span>Email</dt>
-                                <dd>free@infoexample.com </dd>
+                                <dd>hong@zexen.com </dd>
                             </dl>
                         </li>
                     </ul>
