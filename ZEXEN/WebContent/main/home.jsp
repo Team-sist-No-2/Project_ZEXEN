@@ -176,7 +176,7 @@
     </section>
     <!-- ================ Best Selling item  carousel end ================= --> 
 
-    <!-- ================ Blog section start ================= -->  
+   <!-- ================ Blog section start ================= -->  
     <section class="blog">
       <div class="container">
         <div class="section-intro pb-30px">
@@ -187,10 +187,10 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
             <div class="card card-blog">
               <div class="card-blog__img">
-                <img class="card-img rounded-0" src="../assets/img/blog/blog1.png" alt="">
+                <img class="card-img rounded-0" src="../assets/img/news/news(6).jpg" alt="" width=330 height=250>
               </div>
               <div class="card-body">
-                <h4 class="card-blog__title"><a href="single-blog.html">The Richland Center Shooping News and weekly shooper</a></h4>
+                <h4 class="card-blog__title"><a href="http://localhost/ZEXEN/news/detail.do?news_no=12">어몽어스2 개발 중단... "어몽어스...</a></h4>
               </div>
             </div>
           </div>
@@ -198,10 +198,10 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
             <div class="card card-blog">
               <div class="card-blog__img">
-                <img class="card-img rounded-0" src="../assets/img/blog/blog2.png" alt="">
+                <img class="card-img rounded-0" src="../assets/img/news/news(29).jpg" alt="" width=330 height=250>
               </div>
               <div class="card-body">
-                <h4 class="card-blog__title"><a href="single-blog.html">The Shopping News also offers top-quality printing services</a></h4>
+                <h4 class="card-blog__title"><a href="http://localhost/ZEXEN/news/detail.do?news_no=58">BTS ‘Dynamite’ 안무 버전 뮤직비디오...</a></h4>
               </div>
             </div>
           </div>
@@ -209,17 +209,17 @@
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
             <div class="card card-blog">
               <div class="card-blog__img">
-                <img class="card-img rounded-0" src="../assets/img/blog/blog3.png" alt="">
+                <img class="card-img rounded-0" src="../assets/img/news/news(26).jpg" alt="" width=330 height=250>
               </div>
               <div class="card-body">
-                <h4 class="card-blog__title"><a href="single-blog.html">Professional design staff and efficient equipment you’ll find we offer</a></h4>
+                <h4 class="card-blog__title"><a href="http://localhost/ZEXEN/news/detail.do?news_no=52">제2의 나라 뉴스 장전! 'TGS 2020' ...</a></h4>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- ================ Blog section end ================= -->  
+    <!-- ================ Blog section end ================= -->    
 
   </main>
 
